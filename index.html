@@ -47,6 +47,7 @@
         repeating-conic-gradient(from -16deg at 50% -10%, rgba(105, 196, 248, 0.72) 0deg 11deg, rgba(5, 44, 121, 0.72) 11deg 22deg),
         linear-gradient(180deg, #0A55B7 0%, #06266D 100%);
       min-height: 100vh;
+      overflow-x: hidden;
     }
     
     .main-panel {
@@ -96,6 +97,7 @@
       box-shadow: 0 2px 0 #1D4ED8, 0 6px 12px rgba(37, 99, 235, 0.3);
     }
 
+    /* Efek hover untuk Glassmorphism Cards di Dashboard */
     .card-neon-yellow { transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
     .card-neon-yellow:hover {
       transform: translateY(-10px) scale(1.025);
@@ -117,31 +119,75 @@
       box-shadow: 0 20px 30px -10px rgba(244, 63, 94, 0.35), 0 0 25px 5px rgba(251, 113, 133, 0.55) !important;
     }
 
+    /* Roda Putar Custom Center Button */
+    .wheel-container {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+    }
     #wheelCanvas {
-      filter: saturate(1.25) contrast(1.08);
+      width: 100%;
+      height: 100%;
+      filter: saturate(1.1) drop-shadow(0 15px 25px rgba(0,0,0,0.15));
       transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
+    }
+    .wheel-center-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+      border: 4px solid #ffffff;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
       cursor: pointer;
-      background: #ffffff;
-      box-shadow: 0 0 0 8px rgba(255,255,255,.8), 0 20px 45px rgba(37, 99, 235, .28);
+      box-shadow: 0 5px 15px rgba(37, 99, 235, 0.5), inset 0 2px 5px rgba(255,255,255,0.4);
+      z-index: 30;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .wheel-center-btn:active {
+      transform: translate(-50%, -48%) scale(0.95);
+      box-shadow: 0 2px 5px rgba(37, 99, 235, 0.5), inset 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .wheel-center-btn i { font-size: 1.25rem; margin-bottom: 2px; }
+    
+    .spin-needle-top {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.5rem;
+      color: #EF4444;
+      z-index: 40;
+      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2));
     }
 
-    .spin-needle { position: absolute; inset: 0; z-index: 20; pointer-events: none; }
-    .spin-needle i {
-      position: absolute; top: -0.2rem; left: 50%; color: #ff3158; font-size: 2.15rem;
-      filter: drop-shadow(0 0 5px #ff3158) drop-shadow(0 3px 2px rgba(127, 0, 32, 0.3));
-      transform: translateX(-50%);
-    }
+    /* Custom Scrollbar for lists */
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(148, 163, 184, 0.5); border-radius: 10px; }
 
     @keyframes soft-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
     .animate-soft-float { animation: soft-float 4s ease-in-out infinite; }
   </style>
 </head>
-<body class="text-slate-800 antialiased p-4 md:p-8 flex flex-col justify-between">
+<body class="text-slate-800 antialiased p-2 md:p-8 flex flex-col justify-between">
 
-  <main class="max-w-6xl mx-auto w-full flex-grow flex items-center justify-center">
+  <main class="max-w-7xl mx-auto w-full flex-grow flex items-center justify-center">
 
-    <!-- ================= 0. LANDING PAGE ================= -->
-    <section id="page-landing" class="page-section active w-full">
+    <!-- ================= 0. BERANDA ================= -->
+    <section id="page-landing" class="page-section active w-full max-w-6xl mx-auto">
       <div class="main-panel backdrop-blur-xl rounded-[3rem] p-8 md:p-14 border border-sky-300/40 relative overflow-hidden grid md:grid-cols-2 gap-10 items-center min-h-[520px]">
         <div class="flex flex-col items-center md:items-start text-center md:text-left z-10">
           
@@ -151,11 +197,11 @@
           </h1>
 
           <p class="text-slate-600 text-sm sm:text-base font-medium max-w-md mb-8 leading-relaxed">
-            Ikuti petualangan seru membaca cerita komik literasi, diskusi kelompok terpadu, dan uji ketangkasan kuis bersama teman sekelas!
+            Yuk, baca cerita komik bergambar yang seru, jawab kuis tebak-tebakan, dan kumpulkan bintang bersama teman sekelasmu! ⭐
           </p>
 
           <button onclick="goToPage('dashboard')" class="btn-game-chunky text-white px-9 py-4 rounded-2xl font-formal text-base md:text-lg font-bold flex items-center gap-3 select-none">
-            <span>Mulai Petualangan</span>
+            <span>Mulai Petualangan!</span>
             <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
@@ -174,225 +220,329 @@
       </div>
     </section>
 
-    <!-- ================= 1. DASHBOARD ================= -->
-    <section id="page-dashboard" class="page-section w-full">
-      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40">
-        <div class="flex justify-end mb-2">
-          <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="flex items-center gap-2 bg-white/80 hover:bg-white text-brand-purple px-4 py-2 rounded-2xl font-fun font-bold text-sm shadow-sm border border-brand-purple/20 transition hover:scale-105">
+    <!-- ================= 1. PILIH MISI ================= -->
+    <section id="page-dashboard" class="page-section w-full max-w-6xl mx-auto">
+      <div class="w-full py-6 px-2 md:px-0">
+        
+        <div class="flex justify-end mb-6">
+          <button onclick="goToPage('landing')" title="Kembali ke Beranda" class="flex items-center gap-2 bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-5 py-2.5 rounded-2xl font-fun font-bold text-sm shadow-md border border-white/40 transition-all hover:scale-105">
             <i class="fa-solid fa-house"></i>
-            <span>Halaman Utama</span>
+            <span class="drop-shadow-sm">Kembali ke Depan</span>
           </button>
         </div>
-        <div class="text-center max-w-2xl mx-auto mb-10">
-          <h2 class="font-fun text-3xl md:text-4xl font-bold text-slate-900 mt-2">Ayo Ikuti Misi Belajarmu!</h2>
-          <p class="text-slate-500 text-sm mt-1">Selesaikan setiap tantangan bersama kelompokmu dan raih skor terbaik!</p>
+        
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <h2 class="font-fun text-4xl md:text-5xl font-bold text-white drop-shadow-lg mt-2">Pilih Petualanganmu! 🎯</h2>
+          <p class="text-sky-50 text-sm md:text-base mt-3 font-medium drop-shadow-md">Selesaikan 4 langkah seru ini bareng teman-temanmu ya!</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-none mx-auto w-full">
-          <!-- Card 1 -->
-          <div onclick="goToPage('spin')" class="card-neon-yellow cursor-pointer bg-gradient-to-b from-amber-50/60 to-white p-6 rounded-3xl border-2 border-amber-300 shadow-sm flex flex-col justify-between min-h-[370px]">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-none mx-auto w-full">
+          <!-- Langkah 1 -->
+          <div onclick="goToPage('spin')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-amber-50/90 to-amber-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(245,158,11,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-amber-300/80 flex flex-col justify-between min-h-[380px] group transition-all duration-300 hover:-translate-y-2">
             <div>
-              <div class="w-14 h-14 rounded-2xl bg-amber-400 text-white flex items-center justify-center text-2xl mb-5 shadow-md shadow-amber-400/30">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-500 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-amber-500/30 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                 <i class="fa-solid fa-dharmachakra"></i>
               </div>
-              <span class="text-xs font-extrabold text-amber-600 uppercase tracking-wider">Langkah 1</span>
-              <h3 class="font-fun text-xl font-bold text-slate-800 mt-1">Spin Wheel Kelompok</h3>
-              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Undi anggota kelompok secara acak, adil, dan transparan.</p>
+              <span class="text-xs font-extrabold text-amber-600 uppercase tracking-wider drop-shadow-sm">Langkah 1</span>
+              <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Bagi Kelompok</h3>
+              <p class="text-sm text-slate-600 leading-relaxed font-medium">Putar roda ajaib untuk cari tahu siapa saja teman satu timmu!</p>
             </div>
-            <div class="mt-6 flex items-center text-amber-600 font-bold text-xs gap-1.5">
-              Buka Roda Putar <i class="fa-solid fa-arrow-right"></i>
+            <div class="mt-8 flex items-center text-amber-600 font-bold text-sm gap-2 group-hover:translate-x-2 transition-transform">
+              Putar Roda <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
 
-          <!-- Card 2 -->
-          <div onclick="goToPage('komik')" class="card-neon-blue cursor-pointer bg-gradient-to-b from-sky-50/60 to-white p-6 rounded-3xl border-2 border-sky-300 shadow-sm flex flex-col justify-between min-h-[370px]">
+          <!-- Langkah 2 -->
+          <div onclick="goToPage('komik')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-sky-50/90 to-sky-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(14,165,233,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-sky-300/80 flex flex-col justify-between min-h-[380px] group transition-all duration-300 hover:-translate-y-2">
             <div>
-              <div class="w-14 h-14 rounded-2xl bg-sky-500 text-white flex items-center justify-center text-2xl mb-5 shadow-md shadow-sky-500/30">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-sky-500 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-sky-500/30 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
                 <i class="fa-solid fa-book-open"></i>
               </div>
-              <span class="text-xs font-extrabold text-sky-600 uppercase tracking-wider">Langkah 2</span>
-              <h3 class="font-fun text-xl font-bold text-slate-800 mt-1">Bacaan E-Komik</h3>
-              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Bahan bacaan cerita bergambar untuk tiap tim kelompok.</p>
+              <span class="text-xs font-extrabold text-sky-600 uppercase tracking-wider drop-shadow-sm">Langkah 2</span>
+              <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Baca Cerita Komik</h3>
+              <p class="text-sm text-slate-600 leading-relaxed font-medium">Buka dan baca cerita bergambar yang lucu dan menarik bareng timmu.</p>
             </div>
-            <div class="mt-6 flex items-center text-sky-600 font-bold text-xs gap-1.5">
-              Buka Bacaan Komik <i class="fa-solid fa-arrow-right"></i>
+            <div class="mt-8 flex items-center text-sky-600 font-bold text-sm gap-2 group-hover:translate-x-2 transition-transform">
+              Ayo Membaca <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
 
-          <!-- Card 3 -->
-          <div onclick="goToPage('quiz')" class="card-neon-rose cursor-pointer bg-gradient-to-b from-rose-50/60 to-white p-6 rounded-3xl border-2 border-rose-300 shadow-sm flex flex-col justify-between min-h-[370px]">
+          <!-- Langkah 3 -->
+          <div onclick="goToPage('quiz')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-rose-50/90 to-rose-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(244,63,94,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-rose-300/80 flex flex-col justify-between min-h-[380px] group transition-all duration-300 hover:-translate-y-2">
             <div>
-              <div class="w-14 h-14 rounded-2xl bg-rose-500 text-white flex items-center justify-center text-2xl mb-5 shadow-md shadow-rose-500/30">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-400 to-rose-500 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-rose-500/30 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                 <i class="fa-solid fa-bolt"></i>
               </div>
-              <span class="text-xs font-extrabold text-rose-600 uppercase tracking-wider">Langkah 3</span>
-              <h3 class="font-fun text-xl font-bold text-slate-800 mt-1">Kuis Pemahaman</h3>
-              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Uji pemahaman alur, watak tokoh, dan pesan moral dari komik.</p>
+              <span class="text-xs font-extrabold text-rose-600 uppercase tracking-wider drop-shadow-sm">Langkah 3</span>
+              <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Tebak Kuis Seru</h3>
+              <p class="text-sm text-slate-600 leading-relaxed font-medium">Jawab 4 soal seru tentang cerita tadi dan dapatkan poin penuh!</p>
             </div>
-            <div class="mt-6 flex items-center text-rose-600 font-bold text-xs gap-1.5">
-              Mulai Kuis Seru <i class="fa-solid fa-arrow-right"></i>
+            <div class="mt-8 flex items-center text-rose-600 font-bold text-sm gap-2 group-hover:translate-x-2 transition-transform">
+              Mulai Kuis <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
 
-          <!-- Card 4 -->
-          <div onclick="goToPage('nilai')" class="card-neon-blue cursor-pointer bg-gradient-to-b from-indigo-50/60 to-white p-6 rounded-3xl border-2 border-indigo-300 shadow-sm flex flex-col justify-between min-h-[370px]">
+          <!-- Langkah 4 -->
+          <div onclick="goToPage('nilai')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-indigo-50/90 to-indigo-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(99,102,241,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-indigo-300/80 flex flex-col justify-between min-h-[380px] group transition-all duration-300 hover:-translate-y-2">
             <div>
-              <div class="w-14 h-14 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-2xl mb-5 shadow-md shadow-indigo-600/30">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-600 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-indigo-600/30 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
                 <i class="fa-solid fa-award"></i>
               </div>
-              <span class="text-xs font-extrabold text-indigo-600 uppercase tracking-wider">Hasil Akhir</span>
-              <h3 class="font-fun text-xl font-bold text-slate-800 mt-1">Papan Skor & Nilai</h3>
-              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Rekap pencapaian skor kuis tim dan evaluasi hari ini.</p>
+              <span class="text-xs font-extrabold text-indigo-600 uppercase tracking-wider drop-shadow-sm">Hadiah</span>
+              <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Papan Pemenang</h3>
+              <p class="text-sm text-slate-600 leading-relaxed font-medium">Lihat perolehan nilai dan rayakan kemenangan kelompokmu bersama piala emas!</p>
             </div>
-            <div class="mt-6 flex items-center text-indigo-600 font-bold text-xs gap-1.5">
-              Lihat Papan Skor <i class="fa-solid fa-arrow-right"></i>
+            <div class="mt-8 flex items-center text-indigo-600 font-bold text-sm gap-2 group-hover:translate-x-2 transition-transform">
+              Lihat Skor <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
+          
         </div>
       </div>
     </section>
 
-    <!-- ================= 2. SPIN WHEEL ================= -->
+    <!-- ================= 2. RODA PUTAR (GAYA 3 KOLOM) ================= -->
     <section id="page-spin" class="page-section w-full">
-      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40">
-        <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
-          <div>
-            <h2 class="font-fun text-3xl font-bold text-slate-900">Roda Putar Nama Tim</h2>
+      <!-- Container utama tanpa background putih, langsung blur effect -->
+      <div class="bg-white/10 backdrop-blur-2xl border border-white/30 rounded-[2.5rem] p-6 md:p-8 w-full shadow-2xl">
+        
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 border-b border-white/20 pb-4">
+          <div class="flex items-center gap-4 text-white drop-shadow-md">
+            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-2xl shadow-lg border-2 border-white/50">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div>
+              <h2 class="font-formal text-2xl md:text-3xl font-bold">Pembentukan Kelompok</h2>
+              <p class="text-sm text-blue-100 font-medium">Mudah, Cepat, dan Menyenangkan!</p>
+            </div>
           </div>
-          <div class="flex items-center gap-2">
-            <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="text-xs bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5">
-              <i class="fa-solid fa-house"></i>
-              <span class="hidden sm:inline">Utama</span>
-            </button>
-            <button onclick="goToPage('dashboard')" class="text-xs bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl font-bold transition">
-              <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+          <div class="flex items-center gap-3">
+            <div class="bg-white/20 px-4 py-2 rounded-xl text-white text-sm font-bold border border-white/30 shadow-inner flex items-center gap-2">
+              <i class="fa-solid fa-users"></i> Kelas 5
+            </div>
+            <button onclick="goToPage('dashboard')" class="bg-white hover:bg-blue-50 text-blue-600 px-4 py-2 rounded-xl text-sm font-bold shadow-md transition-all">
+              <i class="fa-solid fa-arrow-left"></i> Menu
             </button>
           </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8 items-start">
-          <div class="flex flex-col items-center justify-center relative">
-            <div class="w-full max-w-sm mb-5">
-              <label for="studentNamesInput" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Daftar Nama Siswa</label>
-              <textarea id="studentNamesInput" rows="3" class="w-full p-3 rounded-2xl border border-slate-200 text-sm focus:outline-brand-purple" placeholder="Satu nama per baris, contoh:&#10;Andi&#10;Budi&#10;Citra"></textarea>
-              <button type="button" onclick="applyStudentNames()" class="mt-2 w-full bg-brand-purple hover:bg-brand-darkPurple text-white px-4 py-2 rounded-xl font-fun text-sm font-bold transition">Terapkan Nama</button>
+        <!-- Layout 3 Kolom -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          
+          <!-- KOLOM KIRI: Input Nama (3/12) -->
+          <div class="lg:col-span-3 flex flex-col gap-4">
+            <div class="bg-white/90 backdrop-blur-md rounded-3xl p-5 shadow-lg border border-white">
+              <h4 class="font-formal font-bold text-slate-800 flex items-center gap-2 mb-2">
+                <i class="fa-solid fa-user-plus text-blue-500"></i> Masukkan Nama Siswa
+              </h4>
+              <p class="text-xs text-slate-500 mb-4 leading-relaxed">Ketik nama siswa, lalu klik + untuk menambahkannya ke daftar.</p>
+              
+              <div class="flex gap-2 mb-2">
+                <input type="text" id="singleNameInput" placeholder="Contoh: Andi Pratama" class="w-full text-sm p-3 rounded-xl border border-slate-200 focus:outline-blue-500 focus:ring-2 focus:ring-blue-200" onkeypress="handleEnter(event)">
+                <button onclick="addSingleName()" class="bg-blue-500 hover:bg-blue-600 text-white w-12 rounded-xl font-bold shadow-md transition-all shrink-0">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
             </div>
-            <div class="relative flex items-center justify-center">
-              <div id="spinNeedle" class="spin-needle" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></div>
-              <canvas id="wheelCanvas" width="340" height="340" class="rounded-full shadow-2xl border-4 border-white"></canvas>
+
+            <div class="bg-white/90 backdrop-blur-md rounded-3xl p-5 shadow-lg border border-white flex-grow flex flex-col">
+              <div class="flex justify-between items-center mb-3">
+                <h4 class="font-formal font-bold text-slate-800 text-sm">Daftar Nama Siswa</h4>
+                <span id="studentCountBadge" class="bg-blue-100 text-blue-700 text-[10px] font-extrabold px-2 py-1 rounded-lg">0 siswa</span>
+              </div>
+              
+              <!-- List Nama dengan Scrollbar -->
+              <div id="studentNameList" class="flex-grow max-h-[300px] overflow-y-auto custom-scrollbar pr-2 space-y-2 mb-4">
+                <div class="text-xs text-slate-400 text-center py-4 italic">Belum ada nama yang dimasukkan.</div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 mt-auto pt-4 border-t border-slate-100">
+                <button onclick="clearAllNames()" class="bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-500 text-xs font-bold py-2.5 rounded-xl border border-slate-200 transition-all">
+                  <i class="fa-solid fa-trash-can mr-1"></i> Hapus
+                </button>
+                <button onclick="syncWheel()" class="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded-xl shadow-md transition-all">
+                  Siap Putar
+                </button>
+              </div>
             </div>
-            <button id="spinBtn" onclick="spinWheel()" class="mt-6 bg-amber-400 hover:bg-amber-500 text-slate-900 font-fun text-lg font-bold px-8 py-3 rounded-2xl shadow-lg shadow-amber-400/40 transform active:scale-95 transition">
-              <i class="fa-solid fa-play mr-2"></i> Putar Roda!
-            </button>
-            <button onclick="resetWheel()" class="mt-2 text-xs text-slate-500 hover:text-brand-purple font-bold transition">
-              <i class="fa-solid fa-rotate-left mr-1"></i> Reset undian
-            </button>
           </div>
 
-          <div class="self-start bg-slate-50 p-6 rounded-3xl border border-slate-200/80 w-full">
-            <h4 class="font-fun text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
-              <i class="fa-solid fa-bullhorn text-brand-purple"></i> Hasil Undian:
-            </h4>
-            <div id="spinResult" class="p-4 bg-white rounded-2xl border-2 border-brand-purple/20 text-center mb-6">
-              <p class="text-xs text-slate-400">Masukkan nama siswa, lalu tekan 'Putar Roda'</p>
+          <!-- KOLOM TENGAH: Roda Putar (5/12) -->
+          <div class="lg:col-span-5 flex flex-col items-center justify-center p-4">
+            <div class="text-center mb-8">
+              <h2 class="font-fun text-3xl font-extrabold text-white drop-shadow-md">Spin Wheel <br>Pembagian Kelompok</h2>
+              <p class="text-sm text-sky-100 mt-2 max-w-sm mx-auto font-medium">Klik tombol putar untuk membagi siswa ke dalam kelompok secara acak dan merata.</p>
             </div>
-
-            <h5 class="font-bold text-xs uppercase tracking-wider text-slate-400 mb-2">Daftar Kelompok Kelas:</h5>
-            <div id="groupList" class="grid grid-cols-2 gap-2 text-xs font-semibold">
-              <div class="p-3 bg-white rounded-xl border border-slate-200">
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#EF4444]"></span> Kelompok 1</div><p id="members-0" class="mt-2 text-slate-400 font-normal">Belum ada anggota</p>
-              </div>
-              <div class="p-3 bg-white rounded-xl border border-slate-200">
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#3B82F6]"></span> Kelompok 2</div><p id="members-1" class="mt-2 text-slate-400 font-normal">Belum ada anggota</p>
-              </div>
-              <div class="p-3 bg-white rounded-xl border border-slate-200">
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#10B981]"></span> Kelompok 3</div><p id="members-2" class="mt-2 text-slate-400 font-normal">Belum ada anggota</p>
-              </div>
-              <div class="p-3 bg-white rounded-xl border border-slate-200">
-                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#F59E0B]"></span> Kelompok 4</div><p id="members-3" class="mt-2 text-slate-400 font-normal">Belum ada anggota</p>
-              </div>
-            </div>
-
-            <div class="mt-6 text-right">
-              <button onclick="goToPage('komik')" class="bg-brand-purple text-white px-5 py-2.5 rounded-xl font-fun text-sm font-bold shadow-md transition">
-                Lanjut Baca Komik <i class="fa-solid fa-arrow-right ml-1"></i>
+            
+            <!-- Wheel Container dengan Center Button -->
+            <div class="wheel-container">
+              <i class="fa-solid fa-location-dot spin-needle-top"></i>
+              <canvas id="wheelCanvas" width="400" height="400" class="rounded-full border-4 border-white"></canvas>
+              
+              <!-- Tombol Tengah Bulat -->
+              <button id="spinBtn" onclick="spinWheel()" class="wheel-center-btn">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Putar</span>
               </button>
             </div>
           </div>
+
+          <!-- KOLOM KANAN: Daftar Kelompok (4/12) -->
+          <div class="lg:col-span-4 flex flex-col h-full">
+            <div class="bg-white/90 backdrop-blur-md rounded-3xl p-5 shadow-lg border border-white h-full flex flex-col">
+              <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
+                <h4 class="font-formal font-bold text-slate-800 flex items-center gap-2">
+                  <i class="fa-solid fa-users text-blue-500"></i> Daftar Kelompok
+                </h4>
+                <span class="bg-blue-100 text-blue-700 text-[10px] font-extrabold px-2 py-1 rounded-lg">4 Kelompok</span>
+              </div>
+
+              <!-- List Kelompok dengan Scrollbar jika perlu -->
+              <div class="flex-grow overflow-y-auto custom-scrollbar pr-2 space-y-3 pb-4">
+                
+                <!-- Grup 1 -->
+                <div class="border border-amber-200 rounded-2xl overflow-hidden bg-amber-50/30">
+                  <div class="bg-amber-100/50 px-4 py-2 flex justify-between items-center border-b border-amber-100">
+                    <div class="flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-full bg-amber-400 text-white flex items-center justify-center text-xs font-bold shadow-sm">1</span>
+                      <span class="font-bold text-amber-900 text-sm">Kelompok 1</span>
+                    </div>
+                    <span class="text-[10px] font-bold text-amber-700 bg-white px-2 py-0.5 rounded-md" id="count-group-0">0 siswa</span>
+                  </div>
+                  <div class="p-3 text-xs text-slate-500 min-h-[40px] flex items-center" id="members-group-0">
+                    <i class="fa-solid fa-user-xmark mr-2 opacity-50"></i> Belum ada anggota
+                  </div>
+                </div>
+
+                <!-- Grup 2 -->
+                <div class="border border-sky-200 rounded-2xl overflow-hidden bg-sky-50/30">
+                  <div class="bg-sky-100/50 px-4 py-2 flex justify-between items-center border-b border-sky-100">
+                    <div class="flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-full bg-sky-400 text-white flex items-center justify-center text-xs font-bold shadow-sm">2</span>
+                      <span class="font-bold text-sky-900 text-sm">Kelompok 2</span>
+                    </div>
+                    <span class="text-[10px] font-bold text-sky-700 bg-white px-2 py-0.5 rounded-md" id="count-group-1">0 siswa</span>
+                  </div>
+                  <div class="p-3 text-xs text-slate-500 min-h-[40px] flex items-center" id="members-group-1">
+                    <i class="fa-solid fa-user-xmark mr-2 opacity-50"></i> Belum ada anggota
+                  </div>
+                </div>
+
+                <!-- Grup 3 -->
+                <div class="border border-emerald-200 rounded-2xl overflow-hidden bg-emerald-50/30">
+                  <div class="bg-emerald-100/50 px-4 py-2 flex justify-between items-center border-b border-emerald-100">
+                    <div class="flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-full bg-emerald-400 text-white flex items-center justify-center text-xs font-bold shadow-sm">3</span>
+                      <span class="font-bold text-emerald-900 text-sm">Kelompok 3</span>
+                    </div>
+                    <span class="text-[10px] font-bold text-emerald-700 bg-white px-2 py-0.5 rounded-md" id="count-group-2">0 siswa</span>
+                  </div>
+                  <div class="p-3 text-xs text-slate-500 min-h-[40px] flex items-center" id="members-group-2">
+                    <i class="fa-solid fa-user-xmark mr-2 opacity-50"></i> Belum ada anggota
+                  </div>
+                </div>
+
+                <!-- Grup 4 -->
+                <div class="border border-purple-200 rounded-2xl overflow-hidden bg-purple-50/30">
+                  <div class="bg-purple-100/50 px-4 py-2 flex justify-between items-center border-b border-purple-100">
+                    <div class="flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-full bg-purple-400 text-white flex items-center justify-center text-xs font-bold shadow-sm">4</span>
+                      <span class="font-bold text-purple-900 text-sm">Kelompok 4</span>
+                    </div>
+                    <span class="text-[10px] font-bold text-purple-700 bg-white px-2 py-0.5 rounded-md" id="count-group-3">0 siswa</span>
+                  </div>
+                  <div class="p-3 text-xs text-slate-500 min-h-[40px] flex items-center" id="members-group-3">
+                    <i class="fa-solid fa-user-xmark mr-2 opacity-50"></i> Belum ada anggota
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Tombol Lanjut -->
+              <div class="mt-auto pt-4 border-t border-slate-100">
+                <button onclick="goToPage('komik')" class="w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-3 rounded-xl font-formal font-bold text-sm shadow-[0_4px_0_#1E40AF] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">
+                  Sudah Terbagi? Lanjut Misi <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- ================= 3. E-KOMIK ================= -->
+    <!-- ================= 3. BACA KOMIK ================= -->
     <section id="page-komik" class="page-section w-full">
-      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40">
-        <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
-          <div>
-            <span class="text-xs font-bold text-sky-500 uppercase tracking-wider">Aktivitas Membaca Terpadu</span>
-            <h2 class="font-fun text-3xl font-bold text-slate-900">Bahan Bacaan E-Komik</h2>
-          </div>
-          <div class="flex items-center gap-2">
-            <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="text-xs bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5">
-              <i class="fa-solid fa-house"></i>
-              <span class="hidden sm:inline">Utama</span>
-            </button>
-            <button onclick="goToPage('dashboard')" class="text-xs bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl font-bold transition">
-              <i class="fa-solid fa-arrow-left mr-1"></i> Dashboard
-            </button>
-          </div>
+      <div class="w-full max-w-6xl mx-auto py-6 px-2 md:px-0">
+        
+        <div class="flex justify-end mb-6">
+          <button onclick="goToPage('landing')" title="Kembali ke Beranda" class="flex items-center gap-2 bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-5 py-2.5 rounded-2xl font-fun font-bold text-sm shadow-md border border-white/40 transition-all hover:scale-105">
+            <i class="fa-solid fa-house"></i>
+            <span class="drop-shadow-sm">Depan</span>
+          </button>
+          <button onclick="goToPage('dashboard')" title="Kembali ke Menu Misi" class="ml-3 flex items-center gap-2 bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-5 py-2.5 rounded-2xl font-fun font-bold text-sm shadow-md border border-white/40 transition-all hover:scale-105">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span class="drop-shadow-sm">Pilihan Misi</span>
+          </button>
         </div>
 
-        <p class="text-slate-600 text-sm mb-6">Pilih kartu kelompok untuk membaca lembar komik bergambar:</p>
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <span class="text-xs font-bold text-sky-200 uppercase tracking-wider drop-shadow-sm">Ruang Membaca</span>
+          <h2 class="font-fun text-4xl md:text-5xl font-bold text-white drop-shadow-lg mt-2">Pilih Komik Timmu 📚</h2>
+          <p class="text-sky-50 text-sm md:text-base mt-3 font-medium drop-shadow-md">Pilih kotak kelompokmu, lalu tekan tombol <strong>"Ayo Baca"</strong> untuk membuka gambarnya!</p>
+        </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-none mx-auto w-full">
           <!-- Kelompok 1 -->
-          <div class="card-neon-rose bg-white rounded-3xl p-5 border-2 border-rose-300 shadow-md flex flex-col justify-between">
+          <div class="p-7 rounded-[2rem] bg-gradient-to-br from-rose-50/90 to-rose-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(244,63,94,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-rose-300/80 flex flex-col justify-between min-h-[340px] group transition-all duration-300 hover:-translate-y-2">
             <div>
-              <div class="h-36 bg-gradient-to-tr from-rose-100 to-rose-200 rounded-2xl mb-5 flex items-center justify-center text-rose-500 text-5xl shadow-sm">
+              <div class="h-36 bg-gradient-to-br from-rose-400 to-rose-500 rounded-2xl mb-5 flex items-center justify-center text-white text-5xl shadow-lg shadow-rose-500/30 group-hover:scale-105 transition-transform duration-300">
                 <i class="fa-solid fa-dragon"></i>
               </div>
-              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight">Kelompok 1</h3>
+              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight mt-4 drop-shadow-sm">Kelompok 1</h3>
             </div>
-            <button onclick="openComicImageViewer(0)" class="mt-6 w-full bg-rose-500 hover:bg-rose-600 text-white font-formal text-sm py-3 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2">
+            <button onclick="openComicImageViewer(0)" class="mt-6 w-full bg-rose-500 hover:bg-rose-600 text-white font-formal text-sm py-3.5 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 group-hover:shadow-lg">
               <i class="fa-solid fa-book-open"></i> Ayo Baca
             </button>
           </div>
 
           <!-- Kelompok 2 -->
-          <div class="card-neon-blue bg-white rounded-3xl p-5 border-2 border-sky-300 shadow-md flex flex-col justify-between">
+          <div class="p-7 rounded-[2rem] bg-gradient-to-br from-sky-50/90 to-sky-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(14,165,233,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-sky-300/80 flex flex-col justify-between min-h-[340px] group transition-all duration-300 hover:-translate-y-2">
             <div>
-              <div class="h-36 bg-gradient-to-tr from-sky-100 to-sky-200 rounded-2xl mb-5 flex items-center justify-center text-sky-500 text-5xl shadow-sm">
+              <div class="h-36 bg-gradient-to-br from-sky-400 to-sky-500 rounded-2xl mb-5 flex items-center justify-center text-white text-5xl shadow-lg shadow-sky-500/30 group-hover:scale-105 transition-transform duration-300">
                 <i class="fa-solid fa-anchor"></i>
               </div>
-              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight">Kelompok 2</h3>
+              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight mt-4 drop-shadow-sm">Kelompok 2</h3>
             </div>
-            <button onclick="openComicImageViewer(1)" class="mt-6 w-full bg-sky-500 hover:bg-sky-600 text-white font-formal text-sm py-3 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2">
+            <button onclick="openComicImageViewer(1)" class="mt-6 w-full bg-sky-500 hover:bg-sky-600 text-white font-formal text-sm py-3.5 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 group-hover:shadow-lg">
               <i class="fa-solid fa-book-open"></i> Ayo Baca
             </button>
           </div>
 
           <!-- Kelompok 3 -->
-          <div class="card-neon-yellow bg-white rounded-3xl p-5 border-2 border-emerald-300 shadow-md flex flex-col justify-between">
+          <div class="p-7 rounded-[2rem] bg-gradient-to-br from-emerald-50/90 to-emerald-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(16,185,129,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-emerald-300/80 flex flex-col justify-between min-h-[340px] group transition-all duration-300 hover:-translate-y-2">
             <div>
-              <div class="h-36 bg-gradient-to-tr from-emerald-100 to-emerald-200 rounded-2xl mb-5 flex items-center justify-center text-emerald-500 text-5xl shadow-sm">
+              <div class="h-36 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-2xl mb-5 flex items-center justify-center text-white text-5xl shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform duration-300">
                 <i class="fa-solid fa-feather"></i>
               </div>
-              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight">Kelompok 3</h3>
+              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight mt-4 drop-shadow-sm">Kelompok 3</h3>
             </div>
-            <button onclick="openComicImageViewer(2)" class="mt-6 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-formal text-sm py-3 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2">
+            <button onclick="openComicImageViewer(2)" class="mt-6 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-formal text-sm py-3.5 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 group-hover:shadow-lg">
               <i class="fa-solid fa-book-open"></i> Ayo Baca
             </button>
           </div>
 
           <!-- Kelompok 4 -->
-          <div class="card-neon-yellow bg-white rounded-3xl p-5 border-2 border-amber-300 shadow-md flex flex-col justify-between">
+          <div class="p-7 rounded-[2rem] bg-gradient-to-br from-amber-50/90 to-amber-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(245,158,11,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-amber-300/80 flex flex-col justify-between min-h-[340px] group transition-all duration-300 hover:-translate-y-2">
             <div>
-              <div class="h-36 bg-gradient-to-tr from-amber-100 to-amber-200 rounded-2xl mb-5 flex items-center justify-center text-amber-500 text-5xl shadow-sm">
+              <div class="h-36 bg-gradient-to-br from-amber-400 to-amber-500 rounded-2xl mb-5 flex items-center justify-center text-white text-5xl shadow-lg shadow-amber-500/30 group-hover:scale-105 transition-transform duration-300">
                 <i class="fa-solid fa-tree"></i>
               </div>
-              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight">Kelompok 4</h3>
+              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight mt-4 drop-shadow-sm">Kelompok 4</h3>
             </div>
-            <button onclick="openComicImageViewer(3)" class="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white font-formal text-sm py-3 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2">
+            <button onclick="openComicImageViewer(3)" class="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white font-formal text-sm py-3.5 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 group-hover:shadow-lg">
               <i class="fa-solid fa-book-open"></i> Ayo Baca
             </button>
           </div>
@@ -400,88 +550,87 @@
       </div>
     </section>
 
-    <!-- ================= 4. KUIS (3 PG + 1 ESSAY) ================= -->
+    <!-- ================= 4. KUIS SERU ================= -->
     <section id="page-quiz" class="page-section w-full">
-      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40 max-w-3xl mx-auto">
-        <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
-          <div class="flex items-center gap-3">
-            <span class="w-9 h-9 rounded-xl bg-brand-yellow text-slate-900 font-fun font-bold flex items-center justify-center">
+      <div class="w-full max-w-4xl mx-auto py-6 px-4 md:px-0">
+        
+        <div class="flex flex-col md:flex-row items-center justify-between pb-6 mb-4 gap-4 border-b border-white/20">
+          <div class="flex items-center gap-4">
+            <span class="w-12 h-12 rounded-2xl bg-amber-400 text-white font-fun font-bold flex items-center justify-center shadow-lg text-2xl">
               <i class="fa-solid fa-bolt"></i>
             </span>
-            <div>
-              <h3 class="font-formal text-xl font-bold text-slate-800">Kuis Bacaan Cerita Komik</h3>
-              <p class="text-xs text-slate-400">Jawab pertanyaan pemahaman bacaan berikut bersama kelompokmu!</p>
+            <div class="text-center md:text-left">
+              <h3 class="font-formal text-2xl font-extrabold text-white drop-shadow-md">Kuis Berhadiah Poin</h3>
+              <p class="text-sm text-sky-100 mt-1 font-medium drop-shadow-sm">Jawab pertanyaan berikut berdasarkan cerita komik!</p>
             </div>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-bold bg-brand-softPurple text-brand-purple px-3 py-1 rounded-xl" id="quizScoreDisplay">Skor: 0</span>
-            <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="text-xs bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1">
-              <i class="fa-solid fa-house"></i>
-              <span class="hidden sm:inline">Utama</span>
+          <div class="flex items-center gap-3">
+            <div class="bg-white/20 backdrop-blur-md text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-md border border-white/40">
+              Poin: <span id="quizScoreDisplay" class="text-lg ml-1 text-amber-300">0</span>
+            </div>
+            <button onclick="goToPage('dashboard')" class="bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-4 py-2.5 rounded-xl text-sm font-bold shadow-md border border-white/40 transition-all">
+              <i class="fa-solid fa-arrow-left md:mr-1"></i> <span class="hidden md:inline">Menu Utama</span>
             </button>
-            <button onclick="goToPage('dashboard')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl font-bold">Dashboard</button>
           </div>
         </div>
 
         <div id="quizContainer">
-          <div class="bg-brand-softPurple/50 p-6 rounded-2xl border border-brand-purple/20 mb-6 text-center">
-            <span class="text-xs uppercase font-extrabold tracking-wider text-brand-purple" id="questionNumber">Pertanyaan 1 dari 4</span>
-            <h4 class="font-formal text-lg md:text-xl font-bold text-slate-800 mt-2 leading-snug" id="questionText">
-              Pertanyaan kuis akan dimuat di sini...
+          <div class="bg-white/10 backdrop-blur-xl border border-white/40 p-8 md:p-12 rounded-[2rem] mb-8 text-center shadow-[0_8px_30px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.5)] relative overflow-hidden">
+            <span class="relative text-sm font-extrabold text-amber-300 tracking-widest uppercase mb-3 block drop-shadow-md" id="questionNumber">Soal Nomor 1 dari 4</span>
+            <h4 class="relative font-formal text-2xl md:text-3xl font-bold text-white leading-snug drop-shadow-lg" id="questionText">
+              Pertanyaan kuis sedang disiapkan...
             </h4>
           </div>
-
           <div id="optionsContainer"></div>
         </div>
-
-        <div id="feedbackArea" class="hidden text-center mt-6 p-4 rounded-2xl font-formal font-bold text-base"></div>
+        <div id="feedbackArea" class="hidden text-center mt-8 p-6 rounded-3xl font-formal shadow-2xl transition-all"></div>
       </div>
     </section>
 
-    <!-- ================= 5. DISKUSI ================= -->
+    <!-- ================= 5. RUANG CATATAN ================= -->
     <section id="page-diskusi" class="page-section w-full">
       <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40">
         <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
           <div>
-            <span class="text-xs font-bold text-emerald-500 uppercase tracking-wider">Aktivitas Menulis & Kolaborasi</span>
-            <h2 class="font-fun text-3xl font-bold text-slate-900">Ruang Diskusi & Rangkuman Tim</h2>
+            <span class="text-xs font-bold text-emerald-500 uppercase tracking-wider">Aktivitas Bersama</span>
+            <h2 class="font-fun text-3xl font-bold text-slate-900">Papan Catatan Kelompok</h2>
           </div>
           <div class="flex items-center gap-2">
-            <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="text-xs bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5">
+            <button onclick="goToPage('landing')" title="Kembali ke Beranda" class="text-xs bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5">
               <i class="fa-solid fa-house"></i>
-              <span class="hidden sm:inline">Utama</span>
+              <span class="hidden sm:inline">Beranda</span>
             </button>
             <button onclick="goToPage('dashboard')" class="text-xs bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl font-bold transition">
-              <i class="fa-solid fa-arrow-left mr-1"></i> Dashboard
+              <i class="fa-solid fa-arrow-left mr-1"></i> Pilihan Misi
             </button>
           </div>
         </div>
 
         <div class="grid md:grid-cols-3 gap-6">
           <div class="md:col-span-1 bg-emerald-50 p-6 rounded-3xl border border-emerald-100">
-            <h4 class="font-fun text-lg font-bold text-emerald-900 mb-2">Instruksi Diskusi</h4>
+            <h4 class="font-fun text-lg font-bold text-emerald-900 mb-2">Tips Menulis Cerita:</h4>
             <ul class="text-xs text-emerald-800 space-y-2 list-disc list-inside">
-              <li>Identifikasi tokoh protagonis dan antagonis dari e-komik.</li>
-              <li>Tuliskan 1 paragraf ringkasan cerita menggunakan kata baku.</li>
-              <li>Tulis pesan tersirat dan bagikan ke papan kelas.</li>
+              <li>Siapa saja tokoh baik dan tokoh jahatnya?</li>
+              <li>Ceritakan secara singkat kejadian apa yang paling seru!</li>
+              <li>Pelajaran baik apa yang bisa kita tiru di rumah atau sekolah?</li>
             </ul>
           </div>
 
           <div class="md:col-span-2 bg-white p-6 rounded-3xl border border-slate-200">
-            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Kirim Catatan Kelompok:</label>
+            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Tempel Catatan Baru:</label>
             <div class="flex gap-2 mb-3">
-              <input type="text" id="groupNameInput" placeholder="Nama Kelompok (misal: Kelompok 1)" class="w-1/3 text-xs p-3 rounded-xl border border-slate-200 focus:outline-brand-purple">
-              <input type="text" id="discussionInput" placeholder="Tuliskan temuan atau amanat komik di sini..." class="w-2/3 text-xs p-3 rounded-xl border border-slate-200 focus:outline-brand-purple">
+              <input type="text" id="groupNameInput" placeholder="Nama Kelompokmu (Misal: Kelompok 1)" class="w-1/3 text-xs p-3 rounded-xl border border-slate-200 focus:outline-brand-purple">
+              <input type="text" id="discussionInput" placeholder="Tuliskan pesan cerita yang kamu dapatkan..." class="w-2/3 text-xs p-3 rounded-xl border border-slate-200 focus:outline-brand-purple">
             </div>
             <button onclick="postDiscussion()" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-fun font-bold px-5 py-2.5 rounded-xl transition">
-              <i class="fa-solid fa-paper-plane mr-1"></i> Pasang Catatan
+              <i class="fa-solid fa-paper-plane mr-1"></i> Tempel di Papan Kelas
             </button>
 
             <div class="mt-6 border-t pt-4">
-              <h5 class="text-xs font-bold text-slate-400 uppercase mb-3">Papan Catatan Terkumpul:</h5>
+              <h5 class="text-xs font-bold text-slate-400 uppercase mb-3">Catatan Teman-Temanmu:</h5>
               <div id="notesBoard" class="space-y-2 max-h-48 overflow-y-auto pr-2">
                 <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs">
-                  <span class="font-bold text-amber-800">Kelompok 1:</span> Tokoh cerita mengajarkan kita untuk selalu menepati janji dalam kondisi apa pun demi kebaikan bersama.
+                  <span class="font-bold text-amber-800">Kelompok 1:</span> Kita harus selalu menepati janji dan tidak boleh sombong kepada orang lain! ✨
                 </div>
               </div>
             </div>
@@ -490,70 +639,69 @@
       </div>
     </section>
 
-    <!-- ================= 6. NILAI ================= -->
+    <!-- ================= 6. PAPAN SKOR PODIUM (GLASSMORPHISM) ================= -->
     <section id="page-nilai" class="page-section w-full">
-      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40 max-w-2xl mx-auto text-center">
-        <div class="flex justify-end mb-2">
-          <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="flex items-center gap-2 bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-2 rounded-2xl font-fun font-bold text-xs shadow-sm transition hover:scale-105">
+      <div class="w-full max-w-5xl mx-auto py-6 px-4 md:px-0">
+        
+        <div class="flex justify-end mb-8">
+          <button onclick="goToPage('landing')" title="Kembali ke Beranda" class="flex items-center gap-2 bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-5 py-2.5 rounded-2xl font-fun font-bold text-sm shadow-md border border-white/40 transition-all hover:scale-105">
             <i class="fa-solid fa-house"></i>
-            <span>Halaman Utama</span>
+            <span class="drop-shadow-sm">Kembali ke Depan</span>
           </button>
         </div>
-        <div class="w-20 h-20 bg-amber-400 text-white rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-lg shadow-amber-400/40 mb-4">
-          <i class="fa-solid fa-trophy"></i>
-        </div>
-        <h2 class="font-fun text-3xl font-bold text-slate-900">Papan Juara & Skor Hari Ini</h2>
-        <p class="text-slate-500 text-xs mt-1 mb-6" id="scoreboardSubtitle">Hebat! Semua tim telah menuntaskan alur membaca & kuis hari ini.</p>
-
-        <div class="space-y-3 mb-6 text-left">
-          <div class="flex items-center justify-between p-4 bg-gradient-to-r from-amber-100 to-amber-50 rounded-2xl border-2 border-amber-300 shadow-sm">
-            <div class="flex items-center gap-3">
-              <span class="font-fun text-xl font-bold text-amber-700">#1</span>
-              <div>
-                <p class="font-formal font-bold text-slate-800 text-sm" id="userGroupResultTitle">Kelompok Anda</p>
-                <p class="text-[10px] text-slate-500 font-medium" id="userAccuracyResult">Hasil kuis: 0 dari 4 soal benar • 0% Akurasi</p>
-              </div>
-            </div>
-            <span class="font-formal font-extrabold text-amber-700 text-xl tracking-tight" id="userScoreValue">0 Poin</span>
+        
+        <div class="text-center max-w-2xl mx-auto">
+          <div class="w-20 h-20 bg-gradient-to-br from-amber-400 to-amber-500 text-white rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-xl shadow-amber-500/30 mb-5 border-2 border-white/50">
+            <i class="fa-solid fa-trophy"></i>
           </div>
-
-          <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-200">
-            <div class="flex items-center gap-3">
-              <span class="font-fun text-xl font-bold text-slate-400">#2</span>
-              <div>
-                <p class="font-formal font-bold text-slate-800 text-sm">Kelompok 3</p>
-                <p class="text-[10px] text-slate-500 font-medium">Selesai dalam 4 menit • 75% Akurasi</p>
-              </div>
-            </div>
-            <span class="font-formal font-bold text-slate-700 text-lg">75 Poin</span>
-          </div>
-
-          <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-200">
-            <div class="flex items-center gap-3">
-              <span class="font-fun text-xl font-bold text-slate-400">#3</span>
-              <div>
-                <p class="font-formal font-bold text-slate-800 text-sm">Kelompok 2</p>
-                <p class="text-[10px] text-slate-500 font-medium">Selesai dalam 4 menit • 50% Akurasi</p>
-              </div>
-            </div>
-            <span class="font-formal font-bold text-slate-700 text-lg">50 Poin</span>
-          </div>
+          <h2 class="font-fun text-4xl md:text-5xl font-bold text-white drop-shadow-lg">Papan Pemenang Hari Ini! 🏆</h2>
+          <p class="text-sky-100 text-sm md:text-base mt-3 font-medium drop-shadow-sm" id="scoreboardSubtitle">Hore! Kamu dan teman-temanmu sudah menyelesaikan semua tantangan dengan hebat!</p>
         </div>
 
-        <div class="flex items-center justify-center gap-3">
-          <button onclick="triggerCelebration()" class="bg-brand-purple hover:bg-brand-darkPurple text-white px-6 py-3 rounded-2xl font-fun font-bold text-sm shadow-md transition">
-            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Rayakan Bersama!
+        <div class="flex flex-row items-end justify-center gap-2 sm:gap-5 mt-16 mb-12 h-[22rem] relative px-2">
+          
+          <div class="w-28 sm:w-44 h-56 sm:h-64 bg-gradient-to-t from-slate-200/90 to-white/40 backdrop-blur-xl border-t-2 border-l border-r border-white/80 rounded-t-[2rem] shadow-[0_-5px_25px_rgba(0,0,0,0.1)] flex flex-col items-center justify-start pt-8 relative group hover:-translate-y-1 transition-transform">
+            <div class="absolute -top-10 w-14 h-14 bg-gradient-to-br from-slate-100 to-slate-300 rounded-full flex items-center justify-center text-2xl shadow-lg shadow-slate-400/50 border-[3px] border-white z-20">🥈</div>
+            <h3 class="font-formal font-bold text-slate-800 text-sm sm:text-lg mt-2">Kelompok 3</h3>
+            <span class="font-fun text-3xl sm:text-4xl text-slate-700 mt-2 drop-shadow-sm">75</span>
+            <span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-widest font-bold mt-1">Poin</span>
+            <div class="mt-auto mb-5 text-5xl sm:text-6xl font-black text-white/50 drop-shadow-md">#2</div>
+          </div>
+
+          <div class="w-32 sm:w-52 h-72 sm:h-80 bg-gradient-to-t from-amber-400/90 to-yellow-100/60 backdrop-blur-xl border-t-2 border-l border-r border-white/90 rounded-t-[2.5rem] shadow-[0_-10px_30px_rgba(245,158,11,0.3)] flex flex-col items-center justify-start pt-10 relative z-10 group hover:-translate-y-1 transition-transform">
+            <div class="absolute -top-12 w-16 h-16 bg-gradient-to-br from-amber-300 to-amber-500 rounded-full flex items-center justify-center text-3xl shadow-xl shadow-amber-500/50 border-[3px] border-white z-20 animate-bounce">🥇</div>
+            <h3 class="font-formal font-extrabold text-slate-900 text-base sm:text-xl text-center px-1 mt-2 leading-tight" id="userGroupResultTitle">Kelompok Kamu</h3>
+            <span class="font-fun text-4xl sm:text-5xl text-amber-900 mt-3 drop-shadow-md" id="userScoreValue">0</span>
+            <span class="text-[10px] sm:text-xs text-amber-800 uppercase tracking-widest font-bold mt-1">Poin</span>
+            <p class="text-[9px] sm:text-[10px] font-bold text-amber-900/60 text-center px-3 mt-3 leading-tight uppercase tracking-wider" id="userAccuracyResult">Benar 0 dari 4 soal</p>
+            <div class="mt-auto mb-6 text-6xl sm:text-7xl font-black text-white/60 drop-shadow-lg">#1</div>
+          </div>
+
+          <div class="w-28 sm:w-44 h-48 sm:h-56 bg-gradient-to-t from-orange-300/90 to-orange-100/40 backdrop-blur-xl border-t-2 border-l border-r border-white/70 rounded-t-[2rem] shadow-[0_-5px_25px_rgba(0,0,0,0.1)] flex flex-col items-center justify-start pt-7 relative group hover:-translate-y-1 transition-transform">
+            <div class="absolute -top-10 w-14 h-14 bg-gradient-to-br from-orange-200 to-orange-400 rounded-full flex items-center justify-center text-2xl shadow-lg shadow-orange-500/40 border-[3px] border-white z-20">🥉</div>
+            <h3 class="font-formal font-bold text-slate-800 text-sm sm:text-lg mt-2">Kelompok 2</h3>
+            <span class="font-fun text-3xl sm:text-4xl text-orange-900 mt-2 drop-shadow-sm">50</span>
+            <span class="text-[10px] sm:text-xs text-orange-800/80 uppercase tracking-widest font-bold mt-1">Poin</span>
+            <div class="mt-auto mb-4 text-5xl sm:text-6xl font-black text-white/50 drop-shadow-md">#3</div>
+          </div>
+
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
+          <button onclick="triggerCelebration()" class="w-full sm:w-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-8 py-4 rounded-[1.5rem] font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1.5 active:shadow-none transition-all flex justify-center items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Rayakan Bersama Teman! 🎉
           </button>
-          <button onclick="restartQuiz()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-6 py-3 rounded-2xl font-fun font-bold text-sm transition">
-            Ulangi Kuis
+          <button onclick="restartQuiz()" class="w-full sm:w-auto bg-white/20 backdrop-blur-md hover:bg-white hover:text-slate-800 text-white px-8 py-4 rounded-[1.5rem] font-formal font-bold text-sm border border-white/40 shadow-lg transition-all flex justify-center items-center gap-2">
+            Main Kuis Lagi 🔄
           </button>
         </div>
+
       </div>
     </section>
 
   </main>
 
-  <!-- ================= MODAL PENAMPIL GAMBAR KOMIK ================= -->
+  <!-- ================= POP-UP BACA GAMBAR KOMIK ================= -->
   <div id="imageModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6">
     <div class="bg-white rounded-3xl max-w-3xl w-full p-4 md:p-6 relative border-4 border-brand-purple/20 shadow-2xl flex flex-col max-h-[92vh]">
       
@@ -579,9 +727,9 @@
       </div>
 
       <div class="flex items-center justify-between pt-3 border-t border-slate-100 mt-3">
-        <p class="text-xs text-slate-400 font-medium hidden sm:block">Baca cerita dengan teliti sebelum mengerjakan kuis.</p>
+        <p class="text-xs text-slate-400 font-medium hidden sm:block">Baca ceritanya sampai selesai ya, lalu klik tombol biru untuk mulai kuis!</p>
         <button onclick="closeComicImageViewer(); goToPage('quiz');" class="bg-brand-purple hover:bg-brand-darkPurple text-white px-5 py-2.5 rounded-xl font-formal text-xs font-bold shadow-md transition flex items-center gap-1.5 ml-auto">
-          Selesai Membaca & Lanjut Kuis <i class="fa-solid fa-arrow-right"></i>
+          Selesai Baca, Ayo Kuis! <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
 
@@ -591,6 +739,7 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     let activeGroupName = "Kelompok 1";
+    let internalStudentsList = []; // Pisahkan state data
 
     function goToPage(pageId) {
       document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
@@ -631,22 +780,23 @@
       document.getElementById('imageModal').classList.add('hidden');
     }
 
-    // Spin Wheel Logic
+    // ================= RODA PUTAR =================
     const canvas = document.getElementById('wheelCanvas');
     const ctx = canvas.getContext('2d');
+    // Warna roda diubah menjadi pastel ceria ala gambar
+    const wheelColors = ["#FCA5A5", "#FCD34D", "#6EE7B7", "#93C5FD", "#C4B5FD", "#FDB4BF"];
     const groups = [
-      { name: "Kelompok 1", color: "#FF3158" },
-      { name: "Kelompok 2", color: "#2878F0" },
-      { name: "Kelompok 3", color: "#08C58A" },
-      { name: "Kelompok 4", color: "#FFAA00" }
+      { name: "Kelompok 1" },
+      { name: "Kelompok 2" },
+      { name: "Kelompok 3" },
+      { name: "Kelompok 4" }
     ];
-    let students = [];
     let assignedStudents = groups.map(() => []);
     let assignmentCount = 0;
     let currentRotation = 0;
 
     function drawWheelOn(targetCanvas, targetCtx) {
-      const wheelItems = students.length ? students : ["Nama Siswa"];
+      const wheelItems = internalStudentsList.length ? internalStudentsList : ["Kosong", "Kosong", "Kosong", "Kosong", "Kosong", "Kosong"];
       const numSegments = wheelItems.length;
       const arc = (2 * Math.PI) / numSegments;
       const radius = targetCanvas.width / 2;
@@ -656,82 +806,140 @@
       wheelItems.forEach((student, i) => {
         const angle = i * arc;
         targetCtx.beginPath();
-        targetCtx.fillStyle = groups[i % groups.length].color;
+        targetCtx.fillStyle = wheelColors[i % wheelColors.length];
         targetCtx.moveTo(radius, radius);
         targetCtx.arc(radius, radius, radius - 8, angle, angle + arc);
         targetCtx.fill();
-        targetCtx.strokeStyle = "#172554";
-        targetCtx.lineWidth = 2;
+        targetCtx.strokeStyle = "#ffffff";
+        targetCtx.lineWidth = 4;
         targetCtx.stroke();
 
         targetCtx.save();
         targetCtx.translate(radius, radius);
         targetCtx.rotate(angle + arc / 2);
         targetCtx.textAlign = "right";
-        targetCtx.fillStyle = "#ffffff";
-        targetCtx.font = `bold ${wheelItems.length > 8 ? 11 : 15}px Fredoka`;
-        const label = student.length > 14 ? `${student.slice(0, 13)}...` : student;
-        targetCtx.fillText(label, radius - 24, 6);
+        targetCtx.fillStyle = "#334155";
+        targetCtx.font = `bold ${wheelItems.length > 10 ? 12 : 16}px Fredoka`;
+        const label = student.length > 12 ? `${student.slice(0, 11)}...` : student;
+        targetCtx.fillText(label, radius - 30, 6);
         targetCtx.restore();
       });
 
-      targetCtx.beginPath();
-      targetCtx.arc(radius, radius, 30, 0, 2 * Math.PI);
-      targetCtx.fillStyle = "#ffffff";
-      targetCtx.fill();
-      targetCtx.strokeStyle = "#172554";
-      targetCtx.stroke();
+      // Lingkaran tengah putih untuk efek donat (opsional, tapi saya hapus agar tombol tengah pas)
     }
 
     function drawWheel() { drawWheelOn(canvas, ctx); }
-    drawWheel();
+    drawWheel(); // Initial draw
 
-    function applyStudentNames() {
-      const input = document.getElementById('studentNamesInput');
-      const names = input.value.split(/[,\n]+/).map(name => name.trim()).filter(Boolean);
-      students = [...new Set(names)];
-      assignedStudents = groups.map(() => []);
-      assignmentCount = 0;
-      currentRotation = 0;
-      canvas.style.transform = 'rotate(0deg)';
-      drawWheel();
-      updateGroupList();
-      document.getElementById('spinResult').innerHTML = students.length
-        ? `<p class="text-xs text-emerald-600 font-bold">${students.length} nama siap dibagikan ke kelompok.</p>`
-        : '<p class="text-xs text-rose-500">Masukkan minimal satu nama siswa.</p>';
+    // Fungsi Tambah Nama Satu Per Satu
+    function handleEnter(e) {
+      if(e.key === 'Enter') addSingleName();
     }
 
-    function resetWheel() {
-      document.getElementById('studentNamesInput').value = '';
-      students = [];
+    function addSingleName() {
+      const input = document.getElementById('singleNameInput');
+      const name = input.value.trim();
+      
+      if(name && !internalStudentsList.includes(name)) {
+        internalStudentsList.push(name);
+        input.value = '';
+        renderStudentList();
+      } else if (internalStudentsList.includes(name)) {
+        alert('Nama ini sudah ada di daftar ya!');
+      }
+    }
+
+    function removeName(index) {
+      internalStudentsList.splice(index, 1);
+      renderStudentList();
+    }
+
+    function clearAllNames() {
+      if(confirm('Yakin ingin menghapus semua nama siswa?')) {
+        internalStudentsList = [];
+        assignedStudents = groups.map(() => []);
+        assignmentCount = 0;
+        currentRotation = 0;
+        canvas.style.transform = 'rotate(0deg)';
+        renderStudentList();
+        updateGroupList();
+        drawWheel();
+      }
+    }
+
+    function renderStudentList() {
+      const listDiv = document.getElementById('studentNameList');
+      const badge = document.getElementById('studentCountBadge');
+      
+      badge.innerText = `${internalStudentsList.length} siswa`;
+      listDiv.innerHTML = '';
+
+      if (internalStudentsList.length === 0) {
+        listDiv.innerHTML = '<div class="text-xs text-slate-400 text-center py-4 italic">Belum ada nama yang dimasukkan.</div>';
+        return;
+      }
+
+      internalStudentsList.forEach((name, idx) => {
+        const item = document.createElement('div');
+        item.className = "flex justify-between items-center bg-slate-50 border border-slate-100 rounded-xl px-3 py-2 text-sm";
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="text-slate-400 font-bold text-xs w-4">${idx + 1}</span>
+            <span class="font-medium text-slate-700">${name}</span>
+          </div>
+          <button onclick="removeName(${idx})" class="text-slate-400 hover:text-rose-500 transition-colors px-2">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        `;
+        listDiv.appendChild(listDiv.lastElementChild ? item : item); // Ensure proper append
+      });
+    }
+
+    function syncWheel() {
+      if(internalStudentsList.length === 0) {
+        alert('Masukkan nama siswa terlebih dahulu!');
+        return;
+      }
       assignedStudents = groups.map(() => []);
       assignmentCount = 0;
       currentRotation = 0;
       canvas.style.transform = 'rotate(0deg)';
       drawWheel();
       updateGroupList();
-      document.getElementById('spinResult').innerHTML = '<p class="text-xs text-slate-400">Masukkan nama siswa, lalu tekan \'Putar Roda\'</p>';
+      alert('Nama sudah siap diundi! Silakan klik tombol Putar di tengah roda.');
     }
 
     function updateGroupList() {
       assignedStudents.forEach((members, index) => {
-        const memberElement = document.getElementById(`members-${index}`);
-        memberElement.innerText = members.length ? members.join(', ') : 'Belum ada anggota';
-        memberElement.className = members.length ? 'mt-2 text-slate-700 font-normal' : 'mt-2 text-slate-400 font-normal';
+        const countBadge = document.getElementById(`count-group-${index}`);
+        const memberContainer = document.getElementById(`members-group-${index}`);
+        
+        countBadge.innerText = `${members.length} siswa`;
+        
+        if (members.length > 0) {
+          memberContainer.innerHTML = `<ul class="list-disc list-inside space-y-1 w-full text-slate-600 font-medium">
+            ${members.map(m => `<li>${m}</li>`).join('')}
+          </ul>`;
+        } else {
+          memberContainer.innerHTML = `<i class="fa-solid fa-user-xmark mr-2 opacity-50"></i> Belum ada anggota`;
+        }
       });
     }
 
     function spinWheel() {
-      if (!students.length) {
-        document.getElementById('spinResult').innerHTML = '<p class="text-xs text-rose-500 font-bold">Masukkan nama siswa dan tekan Terapkan Nama terlebih dahulu.</p>';
+      if (internalStudentsList.length === 0) {
+        alert('Ups, daftarnya kosong! Tambahkan nama siswa lalu klik "Siap Putar" dulu ya.');
         return;
       }
 
       const btn = document.getElementById('spinBtn');
       btn.disabled = true;
       const spins = 5; 
-      const selectedStudentIndex = Math.floor(Math.random() * students.length);
-      const segmentCenter = ((selectedStudentIndex + 0.5) / students.length) * 360;
+      
+      // Pilih secara acak dari array internal
+      const selectedIndex = Math.floor(Math.random() * internalStudentsList.length);
+      
+      const segmentCenter = ((selectedIndex + 0.5) / internalStudentsList.length) * 360;
       const targetAngle = 270 - segmentCenter;
       const targetOffset = (targetAngle - (currentRotation % 360) + 360) % 360;
       currentRotation += (spins * 360) + targetOffset;
@@ -740,60 +948,71 @@
 
       setTimeout(() => {
         btn.disabled = false;
-        const winner = students.splice(selectedStudentIndex, 1)[0];
+        
+        // Ambil pemenang dan HAPUS dari daftar
+        const winner = internalStudentsList.splice(selectedIndex, 1)[0];
+        
         const groupIndex = assignmentCount % groups.length;
-        const selectedGroup = groups[groupIndex];
         assignedStudents[groupIndex].push(winner);
         assignmentCount++;
-        drawWheel();
-        updateGroupList();
+        
+        // Update UI
+        renderStudentList(); // Daftar nama berkurang
+        drawWheel();         // Roda diperbarui tanpa nama pemenang
+        updateGroupList();   // Nama masuk ke grup
 
-        document.getElementById('spinResult').innerHTML = `
-          <p class="text-xs text-slate-500">Nama terpilih:</p>
-          <h3 class="font-fun text-2xl font-bold text-brand-purple mt-1">${winner}!</h3>
-          <p class="text-sm font-bold text-slate-700 mt-2">Masuk ke ${selectedGroup.name}</p>
-          <p class="text-xs text-slate-400 mt-1">Nama berikutnya akan masuk ke kelompok selanjutnya.</p>
-        `;
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+        
+        // Cek jika habis
+        if(internalStudentsList.length === 0) {
+          setTimeout(() => {
+            alert('Yay! Semua siswa sudah masuk ke kelompoknya masing-masing. Silakan Lanjut Baca Komik!');
+          }, 500);
+        }
+
       }, 4000);
     }
 
-    // ================= LOGIKA KUIS (3 PG + 1 ESSAY BERVALIDASI KATA KUNCI) =================
+    // ================= KUIS RAMAH ANAK =================
     const questions = [
       {
         type: "multiple-choice",
-        q: "1. Apa amanat atau pesan moral utama yang dapat kita petik dari bacaan komik tersebut?",
+        q: "1. Nasihat baik apa yang bisa kita pelajari dari cerita komik tadi?",
         options: [
-          { text: "Selalu menepati janji dan menghormati orang lain", correct: true },
-          { text: "Menuntut imbalan besar saat membantu teman", correct: false },
-          { text: "Menghindari tanggung jawab ketika menghadapi kesulitan", correct: false },
-          { text: "Menyembunyikan kesalahan agar tidak ditegur guru", correct: false }
-        ]
+          { text: "Selalu menepati janji dan menghormati orang tua", correct: true },
+          { text: "Boleh marah-marah kalau bekal makanannya habis", correct: false },
+          { text: "Boleh lupa pada janji kalau sedang buru-buru", correct: false },
+          { text: "Pura-pura tidak dengar nasihat ibu", correct: false }
+        ],
+        explanation: "<strong>Pembahasan:</strong> Menepati janji dan berbakti kepada orang tua adalah sikap baik yang sangat disukai dan akan membawa kebahagiaan di setiap cerita."
       },
       {
         type: "multiple-choice",
-        q: "2. Dalam struktur cerita komik yang kalian baca, tokoh yang berwatak baik dan membela kebenaran disebut...",
+        q: "2. Siapa sebutan untuk tokoh yang berhati baik, ramah, dan suka menolong di dalam cerita?",
         options: [
-          { text: "Tokoh Antagonis", correct: false },
-          { text: "Tokoh Protagonis", correct: true },
-          { text: "Tokoh Figuran", correct: false },
-          { text: "Tokoh Samaran", correct: false }
-        ]
+          { text: "Tokoh Galak", correct: false },
+          { text: "Tokoh Baik (Protagonis)", correct: true },
+          { text: "Tokoh Penakut", correct: false },
+          { text: "Tokoh Jahat", correct: false }
+        ],
+        explanation: "<strong>Pembahasan:</strong> Tokoh protagonis adalah tokoh yang membawa kebaikan dan selalu menjadi contoh teladan yang baik untuk kita ikuti."
       },
       {
         type: "multiple-choice",
-        q: "3. Apa yang menjadi penyebab munculnya masalah (konflik) utama dalam alur komik tersebut?",
+        q: "3. Apa yang biasanya membuat cerita komik jadi seru dan bikin penasaran?",
         options: [
-          { text: "Adanya pelanggaran kesepakatan atau kesombongan sikap tokoh", correct: true },
-          { text: "Semua tokoh selalu sepakat sejak awal cerita", correct: false },
-          { text: "Perjalanan tokoh tidak pernah mengalami rintangan apa pun", correct: false },
-          { text: "Tokoh utama menolak pergi ke sekolah bersama teman", correct: false }
-        ]
+          { text: "Ketika tokoh menghadapi masalah dan mencari jalan keluar", correct: true },
+          { text: "Ketika semua tokoh hanya duduk diam saja", correct: false },
+          { text: "Ketika tidak ada kejadian apa-apa di dalam komik", correct: false },
+          { text: "Ketika bukunya ditutup tanpa dibaca", correct: false }
+        ],
+        explanation: "<strong>Pembahasan:</strong> Cerita menjadi seru ketika ada masalah (konflik), karena dari situlah tokoh utama akan belajar menjadi lebih kuat dan pintar."
       },
       {
         type: "essay",
-        q: "4. Apa pesan moral yang dapat diambil dari kisah ini?",
-        placeholder: "Tuliskan pendapat kelompokmu tentang nilai kebajikan atau pelajaran hidup yang didapat dari komik..."
+        q: "4. Tuliskan dengan bahasamu sendiri: Kebaikan apa yang bisa kita tiru dari cerita tadi?",
+        placeholder: "Tuliskan jawabanmu di sini ya (Misalnya: Kita harus selalu jujur dan sayang sama ibu)...",
+        explanation: "<strong>Pembahasan:</strong> Kebaikan hati, rasa hormat, dan rasa tanggung jawab yang tinggi adalah nilai hebat yang membuat kita disukai banyak orang."
       }
     ];
 
@@ -803,38 +1022,44 @@
 
     function renderQuestion() {
       const qData = questions[currentQ];
-      document.getElementById('questionNumber').innerText = `Pertanyaan ${currentQ + 1} dari ${questions.length}`;
+      document.getElementById('questionNumber').innerText = `Soal Nomor ${currentQ + 1} dari ${questions.length}`;
       document.getElementById('questionText').innerText = qData.q;
       
       const optContainer = document.getElementById('optionsContainer');
       optContainer.innerHTML = '';
 
       if (qData.type === "multiple-choice") {
-        optContainer.className = "grid grid-cols-1 sm:grid-cols-2 gap-4";
-        const colors = ['bg-rose-500', 'bg-sky-500', 'bg-amber-500', 'bg-emerald-500'];
+        optContainer.className = "grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5";
+        const btnStyles = [
+          { bg: 'bg-[#F43F5E]', shadow: 'shadow-[0_8px_0_#BE123C]' },
+          { bg: 'bg-[#0EA5E9]', shadow: 'shadow-[0_8px_0_#0369A1]' },
+          { bg: 'bg-[#F59E0B]', shadow: 'shadow-[0_8px_0_#B45309]' },
+          { bg: 'bg-[#10B981]', shadow: 'shadow-[0_8px_0_#047857]' }
+        ];
 
         qData.options.forEach((opt, idx) => {
+          const style = btnStyles[idx];
           const btn = document.createElement('button');
-          btn.className = `${colors[idx]} hover:brightness-110 text-white p-5 rounded-2xl font-formal font-bold text-left transition transform active:scale-95 shadow-md flex items-center gap-3`;
-          btn.innerHTML = `<span class="w-7 h-7 bg-white/20 rounded-full flex items-center justify-center text-xs">${String.fromCharCode(65 + idx)}</span> <span>${opt.text}</span>`;
+          btn.className = `${style.bg} ${style.shadow} hover:brightness-110 text-white p-5 md:p-6 rounded-[1.5rem] font-formal font-bold text-left transition transform active:translate-y-2 active:shadow-none flex items-center gap-4`;
+          btn.innerHTML = `<span class="w-8 h-8 md:w-10 md:h-10 bg-white/25 rounded-full flex items-center justify-center text-sm md:text-base shrink-0 font-extrabold shadow-inner drop-shadow-sm">${String.fromCharCode(65 + idx)}</span> <span class="text-sm md:text-base leading-snug drop-shadow-sm">${opt.text}</span>`;
           btn.onclick = () => selectAnswer(opt.correct);
           optContainer.appendChild(btn);
         });
       } else if (qData.type === "essay") {
-        optContainer.className = "flex flex-col gap-4";
+        optContainer.className = "flex flex-col gap-5";
         optContainer.innerHTML = `
           <textarea 
             id="essayAnswerInput" 
             rows="4" 
             placeholder="${qData.placeholder}" 
-            class="w-full p-4 rounded-2xl border-2 border-slate-200 text-sm font-medium focus:outline-brand-purple focus:border-brand-purple shadow-inner resize-none"
+            class="w-full p-5 rounded-[1.25rem] border-2 border-slate-200 text-sm md:text-base font-medium focus:outline-none focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/20 shadow-inner resize-none transition-all"
           ></textarea>
           <button 
             type="button" 
             onclick="submitEssayAnswer()" 
-            class="bg-brand-purple hover:bg-brand-darkPurple text-white py-3.5 px-6 rounded-2xl font-formal font-bold text-sm shadow-md transition flex items-center justify-center gap-2 self-end"
+            class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 px-8 rounded-2xl font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1.5 active:shadow-none transition-all flex items-center justify-center gap-2 self-end"
           >
-            <span>Kirim Jawaban</span>
+            <span>Kirim Jawabanmu Sekarang!</span>
             <i class="fa-solid fa-paper-plane"></i>
           </button>
         `;
@@ -842,21 +1067,22 @@
     }
 
     function selectAnswer(isCorrect) {
+      const qData = questions[currentQ];
       const feedback = document.getElementById('feedbackArea');
       feedback.classList.remove('hidden');
 
       if (isCorrect) {
         score += 25;
         correctCount++;
-        feedback.className = "text-center mt-6 p-4 rounded-2xl font-formal font-bold text-emerald-800 bg-emerald-100 border border-emerald-300";
-        feedback.innerHTML = "🎉 Luar Biasa! Jawaban Kelompokmu Benar (+25 Poin)!";
-        confetti({ particleCount: 30, spread: 45 });
+        feedback.className = "text-center mt-8 p-6 rounded-3xl font-formal bg-white/90 backdrop-blur-md border-4 border-emerald-400 shadow-2xl transition-all";
+        feedback.innerHTML = `<div class="text-2xl font-extrabold text-emerald-600 mb-3">🎉 Jawabanmu Benar! (+25 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-emerald-50 p-4 rounded-xl border border-emerald-200">${qData.explanation}</div>`;
+        confetti({ particleCount: 40, spread: 45 });
       } else {
-        feedback.className = "text-center mt-6 p-4 rounded-2xl font-formal font-bold text-rose-800 bg-rose-100 border border-rose-300";
-        feedback.innerHTML = "❌ Jawaban kurang tepat (+0 Poin). Cermati lagi teks komiknya ya!";
+        feedback.className = "text-center mt-8 p-6 rounded-3xl font-formal bg-white/90 backdrop-blur-md border-4 border-rose-400 shadow-2xl transition-all";
+        feedback.innerHTML = `<div class="text-2xl font-extrabold text-rose-600 mb-3">❌ Kurang Tepat (+0 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-rose-50 p-4 rounded-xl border border-rose-200">${qData.explanation}</div>`;
       }
 
-      document.getElementById('quizScoreDisplay').innerText = `Skor: ${score}`;
+      document.getElementById('quizScoreDisplay').innerText = score;
 
       setTimeout(() => {
         feedback.classList.add('hidden');
@@ -866,62 +1092,65 @@
         } else {
           finishQuiz();
         }
-      }, 1400);
+      }, 4500); 
     }
 
     function submitEssayAnswer() {
       const answerInput = document.getElementById('essayAnswerInput');
       const answerText = answerInput.value.trim().toLowerCase();
 
-      if (answerText.length < 8) {
-        alert("Silakan tuliskan jawaban pesan moral yang lebih lengkap.");
+      if (answerText.length < 6) {
+        alert("Ayo, tuliskan kalimat kebaikan yang lebih lengkap ya!");
         return;
       }
 
-      // Daftar kata yang menandakan jawaban ngawur / tidak tahu
       const invalidPhrases = [
         "tidak tahu", "tidak tau", "nggak tau", "ngga tau", "gatau", 
-        "gak tau", "kurang tau", "asal", "kosong", "bodo", "terserah", "ntah"
+        "gak tau", "kurang tau", "asal", "kosong", "bodo", "terserah", "ntah", "tau ah"
       ];
       const isInvalid = invalidPhrases.some(phrase => answerText.includes(phrase));
 
-      // Daftar kata kunci moral yang diharapkan
       const validKeywords = [
         "janji", "jujur", "bohong", "patuh", "orang tua", "ibu", "ayah", 
         "sombong", "durhaka", "kebaikan", "sabar", "menepati", "hargai", 
         "menghormati", "moral", "pesan", "amanat", "tolong", "belajar",
-        "sikap", "baik", "dosa", "ingkar", "karma", "bakti", "tanggung"
+        "sikap", "baik", "dosa", "ingkar", "karma", "bakti", "tanggung", "sayang"
       ];
       const hasValidKeyword = validKeywords.some(keyword => answerText.includes(keyword));
 
+      const qData = questions[currentQ];
       const feedback = document.getElementById('feedbackArea');
       feedback.classList.remove('hidden');
 
       if (!isInvalid && hasValidKeyword) {
         score += 25;
         correctCount++;
-        feedback.className = "text-center mt-6 p-4 rounded-2xl font-formal font-bold text-emerald-800 bg-emerald-100 border border-emerald-300";
-        feedback.innerHTML = "✨ Hebat! Analisis pesan moral kelompokmu sangat tepat (+25 Poin)!";
-        confetti({ particleCount: 40, spread: 55 });
+        feedback.className = "text-center mt-8 p-6 rounded-3xl font-formal bg-white/90 backdrop-blur-md border-4 border-emerald-400 shadow-2xl transition-all";
+        feedback.innerHTML = `<div class="text-2xl font-extrabold text-emerald-600 mb-3">🌟 Keren Banget! (+25 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-emerald-50 p-4 rounded-xl border border-emerald-200">${qData.explanation}</div>`;
+        confetti({ particleCount: 50, spread: 55 });
       } else {
-        feedback.className = "text-center mt-6 p-4 rounded-2xl font-formal font-bold text-rose-800 bg-rose-100 border border-rose-300";
-        feedback.innerHTML = "❌ Jawaban belum tepat (+0 Poin). Pesan moral berkaitan dengan kejujuran, menepati janji, atau berbakti.";
+        feedback.className = "text-center mt-8 p-6 rounded-3xl font-formal bg-white/90 backdrop-blur-md border-4 border-rose-400 shadow-2xl transition-all";
+        feedback.innerHTML = `<div class="text-2xl font-extrabold text-rose-600 mb-3">❌ Jawabannya belum pas (+0 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-rose-50 p-4 rounded-xl border border-rose-200">Ingat ya, pesannya tentang kejujuran dan berbakti. <br><br>${qData.explanation}</div>`;
       }
 
-      document.getElementById('quizScoreDisplay').innerText = `Skor: ${score}`;
+      document.getElementById('quizScoreDisplay').innerText = score;
 
       setTimeout(() => {
         feedback.classList.add('hidden');
         currentQ++;
-        finishQuiz();
-      }, 1800);
+        if (currentQ < questions.length) {
+          renderQuestion();
+        } else {
+          finishQuiz();
+        }
+      }, 4500);
     }
 
     function finishQuiz() {
       const accuracyPercent = Math.round((correctCount / questions.length) * 100);
       document.getElementById('userGroupResultTitle').innerText = activeGroupName;
-      document.getElementById('userScoreValue').innerText = `${score} Poin`;
-      document.getElementById('userAccuracyResult').innerText = `Hasil kuis: ${correctCount} dari ${questions.length} soal benar • ${accuracyPercent}% Akurasi`;
+      document.getElementById('userScoreValue').innerText = score;
+      document.getElementById('userAccuracyResult').innerText = `Benar ${correctCount} dari ${questions.length} soal (${accuracyPercent}%)`;
 
       goToPage('nilai');
       triggerCelebration();
@@ -931,7 +1160,7 @@
       currentQ = 0;
       score = 0;
       correctCount = 0;
-      document.getElementById('quizScoreDisplay').innerText = 'Skor: 0';
+      document.getElementById('quizScoreDisplay').innerText = '0';
       document.getElementById('feedbackArea').classList.add('hidden');
       renderQuestion();
       goToPage('quiz');
@@ -939,7 +1168,7 @@
 
     renderQuestion();
 
-    // Diskusi
+    // Catatan Kelas
     function postDiscussion() {
       const grp = document.getElementById('groupNameInput').value.trim();
       const txt = document.getElementById('discussionInput').value.trim();
@@ -955,7 +1184,7 @@
     }
 
     function triggerCelebration() {
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
     }
   </script>
 </body>
