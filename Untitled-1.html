@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LinguaPlay - Belajar Bahasa Indonesia Seru</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- Google Fonts: Fredoka & Plus Jakarta Sans / Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              purple: '#2563EB',
+              darkPurple: '#123B8C',
+              softPurple: '#DBEAFE',
+              yellow: '#FACC15',
+              coral: '#F43F5E',
+              mint: '#10B981',
+              sky: '#0EA5E9'
+            }
+          },
+          fontFamily: {
+            formal: ['Montserrat', 'Plus Jakarta Sans', 'sans-serif'],
+            heading: ['Fredoka', 'sans-serif'],
+            body: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background:
+        radial-gradient(circle at 50% -8%, rgba(180, 235, 255, 0.95) 0%, rgba(76, 173, 236, 0.45) 24%, transparent 52%),
+        repeating-conic-gradient(from -16deg at 50% -10%, rgba(105, 196, 248, 0.72) 0deg 11deg, rgba(5, 44, 121, 0.72) 11deg 22deg),
+        linear-gradient(180deg, #0A55B7 0%, #06266D 100%);
+      min-height: 100vh;
+    }
+    
+    .main-panel {
+      background: linear-gradient(135deg, rgba(239, 246, 255, .98) 0%, rgba(236, 254, 255, .98) 48%, rgba(254, 252, 232, .98) 100%);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+      border-color: rgba(56, 189, 248, 0.45) !important;
+      box-shadow: 
+        0 15px 35px -5px rgba(0, 0, 0, 0.2), 
+        0 0 25px 4px rgba(14, 165, 233, 0.35);
+    }
+    .main-panel:hover,
+    .main-panel:focus-within {
+      transform: translateY(-6px) scale(1.008);
+      border-color: rgba(56, 189, 248, 0.9) !important;
+      box-shadow: 
+        0 25px 45px -10px rgba(0, 0, 0, 0.25),
+        0 0 40px 10px rgba(14, 165, 233, 0.55),
+        0 0 20px 4px rgba(186, 230, 253, 0.8) !important;
+    }
+
+    .font-fun { font-family: 'Fredoka', cursive, sans-serif; }
+
+    .page-section {
+      display: none;
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+      transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .page-section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .btn-game-chunky {
+      background: linear-gradient(180deg, #3B82F6 0%, #2563EB 100%);
+      box-shadow: 0 7px 0 #1D4ED8, 0 16px 25px rgba(37, 99, 235, 0.4);
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-game-chunky:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 0 #1D4ED8, 0 20px 30px rgba(37, 99, 235, 0.45);
+      filter: brightness(1.05);
+    }
+    .btn-game-chunky:active {
+      transform: translateY(5px);
+      box-shadow: 0 2px 0 #1D4ED8, 0 6px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .card-neon-yellow { transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .card-neon-yellow:hover {
+      transform: translateY(-10px) scale(1.025);
+      border-color: #F59E0B !important;
+      box-shadow: 0 20px 30px -10px rgba(245, 158, 11, 0.35), 0 0 25px 5px rgba(250, 204, 21, 0.55) !important;
+    }
+
+    .card-neon-blue { transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .card-neon-blue:hover {
+      transform: translateY(-10px) scale(1.025);
+      border-color: #0284C7 !important;
+      box-shadow: 0 20px 30px -10px rgba(2, 132, 199, 0.35), 0 0 25px 5px rgba(14, 165, 233, 0.55) !important;
+    }
+
+    .card-neon-rose { transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .card-neon-rose:hover {
+      transform: translateY(-10px) scale(1.025);
+      border-color: #F43F5E !important;
+      box-shadow: 0 20px 30px -10px rgba(244, 63, 94, 0.35), 0 0 25px 5px rgba(251, 113, 133, 0.55) !important;
+    }
+
+    #wheelCanvas {
+      filter: saturate(1.25) contrast(1.08);
+      transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
+      cursor: pointer;
+      background: #ffffff;
+      box-shadow: 0 0 0 8px rgba(255,255,255,.8), 0 20px 45px rgba(37, 99, 235, .28);
+    }
+
+    .spin-needle { position: absolute; inset: 0; z-index: 20; pointer-events: none; }
+    .spin-needle i {
+      position: absolute; top: -0.2rem; left: 50%; color: #ff3158; font-size: 2.15rem;
+      filter: drop-shadow(0 0 5px #ff3158) drop-shadow(0 3px 2px rgba(127, 0, 32, 0.3));
+      transform: translateX(-50%);
+    }
+
+    @keyframes soft-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .animate-soft-float { animation: soft-float 4s ease-in-out infinite; }
+  </style>
+</head>
+<body class="text-slate-800 antialiased p-4 md:p-8 flex flex-col justify-between">
+
+  <main class="max-w-6xl mx-auto w-full flex-grow flex items-center justify-center">
+
+    <!-- ================= 0. LANDING PAGE ================= -->
+    <section id="page-landing" class="page-section active w-full">
+      <div class="main-panel backdrop-blur-xl rounded-[3rem] p-8 md:p-14 border border-sky-300/40 relative overflow-hidden grid md:grid-cols-2 gap-10 items-center min-h-[520px]">
+        <div class="flex flex-col items-center md:items-start text-center md:text-left z-10">
+          
+          <h1 class="font-formal text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15] select-none mb-4">
+            Ayo Belajar <br>
+            <span class="text-brand-purple">Bahasa Indonesia!</span>
+          </h1>
+
+          <p class="text-slate-600 text-sm sm:text-base font-medium max-w-md mb-8 leading-relaxed">
+            Ikuti petualangan seru membaca cerita komik literasi, diskusi kelompok terpadu, dan uji ketangkasan kuis bersama teman sekelas!
+          </p>
+
+          <button onclick="goToPage('dashboard')" class="btn-game-chunky text-white px-9 py-4 rounded-2xl font-formal text-base md:text-lg font-bold flex items-center gap-3 select-none">
+            <span>Mulai Petualangan</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <div class="relative flex justify-center items-center z-10 w-full animate-soft-float">
+          <div class="relative w-full max-w-md flex justify-center items-center py-2">
+            <div class="absolute w-64 h-64 bg-sky-200/40 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+            <img 
+              src="hero-cartoon.png" 
+              alt="Anak-anak belajar kelompok membaca" 
+              class="w-full max-w-[340px] md:max-w-[390px] h-auto object-contain drop-shadow-2xl select-none"
+              onerror="this.onerror=null; this.src='https://placehold.co/400x350/transparent/png?text=hero-cartoon.png';"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 1. DASHBOARD ================= -->
+    <section id="page-dashboard" class="page-section w-full">
+      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40">
+        <div class="flex justify-end mb-2">
+          <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="flex items-center gap-2 bg-white/80 hover:bg-white text-brand-purple px-4 py-2 rounded-2xl font-fun font-bold text-sm shadow-sm border border-brand-purple/20 transition hover:scale-105">
+            <i class="fa-solid fa-house"></i>
+            <span>Halaman Utama</span>
+          </button>
+        </div>
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <h2 class="font-fun text-3xl md:text-4xl font-bold text-slate-900 mt-2">Ayo Ikuti Misi Belajarmu!</h2>
+          <p class="text-slate-500 text-sm mt-1">Selesaikan setiap tantangan bersama kelompokmu dan raih skor terbaik!</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-none mx-auto w-full">
+          <!-- Card 1 -->
+          <div onclick="goToPage('spin')" class="card-neon-yellow cursor-pointer bg-gradient-to-b from-amber-50/60 to-white p-6 rounded-3xl border-2 border-amber-300 shadow-sm flex flex-col justify-between min-h-[370px]">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-amber-400 text-white flex items-center justify-center text-2xl mb-5 shadow-md shadow-amber-400/30">
+                <i class="fa-solid fa-dharmachakra"></i>
+              </div>
+              <span class="text-xs font-extrabold text-amber-600 uppercase tracking-wider">Langkah 1</span>
+              <h3 class="font-fun text-xl font-bold text-slate-800 mt-1">Spin Wheel Kelompok</h3>
+              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Undi anggota kelompok secara acak, adil, dan transparan.</p>
+            </div>
+            <div class="mt-6 flex items-center text-amber-600 font-bold text-xs gap-1.5">
+              Buka Roda Putar <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div onclick="goToPage('komik')" class="card-neon-blue cursor-pointer bg-gradient-to-b from-sky-50/60 to-white p-6 rounded-3xl border-2 border-sky-300 shadow-sm flex flex-col justify-between min-h-[370px]">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-sky-500 text-white flex items-center justify-center text-2xl mb-5 shadow-md shadow-sky-500/30">
+                <i class="fa-solid fa-book-open"></i>
+              </div>
+              <span class="text-xs font-extrabold text-sky-600 uppercase tracking-wider">Langkah 2</span>
+              <h3 class="font-fun text-xl font-bold text-slate-800 mt-1">Bacaan E-Komik</h3>
+              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Bahan bacaan cerita bergambar untuk tiap tim kelompok.</p>
+            </div>
+            <div class="mt-6 flex items-center text-sky-600 font-bold text-xs gap-1.5">
+              Buka Bacaan Komik <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div onclick="goToPage('quiz')" class="card-neon-rose cursor-pointer bg-gradient-to-b from-rose-50/60 to-white p-6 rounded-3xl border-2 border-rose-300 shadow-sm flex flex-col justify-between min-h-[370px]">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-rose-500 text-white flex items-center justify-center text-2xl mb-5 shadow-md shadow-rose-500/30">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <span class="text-xs font-extrabold text-rose-600 uppercase tracking-wider">Langkah 3</span>
+              <h3 class="font-fun text-xl font-bold text-slate-800 mt-1">Kuis Pemahaman</h3>
+              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Uji pemahaman alur, watak tokoh, dan pesan moral dari komik.</p>
+            </div>
+            <div class="mt-6 flex items-center text-rose-600 font-bold text-xs gap-1.5">
+              Mulai Kuis Seru <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div onclick="goToPage('nilai')" class="card-neon-blue cursor-pointer bg-gradient-to-b from-indigo-50/60 to-white p-6 rounded-3xl border-2 border-indigo-300 shadow-sm flex flex-col justify-between min-h-[370px]">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-2xl mb-5 shadow-md shadow-indigo-600/30">
+                <i class="fa-solid fa-award"></i>
+              </div>
+              <span class="text-xs font-extrabold text-indigo-600 uppercase tracking-wider">Hasil Akhir</span>
+              <h3 class="font-fun text-xl font-bold text-slate-800 mt-1">Papan Skor & Nilai</h3>
+              <p class="text-xs text-slate-500 mt-2 leading-relaxed">Rekap pencapaian skor kuis tim dan evaluasi hari ini.</p>
+            </div>
+            <div class="mt-6 flex items-center text-indigo-600 font-bold text-xs gap-1.5">
+              Lihat Papan Skor <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 2. SPIN WHEEL ================= -->
+    <section id="page-spin" class="page-section w-full">
+      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40">
+        <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
+          <div>
+            <h2 class="font-fun text-3xl font-bold text-slate-900">Roda Putar Nama Tim</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="text-xs bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5">
+              <i class="fa-solid fa-house"></i>
+              <span class="hidden sm:inline">Utama</span>
+            </button>
+            <button onclick="goToPage('dashboard')" class="text-xs bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl font-bold transition">
+              <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+            </button>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 items-start">
+          <div class="flex flex-col items-center justify-center relative">
+            <div class="w-full max-w-sm mb-5">
+              <label for="studentNamesInput" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Daftar Nama Siswa</label>
+              <textarea id="studentNamesInput" rows="3" class="w-full p-3 rounded-2xl border border-slate-200 text-sm focus:outline-brand-purple" placeholder="Satu nama per baris, contoh:&#10;Andi&#10;Budi&#10;Citra"></textarea>
+              <button type="button" onclick="applyStudentNames()" class="mt-2 w-full bg-brand-purple hover:bg-brand-darkPurple text-white px-4 py-2 rounded-xl font-fun text-sm font-bold transition">Terapkan Nama</button>
+            </div>
+            <div class="relative flex items-center justify-center">
+              <div id="spinNeedle" class="spin-needle" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></div>
+              <canvas id="wheelCanvas" width="340" height="340" class="rounded-full shadow-2xl border-4 border-white"></canvas>
+            </div>
+            <button id="spinBtn" onclick="spinWheel()" class="mt-6 bg-amber-400 hover:bg-amber-500 text-slate-900 font-fun text-lg font-bold px-8 py-3 rounded-2xl shadow-lg shadow-amber-400/40 transform active:scale-95 transition">
+              <i class="fa-solid fa-play mr-2"></i> Putar Roda!
+            </button>
+            <button onclick="resetWheel()" class="mt-2 text-xs text-slate-500 hover:text-brand-purple font-bold transition">
+              <i class="fa-solid fa-rotate-left mr-1"></i> Reset undian
+            </button>
+          </div>
+
+          <div class="self-start bg-slate-50 p-6 rounded-3xl border border-slate-200/80 w-full">
+            <h4 class="font-fun text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-bullhorn text-brand-purple"></i> Hasil Undian:
+            </h4>
+            <div id="spinResult" class="p-4 bg-white rounded-2xl border-2 border-brand-purple/20 text-center mb-6">
+              <p class="text-xs text-slate-400">Masukkan nama siswa, lalu tekan 'Putar Roda'</p>
+            </div>
+
+            <h5 class="font-bold text-xs uppercase tracking-wider text-slate-400 mb-2">Daftar Kelompok Kelas:</h5>
+            <div id="groupList" class="grid grid-cols-2 gap-2 text-xs font-semibold">
+              <div class="p-3 bg-white rounded-xl border border-slate-200">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#EF4444]"></span> Kelompok 1</div><p id="members-0" class="mt-2 text-slate-400 font-normal">Belum ada anggota</p>
+              </div>
+              <div class="p-3 bg-white rounded-xl border border-slate-200">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#3B82F6]"></span> Kelompok 2</div><p id="members-1" class="mt-2 text-slate-400 font-normal">Belum ada anggota</p>
+              </div>
+              <div class="p-3 bg-white rounded-xl border border-slate-200">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#10B981]"></span> Kelompok 3</div><p id="members-2" class="mt-2 text-slate-400 font-normal">Belum ada anggota</p>
+              </div>
+              <div class="p-3 bg-white rounded-xl border border-slate-200">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#F59E0B]"></span> Kelompok 4</div><p id="members-3" class="mt-2 text-slate-400 font-normal">Belum ada anggota</p>
+              </div>
+            </div>
+
+            <div class="mt-6 text-right">
+              <button onclick="goToPage('komik')" class="bg-brand-purple text-white px-5 py-2.5 rounded-xl font-fun text-sm font-bold shadow-md transition">
+                Lanjut Baca Komik <i class="fa-solid fa-arrow-right ml-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 3. E-KOMIK ================= -->
+    <section id="page-komik" class="page-section w-full">
+      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40">
+        <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
+          <div>
+            <span class="text-xs font-bold text-sky-500 uppercase tracking-wider">Aktivitas Membaca Terpadu</span>
+            <h2 class="font-fun text-3xl font-bold text-slate-900">Bahan Bacaan E-Komik</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="text-xs bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5">
+              <i class="fa-solid fa-house"></i>
+              <span class="hidden sm:inline">Utama</span>
+            </button>
+            <button onclick="goToPage('dashboard')" class="text-xs bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl font-bold transition">
+              <i class="fa-solid fa-arrow-left mr-1"></i> Dashboard
+            </button>
+          </div>
+        </div>
+
+        <p class="text-slate-600 text-sm mb-6">Pilih kartu kelompok untuk membaca lembar komik bergambar:</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Kelompok 1 -->
+          <div class="card-neon-rose bg-white rounded-3xl p-5 border-2 border-rose-300 shadow-md flex flex-col justify-between">
+            <div>
+              <div class="h-36 bg-gradient-to-tr from-rose-100 to-rose-200 rounded-2xl mb-5 flex items-center justify-center text-rose-500 text-5xl shadow-sm">
+                <i class="fa-solid fa-dragon"></i>
+              </div>
+              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight">Kelompok 1</h3>
+            </div>
+            <button onclick="openComicImageViewer(0)" class="mt-6 w-full bg-rose-500 hover:bg-rose-600 text-white font-formal text-sm py-3 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-book-open"></i> Ayo Baca
+            </button>
+          </div>
+
+          <!-- Kelompok 2 -->
+          <div class="card-neon-blue bg-white rounded-3xl p-5 border-2 border-sky-300 shadow-md flex flex-col justify-between">
+            <div>
+              <div class="h-36 bg-gradient-to-tr from-sky-100 to-sky-200 rounded-2xl mb-5 flex items-center justify-center text-sky-500 text-5xl shadow-sm">
+                <i class="fa-solid fa-anchor"></i>
+              </div>
+              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight">Kelompok 2</h3>
+            </div>
+            <button onclick="openComicImageViewer(1)" class="mt-6 w-full bg-sky-500 hover:bg-sky-600 text-white font-formal text-sm py-3 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-book-open"></i> Ayo Baca
+            </button>
+          </div>
+
+          <!-- Kelompok 3 -->
+          <div class="card-neon-yellow bg-white rounded-3xl p-5 border-2 border-emerald-300 shadow-md flex flex-col justify-between">
+            <div>
+              <div class="h-36 bg-gradient-to-tr from-emerald-100 to-emerald-200 rounded-2xl mb-5 flex items-center justify-center text-emerald-500 text-5xl shadow-sm">
+                <i class="fa-solid fa-feather"></i>
+              </div>
+              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight">Kelompok 3</h3>
+            </div>
+            <button onclick="openComicImageViewer(2)" class="mt-6 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-formal text-sm py-3 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-book-open"></i> Ayo Baca
+            </button>
+          </div>
+
+          <!-- Kelompok 4 -->
+          <div class="card-neon-yellow bg-white rounded-3xl p-5 border-2 border-amber-300 shadow-md flex flex-col justify-between">
+            <div>
+              <div class="h-36 bg-gradient-to-tr from-amber-100 to-amber-200 rounded-2xl mb-5 flex items-center justify-center text-amber-500 text-5xl shadow-sm">
+                <i class="fa-solid fa-tree"></i>
+              </div>
+              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight">Kelompok 4</h3>
+            </div>
+            <button onclick="openComicImageViewer(3)" class="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white font-formal text-sm py-3 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-book-open"></i> Ayo Baca
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 4. KUIS (3 PG + 1 ESSAY) ================= -->
+    <section id="page-quiz" class="page-section w-full">
+      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40 max-w-3xl mx-auto">
+        <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-9 h-9 rounded-xl bg-brand-yellow text-slate-900 font-fun font-bold flex items-center justify-center">
+              <i class="fa-solid fa-bolt"></i>
+            </span>
+            <div>
+              <h3 class="font-formal text-xl font-bold text-slate-800">Kuis Bacaan Cerita Komik</h3>
+              <p class="text-xs text-slate-400">Jawab pertanyaan pemahaman bacaan berikut bersama kelompokmu!</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold bg-brand-softPurple text-brand-purple px-3 py-1 rounded-xl" id="quizScoreDisplay">Skor: 0</span>
+            <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="text-xs bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-1.5 rounded-xl font-bold transition flex items-center gap-1">
+              <i class="fa-solid fa-house"></i>
+              <span class="hidden sm:inline">Utama</span>
+            </button>
+            <button onclick="goToPage('dashboard')" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl font-bold">Dashboard</button>
+          </div>
+        </div>
+
+        <div id="quizContainer">
+          <div class="bg-brand-softPurple/50 p-6 rounded-2xl border border-brand-purple/20 mb-6 text-center">
+            <span class="text-xs uppercase font-extrabold tracking-wider text-brand-purple" id="questionNumber">Pertanyaan 1 dari 4</span>
+            <h4 class="font-formal text-lg md:text-xl font-bold text-slate-800 mt-2 leading-snug" id="questionText">
+              Pertanyaan kuis akan dimuat di sini...
+            </h4>
+          </div>
+
+          <div id="optionsContainer"></div>
+        </div>
+
+        <div id="feedbackArea" class="hidden text-center mt-6 p-4 rounded-2xl font-formal font-bold text-base"></div>
+      </div>
+    </section>
+
+    <!-- ================= 5. DISKUSI ================= -->
+    <section id="page-diskusi" class="page-section w-full">
+      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+          <div>
+            <span class="text-xs font-bold text-emerald-500 uppercase tracking-wider">Aktivitas Menulis & Kolaborasi</span>
+            <h2 class="font-fun text-3xl font-bold text-slate-900">Ruang Diskusi & Rangkuman Tim</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="text-xs bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5">
+              <i class="fa-solid fa-house"></i>
+              <span class="hidden sm:inline">Utama</span>
+            </button>
+            <button onclick="goToPage('dashboard')" class="text-xs bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl font-bold transition">
+              <i class="fa-solid fa-arrow-left mr-1"></i> Dashboard
+            </button>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="md:col-span-1 bg-emerald-50 p-6 rounded-3xl border border-emerald-100">
+            <h4 class="font-fun text-lg font-bold text-emerald-900 mb-2">Instruksi Diskusi</h4>
+            <ul class="text-xs text-emerald-800 space-y-2 list-disc list-inside">
+              <li>Identifikasi tokoh protagonis dan antagonis dari e-komik.</li>
+              <li>Tuliskan 1 paragraf ringkasan cerita menggunakan kata baku.</li>
+              <li>Tulis pesan tersirat dan bagikan ke papan kelas.</li>
+            </ul>
+          </div>
+
+          <div class="md:col-span-2 bg-white p-6 rounded-3xl border border-slate-200">
+            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Kirim Catatan Kelompok:</label>
+            <div class="flex gap-2 mb-3">
+              <input type="text" id="groupNameInput" placeholder="Nama Kelompok (misal: Kelompok 1)" class="w-1/3 text-xs p-3 rounded-xl border border-slate-200 focus:outline-brand-purple">
+              <input type="text" id="discussionInput" placeholder="Tuliskan temuan atau amanat komik di sini..." class="w-2/3 text-xs p-3 rounded-xl border border-slate-200 focus:outline-brand-purple">
+            </div>
+            <button onclick="postDiscussion()" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-fun font-bold px-5 py-2.5 rounded-xl transition">
+              <i class="fa-solid fa-paper-plane mr-1"></i> Pasang Catatan
+            </button>
+
+            <div class="mt-6 border-t pt-4">
+              <h5 class="text-xs font-bold text-slate-400 uppercase mb-3">Papan Catatan Terkumpul:</h5>
+              <div id="notesBoard" class="space-y-2 max-h-48 overflow-y-auto pr-2">
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs">
+                  <span class="font-bold text-amber-800">Kelompok 1:</span> Tokoh cerita mengajarkan kita untuk selalu menepati janji dalam kondisi apa pun demi kebaikan bersama.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 6. NILAI ================= -->
+    <section id="page-nilai" class="page-section w-full">
+      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40 max-w-2xl mx-auto text-center">
+        <div class="flex justify-end mb-2">
+          <button onclick="goToPage('landing')" title="Kembali ke Halaman Utama" class="flex items-center gap-2 bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-2 rounded-2xl font-fun font-bold text-xs shadow-sm transition hover:scale-105">
+            <i class="fa-solid fa-house"></i>
+            <span>Halaman Utama</span>
+          </button>
+        </div>
+        <div class="w-20 h-20 bg-amber-400 text-white rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-lg shadow-amber-400/40 mb-4">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <h2 class="font-fun text-3xl font-bold text-slate-900">Papan Juara & Skor Hari Ini</h2>
+        <p class="text-slate-500 text-xs mt-1 mb-6" id="scoreboardSubtitle">Hebat! Semua tim telah menuntaskan alur membaca & kuis hari ini.</p>
+
+        <div class="space-y-3 mb-6 text-left">
+          <div class="flex items-center justify-between p-4 bg-gradient-to-r from-amber-100 to-amber-50 rounded-2xl border-2 border-amber-300 shadow-sm">
+            <div class="flex items-center gap-3">
+              <span class="font-fun text-xl font-bold text-amber-700">#1</span>
+              <div>
+                <p class="font-formal font-bold text-slate-800 text-sm" id="userGroupResultTitle">Kelompok Anda</p>
+                <p class="text-[10px] text-slate-500 font-medium" id="userAccuracyResult">Hasil kuis: 0 dari 4 soal benar • 0% Akurasi</p>
+              </div>
+            </div>
+            <span class="font-formal font-extrabold text-amber-700 text-xl tracking-tight" id="userScoreValue">0 Poin</span>
+          </div>
+
+          <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-200">
+            <div class="flex items-center gap-3">
+              <span class="font-fun text-xl font-bold text-slate-400">#2</span>
+              <div>
+                <p class="font-formal font-bold text-slate-800 text-sm">Kelompok 3</p>
+                <p class="text-[10px] text-slate-500 font-medium">Selesai dalam 4 menit • 75% Akurasi</p>
+              </div>
+            </div>
+            <span class="font-formal font-bold text-slate-700 text-lg">75 Poin</span>
+          </div>
+
+          <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-200">
+            <div class="flex items-center gap-3">
+              <span class="font-fun text-xl font-bold text-slate-400">#3</span>
+              <div>
+                <p class="font-formal font-bold text-slate-800 text-sm">Kelompok 2</p>
+                <p class="text-[10px] text-slate-500 font-medium">Selesai dalam 4 menit • 50% Akurasi</p>
+              </div>
+            </div>
+            <span class="font-formal font-bold text-slate-700 text-lg">50 Poin</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center gap-3">
+          <button onclick="triggerCelebration()" class="bg-brand-purple hover:bg-brand-darkPurple text-white px-6 py-3 rounded-2xl font-fun font-bold text-sm shadow-md transition">
+            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Rayakan Bersama!
+          </button>
+          <button onclick="restartQuiz()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-6 py-3 rounded-2xl font-fun font-bold text-sm transition">
+            Ulangi Kuis
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= MODAL PENAMPIL GAMBAR KOMIK ================= -->
+  <div id="imageModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6">
+    <div class="bg-white rounded-3xl max-w-3xl w-full p-4 md:p-6 relative border-4 border-brand-purple/20 shadow-2xl flex flex-col max-h-[92vh]">
+      
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+        <div class="flex items-center gap-3">
+          <span class="w-9 h-9 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-bold">
+            <i class="fa-solid fa-book-open"></i>
+          </span>
+          <h3 id="imageModalBadge" class="font-formal text-xl font-bold text-slate-800">Kelompok</h3>
+        </div>
+        <button onclick="closeComicImageViewer()" class="text-slate-400 hover:text-slate-700 text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="flex-grow w-full overflow-y-auto rounded-2xl border border-slate-200 bg-slate-100/70 p-2 sm:p-4 flex items-center justify-center">
+        <img 
+          id="comicImageElement" 
+          src="" 
+          alt="Lembar Komik" 
+          class="max-w-full h-auto max-h-[65vh] object-contain rounded-xl shadow-md border-2 border-white bg-white"
+        />
+      </div>
+
+      <div class="flex items-center justify-between pt-3 border-t border-slate-100 mt-3">
+        <p class="text-xs text-slate-400 font-medium hidden sm:block">Baca cerita dengan teliti sebelum mengerjakan kuis.</p>
+        <button onclick="closeComicImageViewer(); goToPage('quiz');" class="bg-brand-purple hover:bg-brand-darkPurple text-white px-5 py-2.5 rounded-xl font-formal text-xs font-bold shadow-md transition flex items-center gap-1.5 ml-auto">
+          Selesai Membaca & Lanjut Kuis <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    let activeGroupName = "Kelompok 1";
+
+    function goToPage(pageId) {
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      const target = document.getElementById(`page-${pageId}`);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    const comicsData = [
+      { badge: "Kelompok 1", file: "kelompok1.png" },
+      { badge: "Kelompok 2", file: "kelompok2.png" },
+      { badge: "Kelompok 3", file: "kelompok3.png" },
+      { badge: "Kelompok 4", file: "kelompok4.png" }
+    ];
+
+    function openComicImageViewer(index) {
+      const comic = comicsData[index];
+      activeGroupName = comic.badge;
+      document.getElementById('imageModalBadge').innerText = comic.badge;
+      
+      const img = document.getElementById('comicImageElement');
+      img.src = comic.file;
+      
+      img.onerror = function() {
+        if (this.src.endsWith('.png')) {
+          this.src = comic.file.replace('.png', '.jpg');
+        } else if (this.src.endsWith('.jpg')) {
+          this.src = comic.file.replace('.jpg', '.jpeg');
+        }
+      };
+
+      document.getElementById('imageModal').classList.remove('hidden');
+    }
+
+    function closeComicImageViewer() {
+      document.getElementById('imageModal').classList.add('hidden');
+    }
+
+    // Spin Wheel Logic
+    const canvas = document.getElementById('wheelCanvas');
+    const ctx = canvas.getContext('2d');
+    const groups = [
+      { name: "Kelompok 1", color: "#FF3158" },
+      { name: "Kelompok 2", color: "#2878F0" },
+      { name: "Kelompok 3", color: "#08C58A" },
+      { name: "Kelompok 4", color: "#FFAA00" }
+    ];
+    let students = [];
+    let assignedStudents = groups.map(() => []);
+    let assignmentCount = 0;
+    let currentRotation = 0;
+
+    function drawWheelOn(targetCanvas, targetCtx) {
+      const wheelItems = students.length ? students : ["Nama Siswa"];
+      const numSegments = wheelItems.length;
+      const arc = (2 * Math.PI) / numSegments;
+      const radius = targetCanvas.width / 2;
+
+      targetCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
+
+      wheelItems.forEach((student, i) => {
+        const angle = i * arc;
+        targetCtx.beginPath();
+        targetCtx.fillStyle = groups[i % groups.length].color;
+        targetCtx.moveTo(radius, radius);
+        targetCtx.arc(radius, radius, radius - 8, angle, angle + arc);
+        targetCtx.fill();
+        targetCtx.strokeStyle = "#172554";
+        targetCtx.lineWidth = 2;
+        targetCtx.stroke();
+
+        targetCtx.save();
+        targetCtx.translate(radius, radius);
+        targetCtx.rotate(angle + arc / 2);
+        targetCtx.textAlign = "right";
+        targetCtx.fillStyle = "#ffffff";
+        targetCtx.font = `bold ${wheelItems.length > 8 ? 11 : 15}px Fredoka`;
+        const label = student.length > 14 ? `${student.slice(0, 13)}...` : student;
+        targetCtx.fillText(label, radius - 24, 6);
+        targetCtx.restore();
+      });
+
+      targetCtx.beginPath();
+      targetCtx.arc(radius, radius, 30, 0, 2 * Math.PI);
+      targetCtx.fillStyle = "#ffffff";
+      targetCtx.fill();
+      targetCtx.strokeStyle = "#172554";
+      targetCtx.stroke();
+    }
+
+    function drawWheel() { drawWheelOn(canvas, ctx); }
+    drawWheel();
+
+    function applyStudentNames() {
+      const input = document.getElementById('studentNamesInput');
+      const names = input.value.split(/[,\n]+/).map(name => name.trim()).filter(Boolean);
+      students = [...new Set(names)];
+      assignedStudents = groups.map(() => []);
+      assignmentCount = 0;
+      currentRotation = 0;
+      canvas.style.transform = 'rotate(0deg)';
+      drawWheel();
+      updateGroupList();
+      document.getElementById('spinResult').innerHTML = students.length
+        ? `<p class="text-xs text-emerald-600 font-bold">${students.length} nama siap dibagikan ke kelompok.</p>`
+        : '<p class="text-xs text-rose-500">Masukkan minimal satu nama siswa.</p>';
+    }
+
+    function resetWheel() {
+      document.getElementById('studentNamesInput').value = '';
+      students = [];
+      assignedStudents = groups.map(() => []);
+      assignmentCount = 0;
+      currentRotation = 0;
+      canvas.style.transform = 'rotate(0deg)';
+      drawWheel();
+      updateGroupList();
+      document.getElementById('spinResult').innerHTML = '<p class="text-xs text-slate-400">Masukkan nama siswa, lalu tekan \'Putar Roda\'</p>';
+    }
+
+    function updateGroupList() {
+      assignedStudents.forEach((members, index) => {
+        const memberElement = document.getElementById(`members-${index}`);
+        memberElement.innerText = members.length ? members.join(', ') : 'Belum ada anggota';
+        memberElement.className = members.length ? 'mt-2 text-slate-700 font-normal' : 'mt-2 text-slate-400 font-normal';
+      });
+    }
+
+    function spinWheel() {
+      if (!students.length) {
+        document.getElementById('spinResult').innerHTML = '<p class="text-xs text-rose-500 font-bold">Masukkan nama siswa dan tekan Terapkan Nama terlebih dahulu.</p>';
+        return;
+      }
+
+      const btn = document.getElementById('spinBtn');
+      btn.disabled = true;
+      const spins = 5; 
+      const selectedStudentIndex = Math.floor(Math.random() * students.length);
+      const segmentCenter = ((selectedStudentIndex + 0.5) / students.length) * 360;
+      const targetAngle = 270 - segmentCenter;
+      const targetOffset = (targetAngle - (currentRotation % 360) + 360) % 360;
+      currentRotation += (spins * 360) + targetOffset;
+
+      canvas.style.transform = `rotate(${currentRotation}deg)`;
+
+      setTimeout(() => {
+        btn.disabled = false;
+        const winner = students.splice(selectedStudentIndex, 1)[0];
+        const groupIndex = assignmentCount % groups.length;
+        const selectedGroup = groups[groupIndex];
+        assignedStudents[groupIndex].push(winner);
+        assignmentCount++;
+        drawWheel();
+        updateGroupList();
+
+        document.getElementById('spinResult').innerHTML = `
+          <p class="text-xs text-slate-500">Nama terpilih:</p>
+          <h3 class="font-fun text-2xl font-bold text-brand-purple mt-1">${winner}!</h3>
+          <p class="text-sm font-bold text-slate-700 mt-2">Masuk ke ${selectedGroup.name}</p>
+          <p class="text-xs text-slate-400 mt-1">Nama berikutnya akan masuk ke kelompok selanjutnya.</p>
+        `;
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+      }, 4000);
+    }
+
+    // ================= LOGIKA KUIS (3 PG + 1 ESSAY BERVALIDASI KATA KUNCI) =================
+    const questions = [
+      {
+        type: "multiple-choice",
+        q: "1. Apa amanat atau pesan moral utama yang dapat kita petik dari bacaan komik tersebut?",
+        options: [
+          { text: "Selalu menepati janji dan menghormati orang lain", correct: true },
+          { text: "Menuntut imbalan besar saat membantu teman", correct: false },
+          { text: "Menghindari tanggung jawab ketika menghadapi kesulitan", correct: false },
+          { text: "Menyembunyikan kesalahan agar tidak ditegur guru", correct: false }
+        ]
+      },
+      {
+        type: "multiple-choice",
+        q: "2. Dalam struktur cerita komik yang kalian baca, tokoh yang berwatak baik dan membela kebenaran disebut...",
+        options: [
+          { text: "Tokoh Antagonis", correct: false },
+          { text: "Tokoh Protagonis", correct: true },
+          { text: "Tokoh Figuran", correct: false },
+          { text: "Tokoh Samaran", correct: false }
+        ]
+      },
+      {
+        type: "multiple-choice",
+        q: "3. Apa yang menjadi penyebab munculnya masalah (konflik) utama dalam alur komik tersebut?",
+        options: [
+          { text: "Adanya pelanggaran kesepakatan atau kesombongan sikap tokoh", correct: true },
+          { text: "Semua tokoh selalu sepakat sejak awal cerita", correct: false },
+          { text: "Perjalanan tokoh tidak pernah mengalami rintangan apa pun", correct: false },
+          { text: "Tokoh utama menolak pergi ke sekolah bersama teman", correct: false }
+        ]
+      },
+      {
+        type: "essay",
+        q: "4. Apa pesan moral yang dapat diambil dari kisah ini?",
+        placeholder: "Tuliskan pendapat kelompokmu tentang nilai kebajikan atau pelajaran hidup yang didapat dari komik..."
+      }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+    let correctCount = 0;
+
+    function renderQuestion() {
+      const qData = questions[currentQ];
+      document.getElementById('questionNumber').innerText = `Pertanyaan ${currentQ + 1} dari ${questions.length}`;
+      document.getElementById('questionText').innerText = qData.q;
+      
+      const optContainer = document.getElementById('optionsContainer');
+      optContainer.innerHTML = '';
+
+      if (qData.type === "multiple-choice") {
+        optContainer.className = "grid grid-cols-1 sm:grid-cols-2 gap-4";
+        const colors = ['bg-rose-500', 'bg-sky-500', 'bg-amber-500', 'bg-emerald-500'];
+
+        qData.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = `${colors[idx]} hover:brightness-110 text-white p-5 rounded-2xl font-formal font-bold text-left transition transform active:scale-95 shadow-md flex items-center gap-3`;
+          btn.innerHTML = `<span class="w-7 h-7 bg-white/20 rounded-full flex items-center justify-center text-xs">${String.fromCharCode(65 + idx)}</span> <span>${opt.text}</span>`;
+          btn.onclick = () => selectAnswer(opt.correct);
+          optContainer.appendChild(btn);
+        });
+      } else if (qData.type === "essay") {
+        optContainer.className = "flex flex-col gap-4";
+        optContainer.innerHTML = `
+          <textarea 
+            id="essayAnswerInput" 
+            rows="4" 
+            placeholder="${qData.placeholder}" 
+            class="w-full p-4 rounded-2xl border-2 border-slate-200 text-sm font-medium focus:outline-brand-purple focus:border-brand-purple shadow-inner resize-none"
+          ></textarea>
+          <button 
+            type="button" 
+            onclick="submitEssayAnswer()" 
+            class="bg-brand-purple hover:bg-brand-darkPurple text-white py-3.5 px-6 rounded-2xl font-formal font-bold text-sm shadow-md transition flex items-center justify-center gap-2 self-end"
+          >
+            <span>Kirim Jawaban</span>
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        `;
+      }
+    }
+
+    function selectAnswer(isCorrect) {
+      const feedback = document.getElementById('feedbackArea');
+      feedback.classList.remove('hidden');
+
+      if (isCorrect) {
+        score += 25;
+        correctCount++;
+        feedback.className = "text-center mt-6 p-4 rounded-2xl font-formal font-bold text-emerald-800 bg-emerald-100 border border-emerald-300";
+        feedback.innerHTML = "🎉 Luar Biasa! Jawaban Kelompokmu Benar (+25 Poin)!";
+        confetti({ particleCount: 30, spread: 45 });
+      } else {
+        feedback.className = "text-center mt-6 p-4 rounded-2xl font-formal font-bold text-rose-800 bg-rose-100 border border-rose-300";
+        feedback.innerHTML = "❌ Jawaban kurang tepat (+0 Poin). Cermati lagi teks komiknya ya!";
+      }
+
+      document.getElementById('quizScoreDisplay').innerText = `Skor: ${score}`;
+
+      setTimeout(() => {
+        feedback.classList.add('hidden');
+        currentQ++;
+        if (currentQ < questions.length) {
+          renderQuestion();
+        } else {
+          finishQuiz();
+        }
+      }, 1400);
+    }
+
+    function submitEssayAnswer() {
+      const answerInput = document.getElementById('essayAnswerInput');
+      const answerText = answerInput.value.trim().toLowerCase();
+
+      if (answerText.length < 8) {
+        alert("Silakan tuliskan jawaban pesan moral yang lebih lengkap.");
+        return;
+      }
+
+      // Daftar kata yang menandakan jawaban ngawur / tidak tahu
+      const invalidPhrases = [
+        "tidak tahu", "tidak tau", "nggak tau", "ngga tau", "gatau", 
+        "gak tau", "kurang tau", "asal", "kosong", "bodo", "terserah", "ntah"
+      ];
+      const isInvalid = invalidPhrases.some(phrase => answerText.includes(phrase));
+
+      // Daftar kata kunci moral yang diharapkan
+      const validKeywords = [
+        "janji", "jujur", "bohong", "patuh", "orang tua", "ibu", "ayah", 
+        "sombong", "durhaka", "kebaikan", "sabar", "menepati", "hargai", 
+        "menghormati", "moral", "pesan", "amanat", "tolong", "belajar",
+        "sikap", "baik", "dosa", "ingkar", "karma", "bakti", "tanggung"
+      ];
+      const hasValidKeyword = validKeywords.some(keyword => answerText.includes(keyword));
+
+      const feedback = document.getElementById('feedbackArea');
+      feedback.classList.remove('hidden');
+
+      if (!isInvalid && hasValidKeyword) {
+        score += 25;
+        correctCount++;
+        feedback.className = "text-center mt-6 p-4 rounded-2xl font-formal font-bold text-emerald-800 bg-emerald-100 border border-emerald-300";
+        feedback.innerHTML = "✨ Hebat! Analisis pesan moral kelompokmu sangat tepat (+25 Poin)!";
+        confetti({ particleCount: 40, spread: 55 });
+      } else {
+        feedback.className = "text-center mt-6 p-4 rounded-2xl font-formal font-bold text-rose-800 bg-rose-100 border border-rose-300";
+        feedback.innerHTML = "❌ Jawaban belum tepat (+0 Poin). Pesan moral berkaitan dengan kejujuran, menepati janji, atau berbakti.";
+      }
+
+      document.getElementById('quizScoreDisplay').innerText = `Skor: ${score}`;
+
+      setTimeout(() => {
+        feedback.classList.add('hidden');
+        currentQ++;
+        finishQuiz();
+      }, 1800);
+    }
+
+    function finishQuiz() {
+      const accuracyPercent = Math.round((correctCount / questions.length) * 100);
+      document.getElementById('userGroupResultTitle').innerText = activeGroupName;
+      document.getElementById('userScoreValue').innerText = `${score} Poin`;
+      document.getElementById('userAccuracyResult').innerText = `Hasil kuis: ${correctCount} dari ${questions.length} soal benar • ${accuracyPercent}% Akurasi`;
+
+      goToPage('nilai');
+      triggerCelebration();
+    }
+
+    function restartQuiz() {
+      currentQ = 0;
+      score = 0;
+      correctCount = 0;
+      document.getElementById('quizScoreDisplay').innerText = 'Skor: 0';
+      document.getElementById('feedbackArea').classList.add('hidden');
+      renderQuestion();
+      goToPage('quiz');
+    }
+
+    renderQuestion();
+
+    // Diskusi
+    function postDiscussion() {
+      const grp = document.getElementById('groupNameInput').value.trim();
+      const txt = document.getElementById('discussionInput').value.trim();
+      if (!grp || !txt) return;
+
+      const board = document.getElementById('notesBoard');
+      const newCard = document.createElement('div');
+      newCard.className = "p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs animate-pulse";
+      newCard.innerHTML = `<span class="font-bold text-emerald-800">${grp}:</span> ${txt}`;
+      board.prepend(newCard);
+
+      document.getElementById('discussionInput').value = '';
+    }
+
+    function triggerCelebration() {
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    }
+  </script>
+</body>
+</html>
