@@ -97,29 +97,7 @@
       box-shadow: 0 2px 0 #1D4ED8, 0 6px 12px rgba(37, 99, 235, 0.3);
     }
 
-    /* Efek hover untuk Glassmorphism Cards di Dashboard */
-    .card-neon-yellow { transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    .card-neon-yellow:hover {
-      transform: translateY(-10px) scale(1.025);
-      border-color: #F59E0B !important;
-      box-shadow: 0 20px 30px -10px rgba(245, 158, 11, 0.35), 0 0 25px 5px rgba(250, 204, 21, 0.55) !important;
-    }
-
-    .card-neon-blue { transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    .card-neon-blue:hover {
-      transform: translateY(-10px) scale(1.025);
-      border-color: #0284C7 !important;
-      box-shadow: 0 20px 30px -10px rgba(2, 132, 199, 0.35), 0 0 25px 5px rgba(14, 165, 233, 0.55) !important;
-    }
-
-    .card-neon-rose { transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    .card-neon-rose:hover {
-      transform: translateY(-10px) scale(1.025);
-      border-color: #F43F5E !important;
-      box-shadow: 0 20px 30px -10px rgba(244, 63, 94, 0.35), 0 0 25px 5px rgba(251, 113, 133, 0.55) !important;
-    }
-
-    /* Roda Putar Custom Center Button */
+    /* Roda Putar */
     .wheel-container {
       position: relative;
       width: 100%;
@@ -173,7 +151,6 @@
       filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2));
     }
 
-    /* Custom Scrollbar for lists */
     .custom-scrollbar::-webkit-scrollbar { width: 6px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(148, 163, 184, 0.5); border-radius: 10px; }
@@ -190,31 +167,22 @@
     <section id="page-landing" class="page-section active w-full max-w-6xl mx-auto">
       <div class="main-panel backdrop-blur-xl rounded-[3rem] p-8 md:p-14 border border-sky-300/40 relative overflow-hidden grid md:grid-cols-2 gap-10 items-center min-h-[520px]">
         <div class="flex flex-col items-center md:items-start text-center md:text-left z-10">
-          
           <h1 class="font-formal text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15] select-none mb-4">
             Ayo Belajar <br>
             <span class="text-brand-purple">Bahasa Indonesia!</span>
           </h1>
-
           <p class="text-slate-600 text-sm sm:text-base font-medium max-w-md mb-8 leading-relaxed">
             Yuk, baca cerita komik bergambar yang seru, jawab kuis tebak-tebakan, dan kumpulkan bintang bersama teman sekelasmu! ⭐
           </p>
-
           <button onclick="goToPage('dashboard')" class="btn-game-chunky text-white px-9 py-4 rounded-2xl font-formal text-base md:text-lg font-bold flex items-center gap-3 select-none">
             <span>Mulai Petualangan!</span>
             <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
-
         <div class="relative flex justify-center items-center z-10 w-full animate-soft-float">
           <div class="relative w-full max-w-md flex justify-center items-center py-2">
             <div class="absolute w-64 h-64 bg-sky-200/40 rounded-full blur-3xl -z-10 pointer-events-none"></div>
-            <img 
-              src="hero-cartoon.png" 
-              alt="Anak-anak belajar kelompok membaca" 
-              class="w-full max-w-[340px] md:max-w-[390px] h-auto object-contain drop-shadow-2xl select-none"
-              onerror="this.onerror=null; this.src='https://placehold.co/400x350/transparent/png?text=hero-cartoon.png';"
-            />
+            <img src="hero-cartoon.png" alt="Anak-anak belajar kelompok membaca" class="w-full max-w-[340px] md:max-w-[390px] h-auto object-contain drop-shadow-2xl select-none" onerror="this.onerror=null; this.src='https://placehold.co/400x350/transparent/png?text=hero-cartoon.png';"/>
           </div>
         </div>
       </div>
@@ -223,14 +191,12 @@
     <!-- ================= 1. PILIH MISI ================= -->
     <section id="page-dashboard" class="page-section w-full max-w-6xl mx-auto">
       <div class="w-full py-6 px-2 md:px-0">
-        
         <div class="flex justify-end mb-6">
           <button onclick="goToPage('landing')" title="Kembali ke Beranda" class="flex items-center gap-2 bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-5 py-2.5 rounded-2xl font-fun font-bold text-sm shadow-md border border-white/40 transition-all hover:scale-105">
             <i class="fa-solid fa-house"></i>
             <span class="drop-shadow-sm">Kembali ke Depan</span>
           </button>
         </div>
-        
         <div class="text-center max-w-2xl mx-auto mb-14">
           <h2 class="font-fun text-4xl md:text-5xl font-bold text-white drop-shadow-lg mt-2">Pilih Petualanganmu! 🎯</h2>
           <p class="text-sky-50 text-sm md:text-base mt-3 font-medium drop-shadow-md">Selesaikan 4 langkah seru ini bareng teman-temanmu ya!</p>
@@ -275,7 +241,7 @@
               </div>
               <span class="text-xs font-extrabold text-rose-600 uppercase tracking-wider drop-shadow-sm">Langkah 3</span>
               <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Tebak Kuis Seru</h3>
-              <p class="text-sm text-slate-600 leading-relaxed font-medium">Jawab 4 soal seru tentang cerita tadi dan dapatkan poin penuh!</p>
+              <p class="text-sm text-slate-600 leading-relaxed font-medium">Jawab 10 soal seru tentang cerita tadi dan dapatkan poin penuh!</p>
             </div>
             <div class="mt-8 flex items-center text-rose-600 font-bold text-sm gap-2 group-hover:translate-x-2 transition-transform">
               Mulai Kuis <i class="fa-solid fa-arrow-right"></i>
@@ -296,17 +262,13 @@
               Lihat Skor <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
-          
         </div>
       </div>
     </section>
 
-    <!-- ================= 2. RODA PUTAR (GAYA 3 KOLOM) ================= -->
+    <!-- ================= 2. RODA PUTAR ================= -->
     <section id="page-spin" class="page-section w-full">
-      <!-- Container utama tanpa background putih, langsung blur effect -->
       <div class="bg-white/10 backdrop-blur-2xl border border-white/30 rounded-[2.5rem] p-6 md:p-8 w-full shadow-2xl">
-        
-        <!-- Header -->
         <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 border-b border-white/20 pb-4">
           <div class="flex items-center gap-4 text-white drop-shadow-md">
             <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-2xl shadow-lg border-2 border-white/50">
@@ -318,19 +280,13 @@
             </div>
           </div>
           <div class="flex items-center gap-3">
-            <div class="bg-white/20 px-4 py-2 rounded-xl text-white text-sm font-bold border border-white/30 shadow-inner flex items-center gap-2">
-              <i class="fa-solid fa-users"></i> Kelas 5
-            </div>
             <button onclick="goToPage('dashboard')" class="bg-white hover:bg-blue-50 text-blue-600 px-4 py-2 rounded-xl text-sm font-bold shadow-md transition-all">
               <i class="fa-solid fa-arrow-left"></i> Menu
             </button>
           </div>
         </div>
 
-        <!-- Layout 3 Kolom -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          
-          <!-- KOLOM KIRI: Input Nama (3/12) -->
           <div class="lg:col-span-3 flex flex-col gap-4">
             <div class="bg-white/90 backdrop-blur-md rounded-3xl p-5 shadow-lg border border-white">
               <h4 class="font-formal font-bold text-slate-800 flex items-center gap-2 mb-2">
@@ -352,35 +308,26 @@
                 <span id="studentCountBadge" class="bg-blue-100 text-blue-700 text-[10px] font-extrabold px-2 py-1 rounded-lg">0 siswa</span>
               </div>
               
-              <!-- List Nama dengan Scrollbar -->
               <div id="studentNameList" class="flex-grow max-h-[300px] overflow-y-auto custom-scrollbar pr-2 space-y-2 mb-4">
                 <div class="text-xs text-slate-400 text-center py-4 italic">Belum ada nama yang dimasukkan.</div>
               </div>
 
-              <div class="grid grid-cols-2 gap-2 mt-auto pt-4 border-t border-slate-100">
-                <button onclick="clearAllNames()" class="bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-500 text-xs font-bold py-2.5 rounded-xl border border-slate-200 transition-all">
-                  <i class="fa-solid fa-trash-can mr-1"></i> Hapus
-                </button>
-                <button onclick="syncWheel()" class="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold py-2.5 rounded-xl shadow-md transition-all">
-                  Siap Putar
+              <div class="mt-auto pt-4 border-t border-slate-100">
+                <button onclick="clearAllNames()" class="w-full bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-500 text-xs font-bold py-2.5 rounded-xl border border-slate-200 transition-all">
+                  <i class="fa-solid fa-trash-can mr-1"></i> Hapus Semua Nama
                 </button>
               </div>
             </div>
           </div>
 
-          <!-- KOLOM TENGAH: Roda Putar (5/12) -->
           <div class="lg:col-span-5 flex flex-col items-center justify-center p-4">
             <div class="text-center mb-8">
               <h2 class="font-fun text-3xl font-extrabold text-white drop-shadow-md">Spin Wheel <br>Pembagian Kelompok</h2>
               <p class="text-sm text-sky-100 mt-2 max-w-sm mx-auto font-medium">Klik tombol putar untuk membagi siswa ke dalam kelompok secara acak dan merata.</p>
             </div>
-            
-            <!-- Wheel Container dengan Center Button -->
             <div class="wheel-container">
               <i class="fa-solid fa-location-dot spin-needle-top"></i>
               <canvas id="wheelCanvas" width="400" height="400" class="rounded-full border-4 border-white"></canvas>
-              
-              <!-- Tombol Tengah Bulat -->
               <button id="spinBtn" onclick="spinWheel()" class="wheel-center-btn">
                 <i class="fa-solid fa-rotate-right"></i>
                 <span>Putar</span>
@@ -388,7 +335,6 @@
             </div>
           </div>
 
-          <!-- KOLOM KANAN: Daftar Kelompok (4/12) -->
           <div class="lg:col-span-4 flex flex-col h-full">
             <div class="bg-white/90 backdrop-blur-md rounded-3xl p-5 shadow-lg border border-white h-full flex flex-col">
               <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
@@ -398,10 +344,7 @@
                 <span class="bg-blue-100 text-blue-700 text-[10px] font-extrabold px-2 py-1 rounded-lg">4 Kelompok</span>
               </div>
 
-              <!-- List Kelompok dengan Scrollbar jika perlu -->
               <div class="flex-grow overflow-y-auto custom-scrollbar pr-2 space-y-3 pb-4">
-                
-                <!-- Grup 1 -->
                 <div class="border border-amber-200 rounded-2xl overflow-hidden bg-amber-50/30">
                   <div class="bg-amber-100/50 px-4 py-2 flex justify-between items-center border-b border-amber-100">
                     <div class="flex items-center gap-2">
@@ -415,7 +358,6 @@
                   </div>
                 </div>
 
-                <!-- Grup 2 -->
                 <div class="border border-sky-200 rounded-2xl overflow-hidden bg-sky-50/30">
                   <div class="bg-sky-100/50 px-4 py-2 flex justify-between items-center border-b border-sky-100">
                     <div class="flex items-center gap-2">
@@ -429,7 +371,6 @@
                   </div>
                 </div>
 
-                <!-- Grup 3 -->
                 <div class="border border-emerald-200 rounded-2xl overflow-hidden bg-emerald-50/30">
                   <div class="bg-emerald-100/50 px-4 py-2 flex justify-between items-center border-b border-emerald-100">
                     <div class="flex items-center gap-2">
@@ -443,7 +384,6 @@
                   </div>
                 </div>
 
-                <!-- Grup 4 -->
                 <div class="border border-purple-200 rounded-2xl overflow-hidden bg-purple-50/30">
                   <div class="bg-purple-100/50 px-4 py-2 flex justify-between items-center border-b border-purple-100">
                     <div class="flex items-center gap-2">
@@ -456,16 +396,13 @@
                     <i class="fa-solid fa-user-xmark mr-2 opacity-50"></i> Belum ada anggota
                   </div>
                 </div>
-
               </div>
 
-              <!-- Tombol Lanjut -->
               <div class="mt-auto pt-4 border-t border-slate-100">
                 <button onclick="goToPage('komik')" class="w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-3 rounded-xl font-formal font-bold text-sm shadow-[0_4px_0_#1E40AF] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2">
                   Sudah Terbagi? Lanjut Misi <i class="fa-solid fa-arrow-right"></i>
                 </button>
               </div>
-
             </div>
           </div>
 
@@ -475,9 +412,8 @@
 
     <!-- ================= 3. BACA KOMIK ================= -->
     <section id="page-komik" class="page-section w-full">
-      <div class="w-full max-w-6xl mx-auto py-6 px-2 md:px-0">
-        
-        <div class="flex justify-end mb-6">
+      <div class="w-full max-w-6xl mx-auto py-6 px-4 md:px-0 flex flex-col min-h-[75vh]">
+        <div class="flex justify-end mb-10">
           <button onclick="goToPage('landing')" title="Kembali ke Beranda" class="flex items-center gap-2 bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-5 py-2.5 rounded-2xl font-fun font-bold text-sm shadow-md border border-white/40 transition-all hover:scale-105">
             <i class="fa-solid fa-house"></i>
             <span class="drop-shadow-sm">Depan</span>
@@ -488,63 +424,20 @@
           </button>
         </div>
 
-        <div class="text-center max-w-2xl mx-auto mb-14">
-          <span class="text-xs font-bold text-sky-200 uppercase tracking-wider drop-shadow-sm">Ruang Membaca</span>
-          <h2 class="font-fun text-4xl md:text-5xl font-bold text-white drop-shadow-lg mt-2">Pilih Komik Timmu 📚</h2>
-          <p class="text-sky-50 text-sm md:text-base mt-3 font-medium drop-shadow-md">Pilih kotak kelompokmu, lalu tekan tombol <strong>"Ayo Baca"</strong> untuk membuka gambarnya!</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-none mx-auto w-full">
-          <!-- Kelompok 1 -->
-          <div class="p-7 rounded-[2rem] bg-gradient-to-br from-rose-50/90 to-rose-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(244,63,94,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-rose-300/80 flex flex-col justify-between min-h-[340px] group transition-all duration-300 hover:-translate-y-2">
-            <div>
-              <div class="h-36 bg-gradient-to-br from-rose-400 to-rose-500 rounded-2xl mb-5 flex items-center justify-center text-white text-5xl shadow-lg shadow-rose-500/30 group-hover:scale-105 transition-transform duration-300">
-                <i class="fa-solid fa-dragon"></i>
+        <div class="flex-grow flex items-center justify-center">
+          <div class="max-w-3xl w-full">
+            <div class="p-8 md:p-14 rounded-[3rem] bg-gradient-to-br from-sky-50/90 to-blue-100/60 backdrop-blur-2xl border-2 border-white/80 shadow-[0_15px_40px_rgba(14,165,233,0.2),inset_0_2px_10px_rgba(255,255,255,1)] flex flex-col items-center justify-center text-center group transition-all duration-300 hover:-translate-y-2">
+              <div class="w-24 h-24 rounded-full bg-gradient-to-br from-sky-400 to-blue-500 text-white flex items-center justify-center text-5xl mb-6 shadow-xl shadow-blue-500/40 group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500">
+                <i class="fa-solid fa-paper-plane"></i>
               </div>
-              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight mt-4 drop-shadow-sm">Kelompok 1</h3>
+              <h3 class="font-formal text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight mt-2 drop-shadow-sm">Siap Terbang ke Dunia Cerita? ✈️</h3>
+              <p class="text-slate-600 font-medium mt-4 mb-10 max-w-lg mx-auto text-sm md:text-base leading-relaxed">
+                Yuk, buka buku cerita bergambar sekarang! Baca perlahan, pahami alurnya, dan diskusikan bersama teman satu timmu sebelum lanjut ke kuis.
+              </p>
+              <button onclick="openComicPdfViewer()" class="w-full sm:w-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-formal text-base md:text-lg px-10 py-4 rounded-[1.5rem] font-bold shadow-[0_8px_0_#1E40AF] active:translate-y-2 active:shadow-none transition-all flex items-center justify-center gap-3 group-hover:shadow-[0_8px_0_#1E40AF,0_15px_20px_rgba(37,99,235,0.4)]">
+                <i class="fa-solid fa-book-open"></i> Ayo Baca Sekarang!
+              </button>
             </div>
-            <button onclick="openComicImageViewer(0)" class="mt-6 w-full bg-rose-500 hover:bg-rose-600 text-white font-formal text-sm py-3.5 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 group-hover:shadow-lg">
-              <i class="fa-solid fa-book-open"></i> Ayo Baca
-            </button>
-          </div>
-
-          <!-- Kelompok 2 -->
-          <div class="p-7 rounded-[2rem] bg-gradient-to-br from-sky-50/90 to-sky-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(14,165,233,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-sky-300/80 flex flex-col justify-between min-h-[340px] group transition-all duration-300 hover:-translate-y-2">
-            <div>
-              <div class="h-36 bg-gradient-to-br from-sky-400 to-sky-500 rounded-2xl mb-5 flex items-center justify-center text-white text-5xl shadow-lg shadow-sky-500/30 group-hover:scale-105 transition-transform duration-300">
-                <i class="fa-solid fa-anchor"></i>
-              </div>
-              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight mt-4 drop-shadow-sm">Kelompok 2</h3>
-            </div>
-            <button onclick="openComicImageViewer(1)" class="mt-6 w-full bg-sky-500 hover:bg-sky-600 text-white font-formal text-sm py-3.5 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 group-hover:shadow-lg">
-              <i class="fa-solid fa-book-open"></i> Ayo Baca
-            </button>
-          </div>
-
-          <!-- Kelompok 3 -->
-          <div class="p-7 rounded-[2rem] bg-gradient-to-br from-emerald-50/90 to-emerald-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(16,185,129,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-emerald-300/80 flex flex-col justify-between min-h-[340px] group transition-all duration-300 hover:-translate-y-2">
-            <div>
-              <div class="h-36 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-2xl mb-5 flex items-center justify-center text-white text-5xl shadow-lg shadow-emerald-500/30 group-hover:scale-105 transition-transform duration-300">
-                <i class="fa-solid fa-feather"></i>
-              </div>
-              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight mt-4 drop-shadow-sm">Kelompok 3</h3>
-            </div>
-            <button onclick="openComicImageViewer(2)" class="mt-6 w-full bg-emerald-500 hover:bg-emerald-600 text-white font-formal text-sm py-3.5 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 group-hover:shadow-lg">
-              <i class="fa-solid fa-book-open"></i> Ayo Baca
-            </button>
-          </div>
-
-          <!-- Kelompok 4 -->
-          <div class="p-7 rounded-[2rem] bg-gradient-to-br from-amber-50/90 to-amber-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(245,158,11,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-amber-300/80 flex flex-col justify-between min-h-[340px] group transition-all duration-300 hover:-translate-y-2">
-            <div>
-              <div class="h-36 bg-gradient-to-br from-amber-400 to-amber-500 rounded-2xl mb-5 flex items-center justify-center text-white text-5xl shadow-lg shadow-amber-500/30 group-hover:scale-105 transition-transform duration-300">
-                <i class="fa-solid fa-tree"></i>
-              </div>
-              <h3 class="font-formal text-2xl font-extrabold text-slate-800 text-center tracking-tight mt-4 drop-shadow-sm">Kelompok 4</h3>
-            </div>
-            <button onclick="openComicImageViewer(3)" class="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white font-formal text-sm py-3.5 rounded-xl font-bold shadow-md transition flex items-center justify-center gap-2 group-hover:shadow-lg">
-              <i class="fa-solid fa-book-open"></i> Ayo Baca
-            </button>
           </div>
         </div>
       </div>
@@ -553,7 +446,6 @@
     <!-- ================= 4. KUIS SERU ================= -->
     <section id="page-quiz" class="page-section w-full">
       <div class="w-full max-w-4xl mx-auto py-6 px-4 md:px-0">
-        
         <div class="flex flex-col md:flex-row items-center justify-between pb-6 mb-4 gap-4 border-b border-white/20">
           <div class="flex items-center gap-4">
             <span class="w-12 h-12 rounded-2xl bg-amber-400 text-white font-fun font-bold flex items-center justify-center shadow-lg text-2xl">
@@ -576,8 +468,8 @@
 
         <div id="quizContainer">
           <div class="bg-white/10 backdrop-blur-xl border border-white/40 p-8 md:p-12 rounded-[2rem] mb-8 text-center shadow-[0_8px_30px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.5)] relative overflow-hidden">
-            <span class="relative text-sm font-extrabold text-amber-300 tracking-widest uppercase mb-3 block drop-shadow-md" id="questionNumber">Soal Nomor 1 dari 4</span>
-            <h4 class="relative font-formal text-2xl md:text-3xl font-bold text-white leading-snug drop-shadow-lg" id="questionText">
+            <span class="relative text-sm font-extrabold text-amber-300 tracking-widest uppercase mb-3 block drop-shadow-md" id="questionNumber">Soal Nomor 1 dari 10</span>
+            <h4 class="relative font-formal text-xl md:text-2xl font-bold text-white leading-snug drop-shadow-lg" id="questionText">
               Pertanyaan kuis sedang disiapkan...
             </h4>
           </div>
@@ -639,7 +531,7 @@
       </div>
     </section>
 
-    <!-- ================= 6. PAPAN SKOR PODIUM (GLASSMORPHISM) ================= -->
+    <!-- ================= 6. PAPAN SKOR PODIUM & ULASAN ================= -->
     <section id="page-nilai" class="page-section w-full">
       <div class="w-full max-w-5xl mx-auto py-6 px-4 md:px-0">
         
@@ -655,33 +547,39 @@
             <i class="fa-solid fa-trophy"></i>
           </div>
           <h2 class="font-fun text-4xl md:text-5xl font-bold text-white drop-shadow-lg">Papan Pemenang Hari Ini! 🏆</h2>
-          <p class="text-sky-100 text-sm md:text-base mt-3 font-medium drop-shadow-sm" id="scoreboardSubtitle">Hore! Kamu dan teman-temanmu sudah menyelesaikan semua tantangan dengan hebat!</p>
+          <p class="text-sky-100 text-sm md:text-base mt-3 font-medium drop-shadow-sm">Hore! Semua kelompok sudah menyelesaikan tantangan dengan hebat!</p>
         </div>
 
+        <!-- BLOK PODIUM JUARA (REALTIME) -->
         <div class="flex flex-row items-end justify-center gap-2 sm:gap-5 mt-16 mb-12 h-[22rem] relative px-2">
           
+          <!-- PODIUM JUARA 2 (KIRI - SILVER) -->
           <div class="w-28 sm:w-44 h-56 sm:h-64 bg-gradient-to-t from-slate-200/90 to-white/40 backdrop-blur-xl border-t-2 border-l border-r border-white/80 rounded-t-[2rem] shadow-[0_-5px_25px_rgba(0,0,0,0.1)] flex flex-col items-center justify-start pt-8 relative group hover:-translate-y-1 transition-transform">
             <div class="absolute -top-10 w-14 h-14 bg-gradient-to-br from-slate-100 to-slate-300 rounded-full flex items-center justify-center text-2xl shadow-lg shadow-slate-400/50 border-[3px] border-white z-20">🥈</div>
-            <h3 class="font-formal font-bold text-slate-800 text-sm sm:text-lg mt-2">Kelompok 3</h3>
-            <span class="font-fun text-3xl sm:text-4xl text-slate-700 mt-2 drop-shadow-sm">75</span>
+            <h3 class="font-formal font-bold text-slate-800 text-sm sm:text-lg mt-2 text-center leading-tight" id="podium-rank-2-title">Kelompok 3</h3>
+            <span class="font-fun text-3xl sm:text-4xl text-slate-700 mt-2 drop-shadow-sm" id="podium-rank-2-score">70</span>
             <span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-widest font-bold mt-1">Poin</span>
+            <p class="text-[9px] sm:text-[10px] font-bold text-slate-500 text-center px-3 mt-1 leading-tight uppercase" id="podium-rank-2-acc">Benar 7 dari 10 soal</p>
             <div class="mt-auto mb-5 text-5xl sm:text-6xl font-black text-white/50 drop-shadow-md">#2</div>
           </div>
 
+          <!-- PODIUM JUARA 1 (TENGAH - EMAS) -->
           <div class="w-32 sm:w-52 h-72 sm:h-80 bg-gradient-to-t from-amber-400/90 to-yellow-100/60 backdrop-blur-xl border-t-2 border-l border-r border-white/90 rounded-t-[2.5rem] shadow-[0_-10px_30px_rgba(245,158,11,0.3)] flex flex-col items-center justify-start pt-10 relative z-10 group hover:-translate-y-1 transition-transform">
             <div class="absolute -top-12 w-16 h-16 bg-gradient-to-br from-amber-300 to-amber-500 rounded-full flex items-center justify-center text-3xl shadow-xl shadow-amber-500/50 border-[3px] border-white z-20 animate-bounce">🥇</div>
-            <h3 class="font-formal font-extrabold text-slate-900 text-base sm:text-xl text-center px-1 mt-2 leading-tight" id="userGroupResultTitle">Kelompok Kamu</h3>
-            <span class="font-fun text-4xl sm:text-5xl text-amber-900 mt-3 drop-shadow-md" id="userScoreValue">0</span>
+            <h3 class="font-formal font-extrabold text-slate-900 text-base sm:text-xl text-center px-1 mt-2 leading-tight" id="podium-rank-1-title">Skor Kamu</h3>
+            <span class="font-fun text-4xl sm:text-5xl text-amber-900 mt-3 drop-shadow-md" id="podium-rank-1-score">0</span>
             <span class="text-[10px] sm:text-xs text-amber-800 uppercase tracking-widest font-bold mt-1">Poin</span>
-            <p class="text-[9px] sm:text-[10px] font-bold text-amber-900/60 text-center px-3 mt-3 leading-tight uppercase tracking-wider" id="userAccuracyResult">Benar 0 dari 4 soal</p>
+            <p class="text-[9px] sm:text-[10px] font-bold text-amber-900/60 text-center px-3 mt-3 leading-tight uppercase tracking-wider" id="podium-rank-1-acc">Benar 0 dari 10 soal</p>
             <div class="mt-auto mb-6 text-6xl sm:text-7xl font-black text-white/60 drop-shadow-lg">#1</div>
           </div>
 
+          <!-- PODIUM JUARA 3 (KANAN - PERUNGGU) -->
           <div class="w-28 sm:w-44 h-48 sm:h-56 bg-gradient-to-t from-orange-300/90 to-orange-100/40 backdrop-blur-xl border-t-2 border-l border-r border-white/70 rounded-t-[2rem] shadow-[0_-5px_25px_rgba(0,0,0,0.1)] flex flex-col items-center justify-start pt-7 relative group hover:-translate-y-1 transition-transform">
             <div class="absolute -top-10 w-14 h-14 bg-gradient-to-br from-orange-200 to-orange-400 rounded-full flex items-center justify-center text-2xl shadow-lg shadow-orange-500/40 border-[3px] border-white z-20">🥉</div>
-            <h3 class="font-formal font-bold text-slate-800 text-sm sm:text-lg mt-2">Kelompok 2</h3>
-            <span class="font-fun text-3xl sm:text-4xl text-orange-900 mt-2 drop-shadow-sm">50</span>
+            <h3 class="font-formal font-bold text-slate-800 text-sm sm:text-lg mt-2 text-center leading-tight" id="podium-rank-3-title">Kelompok 2</h3>
+            <span class="font-fun text-3xl sm:text-4xl text-orange-900 mt-2 drop-shadow-sm" id="podium-rank-3-score">40</span>
             <span class="text-[10px] sm:text-xs text-orange-800/80 uppercase tracking-widest font-bold mt-1">Poin</span>
+            <p class="text-[9px] sm:text-[10px] font-bold text-orange-700/60 text-center px-3 mt-1 leading-tight uppercase" id="podium-rank-3-acc">Benar 4 dari 10 soal</p>
             <div class="mt-auto mb-4 text-5xl sm:text-6xl font-black text-white/50 drop-shadow-md">#3</div>
           </div>
 
@@ -696,39 +594,63 @@
           </button>
         </div>
 
+        <!-- ================= ULASAN KUIS (GLASSMORPHISM) ================= -->
+        <div id="quizReviewSection" class="w-full max-w-4xl mx-auto mt-14 mb-8 bg-white/10 backdrop-blur-2xl border border-white/30 rounded-[2.5rem] p-6 md:p-10 shadow-2xl hidden">
+          <h3 class="font-fun text-2xl md:text-3xl font-bold text-white mb-2 text-center drop-shadow-md">
+            <i class="fa-solid fa-list-check text-amber-400 mr-2"></i> Ulasan Jawaban Kamu
+          </h3>
+          <p class="text-center text-sm text-sky-200 font-medium mb-8 drop-shadow-sm">Pelajari kembali jawabanmu di bawah ini agar makin pintar!</p>
+          
+          <div id="reviewContainer" class="space-y-4">
+            <!-- Review items go here dynamically -->
+          </div>
+        </div>
+
       </div>
     </section>
 
   </main>
 
-  <!-- ================= POP-UP BACA GAMBAR KOMIK ================= -->
-  <div id="imageModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6">
-    <div class="bg-white rounded-3xl max-w-3xl w-full p-4 md:p-6 relative border-4 border-brand-purple/20 shadow-2xl flex flex-col max-h-[92vh]">
+  <!-- ================= POP-UP BACA PDF KOMIK ================= -->
+  <div id="pdfModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6 transition-all duration-300">
+    
+    <div id="pdfModalContent" class="bg-white rounded-3xl max-w-4xl w-full p-4 md:p-6 relative border-4 border-brand-purple/20 shadow-2xl flex flex-col h-[90vh] transition-all duration-300">
       
       <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
         <div class="flex items-center gap-3">
           <span class="w-9 h-9 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-bold">
             <i class="fa-solid fa-book-open"></i>
           </span>
-          <h3 id="imageModalBadge" class="font-formal text-xl font-bold text-slate-800">Kelompok</h3>
+          <h3 id="pdfModalBadge" class="font-formal text-xl font-bold text-slate-800">Cerita Komik</h3>
         </div>
-        <button onclick="closeComicImageViewer()" class="text-slate-400 hover:text-slate-700 text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+        
+        <div class="flex gap-2">
+          <button onclick="toggleFullscreen()" id="btnFullscreen" title="Perbesar Layar" class="text-slate-400 hover:text-brand-purple text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
+            <i class="fa-solid fa-expand"></i>
+          </button>
+          <button onclick="closeComicPdfViewer()" title="Tutup Komik" class="text-slate-400 hover:text-rose-500 text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
       </div>
 
-      <div class="flex-grow w-full overflow-y-auto rounded-2xl border border-slate-200 bg-slate-100/70 p-2 sm:p-4 flex items-center justify-center">
-        <img 
-          id="comicImageElement" 
-          src="" 
-          alt="Lembar Komik" 
-          class="max-w-full h-auto max-h-[65vh] object-contain rounded-xl shadow-md border-2 border-white bg-white"
-        />
+      <!-- PDF Viewer Area -->
+      <div class="flex-grow w-full rounded-2xl border border-slate-200 bg-slate-100/70 p-1 sm:p-2 flex flex-col items-center justify-center overflow-hidden relative">
+        <iframe id="comicPdfElement" src="komik.pdf#toolbar=0&navpanes=0" class="w-full h-full rounded-xl shadow-md border border-slate-300 bg-white z-10 relative" type="application/pdf"></iframe>
+        
+        <!-- Fallback if PDF fails -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-0">
+          <i class="fa-solid fa-file-pdf text-4xl text-slate-300 mb-3"></i>
+          <p class="text-sm text-slate-500 font-medium">Jika komik tidak muncul, pastikan file <strong>komik.pdf</strong> sudah diunggah.</p>
+          <a id="comicPdfFallback" href="komik.pdf" target="_blank" class="mt-4 bg-sky-500 hover:bg-sky-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md transition">
+            <i class="fa-solid fa-external-link-alt mr-1"></i> Buka Komik di Tab Baru
+          </a>
+        </div>
       </div>
 
       <div class="flex items-center justify-between pt-3 border-t border-slate-100 mt-3">
         <p class="text-xs text-slate-400 font-medium hidden sm:block">Baca ceritanya sampai selesai ya, lalu klik tombol biru untuk mulai kuis!</p>
-        <button onclick="closeComicImageViewer(); goToPage('quiz');" class="bg-brand-purple hover:bg-brand-darkPurple text-white px-5 py-2.5 rounded-xl font-formal text-xs font-bold shadow-md transition flex items-center gap-1.5 ml-auto">
+        <button onclick="closeComicPdfViewer(); goToPage('quiz');" class="bg-brand-purple hover:bg-brand-darkPurple text-white px-5 py-2.5 rounded-xl font-formal text-xs font-bold shadow-md transition flex items-center gap-1.5 ml-auto">
           Selesai Baca, Ayo Kuis! <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
@@ -736,10 +658,173 @@
     </div>
   </div>
 
+  <!-- ================= CUSTOM MODAL (ALERT/CONFIRM) ================= -->
+  <div id="customModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div class="bg-white/95 backdrop-blur-xl border border-white/50 rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300" id="customModalContent">
+      <div class="text-center">
+        <div id="customModalIcon" class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 text-blue-500 text-3xl mb-4 shadow-inner border-2 border-white">
+          <i class="fa-solid fa-bell"></i>
+        </div>
+        <h3 class="text-xl font-formal font-bold text-slate-800 mb-2" id="customModalTitle">Pemberitahuan</h3>
+        <p class="text-sm text-slate-600 mb-8 font-medium" id="customModalMessage">Pesan akan muncul di sini.</p>
+      </div>
+      <div class="flex justify-center gap-3" id="customModalButtons">
+        <!-- Buttons injected via JS -->
+      </div>
+    </div>
+  </div>
+
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    let activeGroupName = "Kelompok 1";
-    let internalStudentsList = []; // Pisahkan state data
+    let activeGroupName = "Kelompok 1"; 
+    let internalStudentsList = []; 
+    let userAnswers = []; // Menyimpan riwayat jawaban kuis
+
+    // Simulasi Skor Dasar Kelompok Lain (Leaderboard Real-time)
+    let groupScores = {
+      "Kelompok 1": { score: 60, accuracy: 60 },
+      "Kelompok 2": { score: 40, accuracy: 40 },
+      "Kelompok 3": { score: 70, accuracy: 70 },
+      "Kelompok 4": { score: 50, accuracy: 50 }
+    };
+
+    // ================= CUSTOM MODAL NOTIFICATION =================
+    function showNotification(type, title, message, confirmCallback = null) {
+      const modal = document.getElementById('customModal');
+      const content = document.getElementById('customModalContent');
+      const titleEl = document.getElementById('customModalTitle');
+      const messageEl = document.getElementById('customModalMessage');
+      const iconEl = document.getElementById('customModalIcon');
+      const btnContainer = document.getElementById('customModalButtons');
+      
+      titleEl.innerText = title;
+      messageEl.innerHTML = message; 
+      
+      if (type === 'warning') {
+        iconEl.className = "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-rose-100 text-rose-500 text-3xl mb-4 shadow-inner border-2 border-white";
+        iconEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+      } else if (type === 'success') {
+        iconEl.className = "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 text-emerald-500 text-3xl mb-4 shadow-inner border-2 border-white";
+        iconEl.innerHTML = '<i class="fa-solid fa-check"></i>';
+      } else if (type === 'confirm') {
+        iconEl.className = "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-amber-100 text-amber-500 text-3xl mb-4 shadow-inner border-2 border-white";
+        iconEl.innerHTML = '<i class="fa-solid fa-circle-question"></i>';
+      } else {
+        iconEl.className = "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 text-blue-500 text-3xl mb-4 shadow-inner border-2 border-white";
+        iconEl.innerHTML = '<i class="fa-solid fa-bell"></i>';
+      }
+
+      btnContainer.innerHTML = '';
+      if (type === 'confirm') {
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = "px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-sm transition-all";
+        cancelBtn.innerText = "Batal";
+        cancelBtn.onclick = hideNotification;
+        
+        const confirmBtn = document.createElement('button');
+        confirmBtn.className = "px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-bold text-sm shadow-[0_4px_0_#BE123C] active:translate-y-1 active:shadow-none transition-all";
+        confirmBtn.innerText = "Ya, Hapus";
+        confirmBtn.onclick = () => {
+          hideNotification();
+          if (confirmCallback) confirmCallback();
+        };
+        
+        btnContainer.appendChild(cancelBtn);
+        btnContainer.appendChild(confirmBtn);
+      } else {
+        const okBtn = document.createElement('button');
+        okBtn.className = "px-8 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl font-bold text-sm shadow-[0_4px_0_#1E40AF] active:translate-y-1 active:shadow-none transition-all";
+        okBtn.innerText = "Mengerti";
+        okBtn.onclick = hideNotification;
+        btnContainer.appendChild(okBtn);
+      }
+
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        content.classList.remove('scale-95');
+      }, 10);
+    }
+
+    function hideNotification() {
+      const modal = document.getElementById('customModal');
+      const content = document.getElementById('customModalContent');
+      modal.classList.add('opacity-0');
+      content.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+
+    // ================= SISTEM SUARA NATURAL & ANTI-BUG =================
+    let audioCtx = null;
+    let audioUnlocked = false;
+
+    function unlockAudio() {
+      if (audioUnlocked) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      gain.gain.value = 0; 
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(0);
+      osc.stop(0.1);
+      audioUnlocked = true;
+      document.removeEventListener('click', unlockAudio);
+      document.removeEventListener('touchstart', unlockAudio);
+    }
+    document.addEventListener('click', unlockAudio);
+    document.addEventListener('touchstart', unlockAudio);
+
+    function playBeep(freq, typeStr, timeStart, dur, volume) {
+      if (!audioCtx) unlockAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      
+      osc.type = typeStr;
+      osc.frequency.setValueAtTime(freq, timeStart);
+      
+      gain.gain.setValueAtTime(0, timeStart);
+      gain.gain.linearRampToValueAtTime(volume, timeStart + 0.05);
+      gain.gain.linearRampToValueAtTime(0, timeStart + dur);
+      
+      osc.start(timeStart);
+      osc.stop(timeStart + dur);
+    }
+
+    function playSound(type) {
+      if (!audioCtx) unlockAudio();
+      const t = audioCtx.currentTime;
+      
+      if (type === 'correct') {
+        playBeep(523.25, 'sine', t, 0.2, 0.4); 
+        playBeep(659.25, 'sine', t + 0.15, 0.3, 0.4); 
+        playBeep(1046.50, 'sine', t + 0.3, 0.5, 0.3); 
+      } 
+      else if (type === 'wrong') {
+        playBeep(350, 'square', t, 0.25, 0.15);
+        playBeep(250, 'square', t + 0.25, 0.4, 0.15);
+      } 
+      else if (type === 'win') {
+        playBeep(261.63, 'square', t, 0.2, 0.1);
+        playBeep(329.63, 'square', t + 0.2, 0.2, 0.1);
+        playBeep(392.00, 'square', t + 0.4, 0.2, 0.1);
+        
+        playBeep(523.25, 'sine', t + 0.6, 2.0, 0.4); 
+        playBeep(659.25, 'sine', t + 0.6, 2.0, 0.3); 
+        playBeep(1046.50, 'sine', t + 0.6, 2.0, 0.2); 
+      }
+      else if (type === 'alert') {
+        playBeep(400, 'sine', t, 0.15, 0.2);
+      }
+    }
+
 
     function goToPage(pageId) {
       document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
@@ -750,41 +835,57 @@
       }
     }
 
-    const comicsData = [
-      { badge: "Kelompok 1", file: "kelompok1.png" },
-      { badge: "Kelompok 2", file: "kelompok2.png" },
-      { badge: "Kelompok 3", file: "kelompok3.png" },
-      { badge: "Kelompok 4", file: "kelompok4.png" }
-    ];
-
-    function openComicImageViewer(index) {
-      const comic = comicsData[index];
-      activeGroupName = comic.badge;
-      document.getElementById('imageModalBadge').innerText = comic.badge;
+    let isFullscreen = false;
+    function toggleFullscreen() {
+      const modalOverlay = document.getElementById('pdfModal');
+      const modalContent = document.getElementById('pdfModalContent');
+      const btnIcon = document.getElementById('btnFullscreen').querySelector('i');
       
-      const img = document.getElementById('comicImageElement');
-      img.src = comic.file;
+      isFullscreen = !isFullscreen;
       
-      img.onerror = function() {
-        if (this.src.endsWith('.png')) {
-          this.src = comic.file.replace('.png', '.jpg');
-        } else if (this.src.endsWith('.jpg')) {
-          this.src = comic.file.replace('.jpg', '.jpeg');
-        }
-      };
-
-      document.getElementById('imageModal').classList.remove('hidden');
+      if (isFullscreen) {
+        modalOverlay.classList.remove('p-3', 'md:p-6');
+        modalOverlay.classList.add('p-0');
+        modalContent.classList.remove('max-w-4xl', 'h-[90vh]', 'rounded-3xl', 'border-4');
+        modalContent.classList.add('max-w-full', 'h-screen', 'rounded-none', 'border-0');
+        btnIcon.classList.remove('fa-expand');
+        btnIcon.classList.add('fa-compress');
+      } else {
+        modalOverlay.classList.add('p-3', 'md:p-6');
+        modalOverlay.classList.remove('p-0');
+        modalContent.classList.add('max-w-4xl', 'h-[90vh]', 'rounded-3xl', 'border-4');
+        modalContent.classList.remove('max-w-full', 'h-screen', 'rounded-none', 'border-0');
+        btnIcon.classList.remove('fa-compress');
+        btnIcon.classList.add('fa-expand');
+      }
     }
 
-    function closeComicImageViewer() {
-      document.getElementById('imageModal').classList.add('hidden');
+    function openComicPdfViewer() {
+      const modal = document.getElementById('pdfModal');
+      const content = document.getElementById('pdfModalContent');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        content.classList.remove('scale-95');
+      }, 10);
+      activeGroupName = "Kelompok 1"; 
+    }
+
+    function closeComicPdfViewer() {
+      const modal = document.getElementById('pdfModal');
+      const content = document.getElementById('pdfModalContent');
+      modal.classList.add('opacity-0');
+      content.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        if (isFullscreen) toggleFullscreen(); 
+      }, 300);
     }
 
     // ================= RODA PUTAR =================
     const canvas = document.getElementById('wheelCanvas');
     const ctx = canvas.getContext('2d');
-    // Warna roda diubah menjadi pastel ceria ala gambar
-    const wheelColors = ["#FCA5A5", "#FCD34D", "#6EE7B7", "#93C5FD", "#C4B5FD", "#FDB4BF"];
+    const wheelColors = ["#FF3158", "#FFB300", "#00D67D", "#009BFF", "#A200FF", "#FF0084"];
     const groups = [
       { name: "Kelompok 1" },
       { name: "Kelompok 2" },
@@ -818,20 +919,19 @@
         targetCtx.translate(radius, radius);
         targetCtx.rotate(angle + arc / 2);
         targetCtx.textAlign = "right";
-        targetCtx.fillStyle = "#334155";
+        targetCtx.fillStyle = "#ffffff"; 
+        targetCtx.shadowColor = "rgba(0,0,0,0.3)";
+        targetCtx.shadowBlur = 4;
         targetCtx.font = `bold ${wheelItems.length > 10 ? 12 : 16}px Fredoka`;
         const label = student.length > 12 ? `${student.slice(0, 11)}...` : student;
         targetCtx.fillText(label, radius - 30, 6);
         targetCtx.restore();
       });
-
-      // Lingkaran tengah putih untuk efek donat (opsional, tapi saya hapus agar tombol tengah pas)
     }
 
     function drawWheel() { drawWheelOn(canvas, ctx); }
-    drawWheel(); // Initial draw
+    drawWheel(); 
 
-    // Fungsi Tambah Nama Satu Per Satu
     function handleEnter(e) {
       if(e.key === 'Enter') addSingleName();
     }
@@ -844,18 +944,22 @@
         internalStudentsList.push(name);
         input.value = '';
         renderStudentList();
+        drawWheel(); 
       } else if (internalStudentsList.includes(name)) {
-        alert('Nama ini sudah ada di daftar ya!');
+        playSound('alert');
+        showNotification('warning', 'Nama Sudah Ada', `Nama <b>${name}</b> sudah dimasukkan ke dalam daftar!`);
       }
     }
 
     function removeName(index) {
       internalStudentsList.splice(index, 1);
       renderStudentList();
+      drawWheel(); 
     }
 
     function clearAllNames() {
-      if(confirm('Yakin ingin menghapus semua nama siswa?')) {
+      playSound('alert');
+      showNotification('confirm', 'Hapus Semua Nama?', 'Yakin ingin menghapus semua nama siswa dari daftar ini?', () => {
         internalStudentsList = [];
         assignedStudents = groups.map(() => []);
         assignmentCount = 0;
@@ -864,7 +968,7 @@
         renderStudentList();
         updateGroupList();
         drawWheel();
-      }
+      });
     }
 
     function renderStudentList() {
@@ -891,22 +995,8 @@
             <i class="fa-solid fa-xmark"></i>
           </button>
         `;
-        listDiv.appendChild(listDiv.lastElementChild ? item : item); // Ensure proper append
+        listDiv.appendChild(item); 
       });
-    }
-
-    function syncWheel() {
-      if(internalStudentsList.length === 0) {
-        alert('Masukkan nama siswa terlebih dahulu!');
-        return;
-      }
-      assignedStudents = groups.map(() => []);
-      assignmentCount = 0;
-      currentRotation = 0;
-      canvas.style.transform = 'rotate(0deg)';
-      drawWheel();
-      updateGroupList();
-      alert('Nama sudah siap diundi! Silakan klik tombol Putar di tengah roda.');
     }
 
     function updateGroupList() {
@@ -928,7 +1018,8 @@
 
     function spinWheel() {
       if (internalStudentsList.length === 0) {
-        alert('Ups, daftarnya kosong! Tambahkan nama siswa lalu klik "Siap Putar" dulu ya.');
+        playSound('wrong');
+        showNotification('warning', 'Daftar Kosong', 'Ups! Daftarnya kosong. Kamu harus menambahkan nama teman-temanmu di kolom kiri terlebih dahulu.');
         return;
       }
 
@@ -936,7 +1027,6 @@
       btn.disabled = true;
       const spins = 5; 
       
-      // Pilih secara acak dari array internal
       const selectedIndex = Math.floor(Math.random() * internalStudentsList.length);
       
       const segmentCenter = ((selectedIndex + 0.5) / internalStudentsList.length) * 360;
@@ -949,70 +1039,115 @@
       setTimeout(() => {
         btn.disabled = false;
         
-        // Ambil pemenang dan HAPUS dari daftar
         const winner = internalStudentsList.splice(selectedIndex, 1)[0];
         
         const groupIndex = assignmentCount % groups.length;
         assignedStudents[groupIndex].push(winner);
         assignmentCount++;
         
-        // Update UI
-        renderStudentList(); // Daftar nama berkurang
-        drawWheel();         // Roda diperbarui tanpa nama pemenang
-        updateGroupList();   // Nama masuk ke grup
+        renderStudentList(); 
+        drawWheel();         
+        updateGroupList();   
 
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+        playSound('correct'); 
         
-        // Cek jika habis
         if(internalStudentsList.length === 0) {
           setTimeout(() => {
-            alert('Yay! Semua siswa sudah masuk ke kelompoknya masing-masing. Silakan Lanjut Baca Komik!');
-          }, 500);
+            playSound('win');
+            showNotification('success', 'Selesai!', 'Yay! Semua siswa sudah berhasil masuk ke kelompoknya masing-masing. Silakan <b>Lanjut Baca Komik!</b>');
+          }, 600);
         }
 
       }, 4000);
     }
 
-    // ================= KUIS RAMAH ANAK =================
+    // ================= KUIS 10 SOAL =================
     const questions = [
       {
         type: "multiple-choice",
-        q: "1. Nasihat baik apa yang bisa kita pelajari dari cerita komik tadi?",
+        q: "1. Apa yang dilakukan Raka hingga tidur larut malam?",
         options: [
-          { text: "Selalu menepati janji dan menghormati orang tua", correct: true },
-          { text: "Boleh marah-marah kalau bekal makanannya habis", correct: false },
-          { text: "Boleh lupa pada janji kalau sedang buru-buru", correct: false },
-          { text: "Pura-pura tidak dengar nasihat ibu", correct: false }
+          { text: "Membaca buku", correct: false },
+          { text: "Bermain gim", correct: true },
+          { text: "Belajar bersama teman", correct: false },
+          { text: "Menonton berita", correct: false }
         ],
-        explanation: "<strong>Pembahasan:</strong> Menepati janji dan berbakti kepada orang tua adalah sikap baik yang sangat disukai dan akan membawa kebahagiaan di setiap cerita."
+        explanation: "<strong>Pembahasan:</strong> Raka tidur larut malam karena keasyikan bermain gim, sehingga ia kurang istirahat."
       },
       {
         type: "multiple-choice",
-        q: "2. Siapa sebutan untuk tokoh yang berhati baik, ramah, dan suka menolong di dalam cerita?",
+        q: "2. Mengapa Raka tidak sempat sarapan sebelum berangkat ke sekolah?",
         options: [
-          { text: "Tokoh Galak", correct: false },
-          { text: "Tokoh Baik (Protagonis)", correct: true },
-          { text: "Tokoh Penakut", correct: false },
-          { text: "Tokoh Jahat", correct: false }
+          { text: "Raka tidak menyukai makanan di rumah", correct: false },
+          { text: "Raka tidak merasa lapar", correct: false },
+          { text: "Raka bangun kesiangan dan terburu-buru", correct: true },
+          { text: "Raka ingin membeli makanan di sekolah", correct: false }
         ],
-        explanation: "<strong>Pembahasan:</strong> Tokoh protagonis adalah tokoh yang membawa kebaikan dan selalu menjadi contoh teladan yang baik untuk kita ikuti."
+        explanation: "<strong>Pembahasan:</strong> Akibat tidur larut, Raka bangun kesiangan dan harus terburu-buru ke sekolah sehingga melewatkan sarapan."
       },
       {
         type: "multiple-choice",
-        q: "3. Apa yang biasanya membuat cerita komik jadi seru dan bikin penasaran?",
+        q: "3. Apa akibat dari kebiasaan Raka tidur terlalu larut dan tidak sarapan?",
         options: [
-          { text: "Ketika tokoh menghadapi masalah dan mencari jalan keluar", correct: true },
-          { text: "Ketika semua tokoh hanya duduk diam saja", correct: false },
-          { text: "Ketika tidak ada kejadian apa-apa di dalam komik", correct: false },
-          { text: "Ketika bukunya ditutup tanpa dibaca", correct: false }
+          { text: "Raka menjadi lebih aktif di kelas", correct: false },
+          { text: "Raka merasa lemas dan sulit berkonsentrasi", correct: true },
+          { text: "Raka menjadi lebih cepat memahami pelajaran", correct: false },
+          { text: "Raka memiliki lebih banyak energi", correct: false }
         ],
-        explanation: "<strong>Pembahasan:</strong> Cerita menjadi seru ketika ada masalah (konflik), karena dari situlah tokoh utama akan belajar menjadi lebih kuat dan pintar."
+        explanation: "<strong>Pembahasan:</strong> Kurang tidur dan perut kosong membuat tubuh kekurangan energi, sehingga Raka lemas dan sulit fokus belajar."
+      },
+      {
+        type: "multiple-choice",
+        q: "4. Setelah menyadari kebiasaannya kurang sehat, tindakan yang dilakukan Raka adalah ....",
+        options: [
+          { text: "Bermain gim lebih lama", correct: false },
+          { text: "Mengurangi waktu tidur", correct: false },
+          { text: "Mengatur waktu bermain, tidur lebih awal, dan sarapan", correct: true },
+          { text: "Tidak melakukan aktivitas fisik", correct: false }
+        ],
+        explanation: "<strong>Pembahasan:</strong> Raka mulai memperbaiki diri dengan mengatur waktu bermain gim, tidur cukup, dan rutin sarapan."
+      },
+      {
+        type: "multiple-choice",
+        q: "5. Berdasarkan cerita, kesimpulan yang paling tepat adalah ....",
+        options: [
+          { text: "Bermain gim merupakan kebiasaan yang harus dihindari sepenuhnya", correct: false },
+          { text: "Anak yang sehat tidak perlu sarapan", correct: false },
+          { text: "Kebiasaan hidup sehat dapat membantu tubuh lebih bugar dan mendukung kegiatan belajar", correct: true },
+          { text: "Belajar dengan baik hanya bergantung pada kemampuan seseorang", correct: false }
+        ],
+        explanation: "<strong>Pembahasan:</strong> Pola hidup sehat seperti cukup tidur dan sarapan sangat memengaruhi kebugaran tubuh dan konsentrasi di sekolah."
       },
       {
         type: "essay",
-        q: "4. Tuliskan dengan bahasamu sendiri: Kebaikan apa yang bisa kita tiru dari cerita tadi?",
-        placeholder: "Tuliskan jawabanmu di sini ya (Misalnya: Kita harus selalu jujur dan sayang sama ibu)...",
-        explanation: "<strong>Pembahasan:</strong> Kebaikan hati, rasa hormat, dan rasa tanggung jawab yang tinggi adalah nilai hebat yang membuat kita disukai banyak orang."
+        q: "6. Mengapa Raka merasa mengantuk dan sulit berkonsentrasi saat mengikuti pelajaran di kelas?",
+        placeholder: "Tuliskan jawaban kelompokmu di sini...",
+        explanation: "<strong>Pembahasan:</strong> Raka mengantuk karena tidur terlalu larut malam akibat bermain gim, serta lemas karena tidak sarapan."
+      },
+      {
+        type: "essay",
+        q: "7. Jelaskan hubungan antara kebiasaan Raka bermain gim hingga larut malam dengan kondisi tubuhnya pada pagi hari!",
+        placeholder: "Tuliskan jawaban kelompokmu di sini...",
+        explanation: "<strong>Pembahasan:</strong> Bermain gim larut malam membuat jam tidur Raka berkurang, sehingga pada pagi hari tubuhnya kelelahan, mengantuk, dan tidak bugar."
+      },
+      {
+        type: "essay",
+        q: "8. Mengapa keputusan Raka untuk mulai sarapan, membawa air minum, berolahraga, dan tidur lebih awal dapat membuatnya lebih bersemangat belajar?",
+        placeholder: "Tuliskan jawaban kelompokmu di sini...",
+        explanation: "<strong>Pembahasan:</strong> Kebiasaan tersebut memenuhi kebutuhan energi tubuh (nutrisi, oksigen, dan istirahat), sehingga fungsi otak maksimal dan tubuh tidak lemas."
+      },
+      {
+        type: "essay",
+        q: "9. Menurutmu, dari kebiasaan hidup sehat yang dilakukan Raka, kebiasaan manakah yang paling penting? Jelaskan alasanmu!",
+        placeholder: "Tuliskan pendapat kelompokmu di sini...",
+        explanation: "<strong>Pembahasan:</strong> (Semua kebiasaan penting, namun bisa memilih salah satu. Misalnya: tidur cukup agar otak beristirahat, atau sarapan sebagai sumber energi)."
+      },
+      {
+        type: "essay",
+        q: "10. Jika kamu menjadi teman Raka, apa yang akan kamu lakukan untuk membantu Raka mempertahankan kebiasaan hidup sehatnya? Jelaskan alasanmu!",
+        placeholder: "Tuliskan idemu di sini (Misalnya: mengajak olahraga bareng, dll)...",
+        explanation: "<strong>Pembahasan:</strong> Sebagai teman, kita bisa saling mengingatkan untuk membatasi main gim, mengajak sarapan bersama, atau olahraga bareng agar tetap sehat."
       }
     ];
 
@@ -1042,7 +1177,7 @@
           const btn = document.createElement('button');
           btn.className = `${style.bg} ${style.shadow} hover:brightness-110 text-white p-5 md:p-6 rounded-[1.5rem] font-formal font-bold text-left transition transform active:translate-y-2 active:shadow-none flex items-center gap-4`;
           btn.innerHTML = `<span class="w-8 h-8 md:w-10 md:h-10 bg-white/25 rounded-full flex items-center justify-center text-sm md:text-base shrink-0 font-extrabold shadow-inner drop-shadow-sm">${String.fromCharCode(65 + idx)}</span> <span class="text-sm md:text-base leading-snug drop-shadow-sm">${opt.text}</span>`;
-          btn.onclick = () => selectAnswer(opt.correct);
+          btn.onclick = () => selectAnswer(opt);
           optContainer.appendChild(btn);
         });
       } else if (qData.type === "essay") {
@@ -1066,21 +1201,32 @@
       }
     }
 
-    function selectAnswer(isCorrect) {
+    function selectAnswer(opt) {
+      const isCorrect = opt.correct;
       const qData = questions[currentQ];
       const feedback = document.getElementById('feedbackArea');
       feedback.classList.remove('hidden');
 
       if (isCorrect) {
-        score += 25;
+        playSound('correct');
+        score += 10; 
         correctCount++;
         feedback.className = "text-center mt-8 p-6 rounded-3xl font-formal bg-white/90 backdrop-blur-md border-4 border-emerald-400 shadow-2xl transition-all";
-        feedback.innerHTML = `<div class="text-2xl font-extrabold text-emerald-600 mb-3">🎉 Jawabanmu Benar! (+25 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-emerald-50 p-4 rounded-xl border border-emerald-200">${qData.explanation}</div>`;
+        feedback.innerHTML = `<div class="text-2xl font-extrabold text-emerald-600 mb-3">🎉 Jawabanmu Benar! (+10 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-emerald-50 p-4 rounded-xl border border-emerald-200">${qData.explanation}</div>`;
         confetti({ particleCount: 40, spread: 45 });
       } else {
+        playSound('wrong');
         feedback.className = "text-center mt-8 p-6 rounded-3xl font-formal bg-white/90 backdrop-blur-md border-4 border-rose-400 shadow-2xl transition-all";
         feedback.innerHTML = `<div class="text-2xl font-extrabold text-rose-600 mb-3">❌ Kurang Tepat (+0 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-rose-50 p-4 rounded-xl border border-rose-200">${qData.explanation}</div>`;
       }
+
+      // Simpan jawaban untuk Ulasan (Review)
+      userAnswers.push({
+        qText: qData.q,
+        userAns: opt.text,
+        isCorrect: isCorrect,
+        explanation: qData.explanation
+      });
 
       document.getElementById('quizScoreDisplay').innerText = score;
 
@@ -1092,15 +1238,23 @@
         } else {
           finishQuiz();
         }
-      }, 4500); 
+      }, 2500); 
     }
 
     function submitEssayAnswer() {
       const answerInput = document.getElementById('essayAnswerInput');
       const answerText = answerInput.value.trim().toLowerCase();
 
+      // Perbaikan Validasi Esai Kosong & Terlalu Singkat dengan Custom Modal
+      if (answerText.length === 0) {
+        playSound('wrong');
+        showNotification('warning', 'Jawaban Kosong', 'Ups! Kamu belum menuliskan jawaban apa pun. Ayo isi dulu ya!');
+        return;
+      }
+
       if (answerText.length < 6) {
-        alert("Ayo, tuliskan kalimat kebaikan yang lebih lengkap ya!");
+        playSound('wrong');
+        showNotification('warning', 'Jawaban Terlalu Singkat', 'Ayo, tuliskan kalimat jawaban yang lebih lengkap dan jelas ya!');
         return;
       }
 
@@ -1111,10 +1265,10 @@
       const isInvalid = invalidPhrases.some(phrase => answerText.includes(phrase));
 
       const validKeywords = [
-        "janji", "jujur", "bohong", "patuh", "orang tua", "ibu", "ayah", 
-        "sombong", "durhaka", "kebaikan", "sabar", "menepati", "hargai", 
-        "menghormati", "moral", "pesan", "amanat", "tolong", "belajar",
-        "sikap", "baik", "dosa", "ingkar", "karma", "bakti", "tanggung", "sayang"
+        "gim", "game", "larut", "malam", "sarapan", "tidur", "istirahat", 
+        "lemas", "ngantuk", "konsentrasi", "olahraga", "sehat", "bugar", 
+        "air", "minum", "ingatkan", "teman", "bantu", "energi", "fokus", 
+        "kesiangan", "telat", "waktu", "pagi", "kesehatan", "kurang", "main"
       ];
       const hasValidKeyword = validKeywords.some(keyword => answerText.includes(keyword));
 
@@ -1122,16 +1276,28 @@
       const feedback = document.getElementById('feedbackArea');
       feedback.classList.remove('hidden');
 
-      if (!isInvalid && hasValidKeyword) {
-        score += 25;
+      const isCorrect = (!isInvalid && hasValidKeyword);
+
+      if (isCorrect) {
+        playSound('correct');
+        score += 10;
         correctCount++;
         feedback.className = "text-center mt-8 p-6 rounded-3xl font-formal bg-white/90 backdrop-blur-md border-4 border-emerald-400 shadow-2xl transition-all";
-        feedback.innerHTML = `<div class="text-2xl font-extrabold text-emerald-600 mb-3">🌟 Keren Banget! (+25 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-emerald-50 p-4 rounded-xl border border-emerald-200">${qData.explanation}</div>`;
+        feedback.innerHTML = `<div class="text-2xl font-extrabold text-emerald-600 mb-3">🌟 Keren Banget! (+10 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-emerald-50 p-4 rounded-xl border border-emerald-200">${qData.explanation}</div>`;
         confetti({ particleCount: 50, spread: 55 });
       } else {
+        playSound('wrong');
         feedback.className = "text-center mt-8 p-6 rounded-3xl font-formal bg-white/90 backdrop-blur-md border-4 border-rose-400 shadow-2xl transition-all";
-        feedback.innerHTML = `<div class="text-2xl font-extrabold text-rose-600 mb-3">❌ Jawabannya belum pas (+0 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-rose-50 p-4 rounded-xl border border-rose-200">Ingat ya, pesannya tentang kejujuran dan berbakti. <br><br>${qData.explanation}</div>`;
+        feedback.innerHTML = `<div class="text-2xl font-extrabold text-rose-600 mb-3">❌ Jawabannya belum pas (+0 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-rose-50 p-4 rounded-xl border border-rose-200">Coba perhatikan lagi cerita Raka ya. <br><br>${qData.explanation}</div>`;
       }
+
+      // Simpan jawaban untuk Ulasan (Review)
+      userAnswers.push({
+        qText: qData.q,
+        userAns: answerInput.value.trim(),
+        isCorrect: isCorrect,
+        explanation: qData.explanation
+      });
 
       document.getElementById('quizScoreDisplay').innerText = score;
 
@@ -1143,14 +1309,79 @@
         } else {
           finishQuiz();
         }
-      }, 4500);
+      }, 2500);
+    }
+
+    // ================= RENDER ULASAN (GLASSMORPHISM) =================
+    function renderQuizReview() {
+      const container = document.getElementById('reviewContainer');
+      const reviewSection = document.getElementById('quizReviewSection');
+      container.innerHTML = '';
+
+      userAnswers.forEach((ans) => {
+        const isCorrect = ans.isCorrect;
+        
+        const icon = isCorrect 
+          ? '<div class="w-10 h-10 rounded-full bg-emerald-400 text-white flex items-center justify-center text-xl shadow-lg shadow-emerald-500/30 border-2 border-white/50"><i class="fa-solid fa-check"></i></div>' 
+          : '<div class="w-10 h-10 rounded-full bg-rose-500 text-white flex items-center justify-center text-xl shadow-lg shadow-rose-500/30 border-2 border-white/50"><i class="fa-solid fa-xmark"></i></div>';
+          
+        const bgClass = isCorrect 
+          ? 'bg-emerald-500/10 border-emerald-400/30 shadow-[0_8px_20px_rgba(16,185,129,0.15)]' 
+          : 'bg-rose-500/10 border-rose-400/30 shadow-[0_8px_20px_rgba(244,63,94,0.15)]';
+
+        container.innerHTML += `
+          <div class="${bgClass} border backdrop-blur-md rounded-[1.5rem] p-5 md:p-6 mb-4 transition-all hover:-translate-y-1">
+            <div class="flex items-start gap-4">
+              <div class="mt-1 shrink-0">${icon}</div>
+              <div class="w-full">
+                <p class="font-formal font-bold text-white text-base md:text-lg leading-snug drop-shadow-sm">${ans.qText}</p>
+                <div class="mt-4 text-sm text-sky-100 bg-black/20 px-4 py-2 rounded-xl border border-white/10 inline-block">
+                  <span class="font-bold text-white">Jawabanmu:</span> "${ans.userAns}"
+                </div>
+                <div class="mt-3 text-sm md:text-base text-sky-50 bg-black/20 p-4 rounded-2xl border border-white/10 shadow-inner">
+                  ${ans.explanation}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      
+      reviewSection.classList.remove('hidden');
     }
 
     function finishQuiz() {
+      playSound('win');
       const accuracyPercent = Math.round((correctCount / questions.length) * 100);
-      document.getElementById('userGroupResultTitle').innerText = activeGroupName;
-      document.getElementById('userScoreValue').innerText = score;
-      document.getElementById('userAccuracyResult').innerText = `Benar ${correctCount} dari ${questions.length} soal (${accuracyPercent}%)`;
+      
+      // Update Skor di Global Leaderboard Real-Time
+      if (groupScores[activeGroupName]) {
+        groupScores[activeGroupName] = { score: score, accuracy: accuracyPercent };
+      } else {
+        groupScores[activeGroupName] = { score: score, accuracy: accuracyPercent };
+      }
+
+      // Mengurutkan Leaderboard berdasarkan Skor tertinggi
+      let sortedGroups = Object.keys(groupScores).map(name => {
+          return { name: name, score: groupScores[name].score, accuracy: groupScores[name].accuracy };
+      }).sort((a, b) => b.score - a.score);
+
+      // Memperbarui UI Podium secara dinamis
+      const ranks = [1, 2, 3];
+      ranks.forEach((rank, index) => {
+         const group = sortedGroups[index];
+         if (group) {
+            let titleText = group.name;
+            if (group.name === activeGroupName) titleText += " (Kamu)";
+            
+            document.getElementById(`podium-rank-${rank}-title`).innerText = titleText;
+            document.getElementById(`podium-rank-${rank}-score`).innerText = group.score;
+            document.getElementById(`podium-rank-${rank}-acc`).innerText = `Benar ${Math.round((group.accuracy/100)*questions.length)} dari ${questions.length} soal`;
+         }
+      });
+
+      // Render Ulasan Jawaban
+      renderQuizReview();
 
       goToPage('nilai');
       triggerCelebration();
@@ -1160,8 +1391,10 @@
       currentQ = 0;
       score = 0;
       correctCount = 0;
+      userAnswers = []; // Kosongkan riwayat ulasan untuk main ulang
       document.getElementById('quizScoreDisplay').innerText = '0';
       document.getElementById('feedbackArea').classList.add('hidden');
+      document.getElementById('quizReviewSection').classList.add('hidden');
       renderQuestion();
       goToPage('quiz');
     }
@@ -1172,7 +1405,12 @@
     function postDiscussion() {
       const grp = document.getElementById('groupNameInput').value.trim();
       const txt = document.getElementById('discussionInput').value.trim();
-      if (!grp || !txt) return;
+      
+      if (!grp || !txt) {
+        playSound('alert');
+        showNotification('warning', 'Kolom Kosong', 'Pastikan nama kelompok dan catatan cerita sudah diisi ya!');
+        return;
+      }
 
       const board = document.getElementById('notesBoard');
       const newCard = document.createElement('div');
