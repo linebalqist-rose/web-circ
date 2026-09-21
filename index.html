@@ -97,7 +97,7 @@
       box-shadow: 0 2px 0 #1D4ED8, 0 6px 12px rgba(37, 99, 235, 0.3);
     }
 
-    /* Roda Putar */
+    /* Roda Putar Custom Center Button */
     .wheel-container {
       position: relative;
       width: 100%;
@@ -434,6 +434,7 @@
               <p class="text-slate-600 font-medium mt-4 mb-10 max-w-lg mx-auto text-sm md:text-base leading-relaxed">
                 Yuk, buka buku cerita bergambar sekarang! Baca perlahan, pahami alurnya, dan diskusikan bersama teman satu timmu sebelum lanjut ke kuis.
               </p>
+              
               <button onclick="openComicPdfViewer()" class="w-full sm:w-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-formal text-base md:text-lg px-10 py-4 rounded-[1.5rem] font-bold shadow-[0_8px_0_#1E40AF] active:translate-y-2 active:shadow-none transition-all flex items-center justify-center gap-3 group-hover:shadow-[0_8px_0_#1E40AF,0_15px_20px_rgba(37,99,235,0.4)]">
                 <i class="fa-solid fa-book-open"></i> Ayo Baca Sekarang!
               </button>
@@ -625,6 +626,9 @@
         </div>
         
         <div class="flex gap-2">
+          <a href="komik.pdf" download="Komik_LinguaPlay.pdf" title="Unduh Komik" class="text-slate-400 hover:text-emerald-500 text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
+            <i class="fa-solid fa-download"></i>
+          </a>
           <button onclick="toggleFullscreen()" id="btnFullscreen" title="Perbesar Layar" class="text-slate-400 hover:text-brand-purple text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
             <i class="fa-solid fa-expand"></i>
           </button>
@@ -634,11 +638,10 @@
         </div>
       </div>
 
-      <!-- PDF Viewer Area -->
+      <!-- PDF Viewer Area (Preloaded Iframe) -->
       <div class="flex-grow w-full rounded-2xl border border-slate-200 bg-slate-100/70 p-1 sm:p-2 flex flex-col items-center justify-center overflow-hidden relative">
-        <iframe id="comicPdfElement" src="komik.pdf#toolbar=0&navpanes=0" class="w-full h-full rounded-xl shadow-md border border-slate-300 bg-white z-10 relative" type="application/pdf"></iframe>
+        <iframe id="comicPdfElement" src="komik.pdf#toolbar=0&navpanes=0" class="w-full h-full rounded-xl shadow-md border border-slate-300 bg-white z-10 relative" type="application/pdf" loading="lazy"></iframe>
         
-        <!-- Fallback if PDF fails -->
         <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-0">
           <i class="fa-solid fa-file-pdf text-4xl text-slate-300 mb-3"></i>
           <p class="text-sm text-slate-500 font-medium">Jika komik tidak muncul, pastikan file <strong>komik.pdf</strong> sudah diunggah.</p>
@@ -757,7 +760,7 @@
     }
 
 
-    // ================= SISTEM SUARA NATURAL & ANTI-BUG =================
+    // ================= SISTEM SUARA NATURAL =================
     let audioCtx = null;
     let audioUnlocked = false;
 
@@ -868,7 +871,6 @@
         modal.classList.remove('opacity-0');
         content.classList.remove('scale-95');
       }, 10);
-      activeGroupName = "Kelompok 1"; 
     }
 
     function closeComicPdfViewer() {
@@ -1052,6 +1054,9 @@
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
         playSound('correct'); 
         
+        // Simpan Active Group
+        activeGroupName = groups[groupIndex].name;
+        
         if(internalStudentsList.length === 0) {
           setTimeout(() => {
             playSound('win');
@@ -1220,7 +1225,6 @@
         feedback.innerHTML = `<div class="text-2xl font-extrabold text-rose-600 mb-3">❌ Kurang Tepat (+0 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-rose-50 p-4 rounded-xl border border-rose-200">${qData.explanation}</div>`;
       }
 
-      // Simpan jawaban untuk Ulasan (Review)
       userAnswers.push({
         qText: qData.q,
         userAns: opt.text,
@@ -1245,7 +1249,6 @@
       const answerInput = document.getElementById('essayAnswerInput');
       const answerText = answerInput.value.trim().toLowerCase();
 
-      // Perbaikan Validasi Esai Kosong & Terlalu Singkat dengan Custom Modal
       if (answerText.length === 0) {
         playSound('wrong');
         showNotification('warning', 'Jawaban Kosong', 'Ups! Kamu belum menuliskan jawaban apa pun. Ayo isi dulu ya!');
@@ -1291,7 +1294,6 @@
         feedback.innerHTML = `<div class="text-2xl font-extrabold text-rose-600 mb-3">❌ Jawabannya belum pas (+0 Poin)</div><div class="text-sm md:text-base font-medium text-slate-700 bg-rose-50 p-4 rounded-xl border border-rose-200">Coba perhatikan lagi cerita Raka ya. <br><br>${qData.explanation}</div>`;
       }
 
-      // Simpan jawaban untuk Ulasan (Review)
       userAnswers.push({
         qText: qData.q,
         userAns: answerInput.value.trim(),
@@ -1312,7 +1314,6 @@
       }, 2500);
     }
 
-    // ================= RENDER ULASAN (GLASSMORPHISM) =================
     function renderQuizReview() {
       const container = document.getElementById('reviewContainer');
       const reviewSection = document.getElementById('quizReviewSection');
@@ -1354,19 +1355,16 @@
       playSound('win');
       const accuracyPercent = Math.round((correctCount / questions.length) * 100);
       
-      // Update Skor di Global Leaderboard Real-Time
       if (groupScores[activeGroupName]) {
         groupScores[activeGroupName] = { score: score, accuracy: accuracyPercent };
       } else {
         groupScores[activeGroupName] = { score: score, accuracy: accuracyPercent };
       }
 
-      // Mengurutkan Leaderboard berdasarkan Skor tertinggi
       let sortedGroups = Object.keys(groupScores).map(name => {
           return { name: name, score: groupScores[name].score, accuracy: groupScores[name].accuracy };
       }).sort((a, b) => b.score - a.score);
 
-      // Memperbarui UI Podium secara dinamis
       const ranks = [1, 2, 3];
       ranks.forEach((rank, index) => {
          const group = sortedGroups[index];
@@ -1380,7 +1378,6 @@
          }
       });
 
-      // Render Ulasan Jawaban
       renderQuizReview();
 
       goToPage('nilai');
@@ -1391,7 +1388,7 @@
       currentQ = 0;
       score = 0;
       correctCount = 0;
-      userAnswers = []; // Kosongkan riwayat ulasan untuk main ulang
+      userAnswers = []; 
       document.getElementById('quizScoreDisplay').innerText = '0';
       document.getElementById('feedbackArea').classList.add('hidden');
       document.getElementById('quizReviewSection').classList.add('hidden');
@@ -1422,6 +1419,7 @@
     }
 
     function triggerCelebration() {
+      playSound('win');
       confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
     }
   </script>
