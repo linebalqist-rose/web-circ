@@ -13,6 +13,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
   <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- PDF.js untuk Render PDF Murni di Browser (Dukungan penuh untuk HP) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -97,7 +99,7 @@
       box-shadow: 0 2px 0 #1D4ED8, 0 6px 12px rgba(37, 99, 235, 0.3);
     }
 
-    /* Roda Putar Custom Center Button */
+    /* Roda Putar */
     .wheel-container {
       position: relative;
       width: 100%;
@@ -638,17 +640,17 @@
         </div>
       </div>
 
-      <!-- PDF Viewer Area (Preloaded Iframe) -->
-      <div class="flex-grow w-full rounded-2xl border border-slate-200 bg-slate-100/70 p-1 sm:p-2 flex flex-col items-center justify-center overflow-hidden relative">
-        <iframe id="comicPdfElement" src="komik.pdf#toolbar=0&navpanes=0" class="w-full h-full rounded-xl shadow-md border border-slate-300 bg-white z-10 relative" type="application/pdf" loading="lazy"></iframe>
+      <!-- PDF Viewer Area (Canvas untuk HP) -->
+      <div id="pdfScrollContainer" class="flex-grow w-full rounded-2xl border border-slate-200 bg-slate-100/70 p-2 md:p-4 overflow-y-auto custom-scrollbar relative flex flex-col items-center gap-4">
         
-        <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 z-0">
-          <i class="fa-solid fa-file-pdf text-4xl text-slate-300 mb-3"></i>
-          <p class="text-sm text-slate-500 font-medium">Jika komik tidak muncul, pastikan file <strong>komik.pdf</strong> sudah diunggah.</p>
-          <a id="comicPdfFallback" href="komik.pdf" target="_blank" class="mt-4 bg-sky-500 hover:bg-sky-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md transition">
-            <i class="fa-solid fa-external-link-alt mr-1"></i> Buka Komik di Tab Baru
-          </a>
+        <div id="pdfLoadingIndicator" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-100/90 z-20 rounded-xl hidden">
+          <i class="fa-solid fa-spinner fa-spin text-4xl text-brand-purple mb-3"></i>
+          <p class="font-bold text-slate-600">Memuat Komik...</p>
         </div>
+
+        <!-- Tempat Canvas Hasil Render PDF -->
+        <div id="pdfCanvasWrapper" class="flex flex-col items-center gap-4 w-full"></div>
+
       </div>
 
       <div class="flex items-center justify-between pt-3 border-t border-slate-100 mt-3">
@@ -679,7 +681,7 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    let activeGroupName = "Kelompok 1"; 
+    let activeGroupName = "Kelompok Kamu"; 
     let internalStudentsList = []; 
     let userAnswers = []; // Menyimpan riwayat jawaban kuis
 
@@ -690,6 +692,9 @@
       "Kelompok 3": { score: 70, accuracy: 70 },
       "Kelompok 4": { score: 50, accuracy: 50 }
     };
+
+    // Setting PDF.js Worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js';
 
     // ================= CUSTOM MODAL NOTIFICATION =================
     function showNotification(type, title, message, confirmCallback = null) {
@@ -760,7 +765,7 @@
     }
 
 
-    // ================= SISTEM SUARA NATURAL =================
+    // ================= SISTEM SUARA NATURAL & ANTI-BUG =================
     let audioCtx = null;
     let audioUnlocked = false;
 
@@ -828,7 +833,6 @@
       }
     }
 
-
     function goToPage(pageId) {
       document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
       const target = document.getElementById(`page-${pageId}`);
@@ -863,7 +867,10 @@
       }
     }
 
-    function openComicPdfViewer() {
+    // ================= RENDER PDF.JS (SUPPORT HP FULL) =================
+    let isPdfLoaded = false;
+
+    async function openComicPdfViewer() {
       const modal = document.getElementById('pdfModal');
       const content = document.getElementById('pdfModalContent');
       modal.classList.remove('hidden');
@@ -871,6 +878,50 @@
         modal.classList.remove('opacity-0');
         content.classList.remove('scale-95');
       }, 10);
+
+      // Cek apakah PDF sudah dirender sebelumnya
+      if (isPdfLoaded) return;
+      
+      const loading = document.getElementById('pdfLoadingIndicator');
+      const canvasWrapper = document.getElementById('pdfCanvasWrapper');
+      
+      loading.classList.remove('hidden');
+      canvasWrapper.innerHTML = '';
+
+      try {
+        const pdf = await pdfjsLib.getDocument('komik.pdf').promise;
+        
+        for(let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            const page = await pdf.getPage(pageNum);
+            
+            // Atur skala lebih besar agar tajam di HP
+            const viewport = page.getViewport({ scale: 1.5 });
+            
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            
+            // Kelas CSS untuk memastikan canvas responsif (max-w-full)
+            canvas.className = "w-full max-w-3xl h-auto rounded-xl shadow-md border-2 border-slate-200 bg-white object-contain";
+            
+            canvasWrapper.appendChild(canvas);
+            
+            const renderCtx = { canvasContext: ctx, viewport: viewport };
+            await page.render(renderCtx).promise;
+        }
+        isPdfLoaded = true;
+      } catch(err) {
+        console.error("Gagal Render PDF:", err);
+        loading.innerHTML = `
+          <i class="fa-solid fa-triangle-exclamation text-rose-500 text-4xl mb-3"></i>
+          <p class="font-bold text-slate-700 text-lg">Gagal Memuat Komik</p>
+          <p class="text-sm text-slate-500 mt-1 max-w-xs text-center">Pastikan file <b>komik.pdf</b> sudah diunggah di folder yang sama.</p>
+        `;
+        return; // Jangan sembunyikan loading jika error
+      }
+
+      loading.classList.add('hidden');
     }
 
     function closeComicPdfViewer() {
@@ -1197,7 +1248,7 @@
           <button 
             type="button" 
             onclick="submitEssayAnswer()" 
-            class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 px-8 rounded-2xl font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1.5 active:shadow-none transition-all flex items-center justify-center gap-2 self-end"
+            class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 px-8 rounded-2xl font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2 self-end"
           >
             <span>Kirim Jawabanmu Sekarang!</span>
             <i class="fa-solid fa-paper-plane"></i>
