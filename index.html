@@ -159,6 +159,44 @@
 
     @keyframes soft-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
     .animate-soft-float { animation: soft-float 4s ease-in-out infinite; }
+
+    /* Custom Loading Bar (Neon Style) */
+    .neon-loader-container {
+      background-color: #040d1a;
+    }
+    .neon-bar-wrapper {
+      display: flex;
+      width: 100%;
+      height: 20px;
+      border: 2px solid #0284c7;
+      border-radius: 999px;
+      padding: 2px;
+      gap: 2px;
+      background-color: #031428;
+      overflow: hidden;
+    }
+    .neon-segment {
+      flex: 1;
+      background-color: #082f49;
+      animation: neonSweep 1.5s infinite linear;
+    }
+    .neon-segment:first-child { border-top-left-radius: 999px; border-bottom-left-radius: 999px; }
+    .neon-segment:last-child { border-top-right-radius: 999px; border-bottom-right-radius: 999px; }
+
+    @keyframes neonSweep {
+      0%, 100% { background-color: #082f49; box-shadow: none; }
+      30%, 50% { background-color: #06b6d4; box-shadow: 0 0 10px #06b6d4, inset 0 0 5px #06b6d4; }
+    }
+    .seg-1 { animation-delay: 0.0s; }
+    .seg-2 { animation-delay: 0.1s; }
+    .seg-3 { animation-delay: 0.2s; }
+    .seg-4 { animation-delay: 0.3s; }
+    .seg-5 { animation-delay: 0.4s; }
+    .seg-6 { animation-delay: 0.5s; }
+    .seg-7 { animation-delay: 0.6s; }
+    .seg-8 { animation-delay: 0.7s; }
+    .seg-9 { animation-delay: 0.8s; }
+    .seg-10 { animation-delay: 0.9s; }
   </style>
 </head>
 <body class="text-slate-800 antialiased p-2 md:p-8 flex flex-col justify-between">
@@ -437,9 +475,11 @@
                 Yuk, buka buku cerita bergambar sekarang! Baca perlahan, pahami alurnya, dan diskusikan bersama teman satu timmu sebelum lanjut ke kuis.
               </p>
               
+              <!-- Tombol hanya 1 (Ayo Baca Sekarang) -->
               <button onclick="openComicPdfViewer()" class="w-full sm:w-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-formal text-base md:text-lg px-10 py-4 rounded-[1.5rem] font-bold shadow-[0_8px_0_#1E40AF] active:translate-y-2 active:shadow-none transition-all flex items-center justify-center gap-3 group-hover:shadow-[0_8px_0_#1E40AF,0_15px_20px_rgba(37,99,235,0.4)]">
                 <i class="fa-solid fa-book-open"></i> Ayo Baca Sekarang!
               </button>
+
             </div>
           </div>
         </div>
@@ -553,37 +593,37 @@
           <p class="text-sky-100 text-sm md:text-base mt-3 font-medium drop-shadow-sm">Hore! Semua kelompok sudah menyelesaikan tantangan dengan hebat!</p>
         </div>
 
-        <!-- BLOK PODIUM JUARA (REALTIME) -->
-        <div class="flex flex-row items-end justify-center gap-2 sm:gap-5 mt-16 mb-12 h-[22rem] relative px-2">
+        <!-- BLOK PODIUM JUARA (DIPERBAIKI UNTUK RESPONSIVITAS HP) -->
+        <div class="flex flex-row items-end justify-center gap-2 sm:gap-5 mt-16 mb-12 h-[18rem] sm:h-[22rem] relative px-1 w-full max-w-3xl mx-auto">
           
           <!-- PODIUM JUARA 2 (KIRI - SILVER) -->
-          <div class="w-28 sm:w-44 h-56 sm:h-64 bg-gradient-to-t from-slate-200/90 to-white/40 backdrop-blur-xl border-t-2 border-l border-r border-white/80 rounded-t-[2rem] shadow-[0_-5px_25px_rgba(0,0,0,0.1)] flex flex-col items-center justify-start pt-8 relative group hover:-translate-y-1 transition-transform">
-            <div class="absolute -top-10 w-14 h-14 bg-gradient-to-br from-slate-100 to-slate-300 rounded-full flex items-center justify-center text-2xl shadow-lg shadow-slate-400/50 border-[3px] border-white z-20">🥈</div>
-            <h3 class="font-formal font-bold text-slate-800 text-sm sm:text-lg mt-2 text-center leading-tight" id="podium-rank-2-title">Kelompok 3</h3>
-            <span class="font-fun text-3xl sm:text-4xl text-slate-700 mt-2 drop-shadow-sm" id="podium-rank-2-score">70</span>
-            <span class="text-[10px] sm:text-xs text-slate-500 uppercase tracking-widest font-bold mt-1">Poin</span>
-            <p class="text-[9px] sm:text-[10px] font-bold text-slate-500 text-center px-3 mt-1 leading-tight uppercase" id="podium-rank-2-acc">Benar 7 dari 10 soal</p>
-            <div class="mt-auto mb-5 text-5xl sm:text-6xl font-black text-white/50 drop-shadow-md">#2</div>
+          <div class="w-[31%] max-w-[140px] h-48 sm:h-64 bg-gradient-to-t from-slate-200/90 to-white/40 backdrop-blur-xl border-t-2 border-l border-r border-white/80 rounded-t-[2rem] shadow-[0_-5px_25px_rgba(0,0,0,0.1)] flex flex-col items-center justify-start pt-6 sm:pt-8 relative group hover:-translate-y-1 transition-transform px-1 text-center">
+            <div class="absolute -top-6 sm:-top-10 w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-slate-100 to-slate-300 rounded-full flex items-center justify-center text-lg sm:text-2xl shadow-lg shadow-slate-400/50 border-[2px] sm:border-[3px] border-white z-20">🥈</div>
+            <h3 class="font-formal font-bold text-slate-800 text-[10px] sm:text-lg mt-1 sm:mt-2 leading-tight break-words w-full" id="podium-rank-2-title">Kelompok 3</h3>
+            <span class="font-fun text-2xl sm:text-4xl text-slate-700 mt-1 sm:mt-2 drop-shadow-sm" id="podium-rank-2-score">70</span>
+            <span class="text-[8px] sm:text-xs text-slate-500 uppercase tracking-widest font-bold mt-0 sm:mt-1">Poin</span>
+            <p class="text-[8px] sm:text-[10px] font-bold text-slate-500 mt-1 sm:mt-2 leading-tight uppercase px-1" id="podium-rank-2-acc">Benar 7/10</p>
+            <div class="mt-auto mb-3 sm:mb-5 text-4xl sm:text-6xl font-black text-white/50 drop-shadow-md">#2</div>
           </div>
 
           <!-- PODIUM JUARA 1 (TENGAH - EMAS) -->
-          <div class="w-32 sm:w-52 h-72 sm:h-80 bg-gradient-to-t from-amber-400/90 to-yellow-100/60 backdrop-blur-xl border-t-2 border-l border-r border-white/90 rounded-t-[2.5rem] shadow-[0_-10px_30px_rgba(245,158,11,0.3)] flex flex-col items-center justify-start pt-10 relative z-10 group hover:-translate-y-1 transition-transform">
-            <div class="absolute -top-12 w-16 h-16 bg-gradient-to-br from-amber-300 to-amber-500 rounded-full flex items-center justify-center text-3xl shadow-xl shadow-amber-500/50 border-[3px] border-white z-20 animate-bounce">🥇</div>
-            <h3 class="font-formal font-extrabold text-slate-900 text-base sm:text-xl text-center px-1 mt-2 leading-tight" id="podium-rank-1-title">Skor Kamu</h3>
-            <span class="font-fun text-4xl sm:text-5xl text-amber-900 mt-3 drop-shadow-md" id="podium-rank-1-score">0</span>
-            <span class="text-[10px] sm:text-xs text-amber-800 uppercase tracking-widest font-bold mt-1">Poin</span>
-            <p class="text-[9px] sm:text-[10px] font-bold text-amber-900/60 text-center px-3 mt-3 leading-tight uppercase tracking-wider" id="podium-rank-1-acc">Benar 0 dari 10 soal</p>
-            <div class="mt-auto mb-6 text-6xl sm:text-7xl font-black text-white/60 drop-shadow-lg">#1</div>
+          <div class="w-[36%] max-w-[180px] h-60 sm:h-80 bg-gradient-to-t from-amber-400/90 to-yellow-100/60 backdrop-blur-xl border-t-2 border-l border-r border-white/90 rounded-t-[2.5rem] shadow-[0_-10px_30px_rgba(245,158,11,0.3)] flex flex-col items-center justify-start pt-8 sm:pt-10 relative z-10 group hover:-translate-y-1 transition-transform px-1 text-center">
+            <div class="absolute -top-8 sm:-top-12 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-amber-300 to-amber-500 rounded-full flex items-center justify-center text-2xl sm:text-3xl shadow-xl shadow-amber-500/50 border-[2px] sm:border-[3px] border-white z-20 animate-bounce">🥇</div>
+            <h3 class="font-formal font-extrabold text-slate-900 text-xs sm:text-xl mt-1 sm:mt-2 leading-tight break-words w-full" id="podium-rank-1-title">Skor Kamu</h3>
+            <span class="font-fun text-3xl sm:text-5xl text-amber-900 mt-2 sm:mt-3 drop-shadow-md" id="podium-rank-1-score">0</span>
+            <span class="text-[8px] sm:text-xs text-amber-800 uppercase tracking-widest font-bold mt-0 sm:mt-1">Poin</span>
+            <p class="text-[8px] sm:text-[10px] font-bold text-amber-900/60 mt-1 sm:mt-3 leading-tight uppercase px-1" id="podium-rank-1-acc">Benar 0/10</p>
+            <div class="mt-auto mb-4 sm:mb-6 text-5xl sm:text-7xl font-black text-white/60 drop-shadow-lg">#1</div>
           </div>
 
           <!-- PODIUM JUARA 3 (KANAN - PERUNGGU) -->
-          <div class="w-28 sm:w-44 h-48 sm:h-56 bg-gradient-to-t from-orange-300/90 to-orange-100/40 backdrop-blur-xl border-t-2 border-l border-r border-white/70 rounded-t-[2rem] shadow-[0_-5px_25px_rgba(0,0,0,0.1)] flex flex-col items-center justify-start pt-7 relative group hover:-translate-y-1 transition-transform">
-            <div class="absolute -top-10 w-14 h-14 bg-gradient-to-br from-orange-200 to-orange-400 rounded-full flex items-center justify-center text-2xl shadow-lg shadow-orange-500/40 border-[3px] border-white z-20">🥉</div>
-            <h3 class="font-formal font-bold text-slate-800 text-sm sm:text-lg mt-2 text-center leading-tight" id="podium-rank-3-title">Kelompok 2</h3>
-            <span class="font-fun text-3xl sm:text-4xl text-orange-900 mt-2 drop-shadow-sm" id="podium-rank-3-score">40</span>
-            <span class="text-[10px] sm:text-xs text-orange-800/80 uppercase tracking-widest font-bold mt-1">Poin</span>
-            <p class="text-[9px] sm:text-[10px] font-bold text-orange-700/60 text-center px-3 mt-1 leading-tight uppercase" id="podium-rank-3-acc">Benar 4 dari 10 soal</p>
-            <div class="mt-auto mb-4 text-5xl sm:text-6xl font-black text-white/50 drop-shadow-md">#3</div>
+          <div class="w-[31%] max-w-[140px] h-40 sm:h-56 bg-gradient-to-t from-orange-300/90 to-orange-100/40 backdrop-blur-xl border-t-2 border-l border-r border-white/70 rounded-t-[2rem] shadow-[0_-5px_25px_rgba(0,0,0,0.1)] flex flex-col items-center justify-start pt-5 sm:pt-7 relative group hover:-translate-y-1 transition-transform px-1 text-center">
+            <div class="absolute -top-5 sm:-top-10 w-9 h-9 sm:w-14 sm:h-14 bg-gradient-to-br from-orange-200 to-orange-400 rounded-full flex items-center justify-center text-base sm:text-2xl shadow-lg shadow-orange-500/40 border-[2px] sm:border-[3px] border-white z-20">🥉</div>
+            <h3 class="font-formal font-bold text-slate-800 text-[9px] sm:text-lg mt-1 sm:mt-2 leading-tight break-words w-full" id="podium-rank-3-title">Kelompok 2</h3>
+            <span class="font-fun text-xl sm:text-4xl text-orange-900 mt-1 sm:mt-2 drop-shadow-sm" id="podium-rank-3-score">40</span>
+            <span class="text-[7px] sm:text-xs text-orange-800/80 uppercase tracking-widest font-bold mt-0 sm:mt-1">Poin</span>
+            <p class="text-[7px] sm:text-[10px] font-bold text-orange-700/60 mt-1 leading-tight uppercase px-1" id="podium-rank-3-acc">Benar 4/10</p>
+            <div class="mt-auto mb-2 sm:mb-4 text-3xl sm:text-6xl font-black text-white/50 drop-shadow-md">#3</div>
           </div>
 
         </div>
@@ -614,7 +654,7 @@
 
   </main>
 
-  <!-- ================= POP-UP BACA PDF KOMIK ================= -->
+  <!-- ================= POP-UP BACA PDF KOMIK (DUKUNGAN HP) ================= -->
   <div id="pdfModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6 transition-all duration-300">
     
     <div id="pdfModalContent" class="bg-white rounded-3xl max-w-4xl w-full p-4 md:p-6 relative border-4 border-brand-purple/20 shadow-2xl flex flex-col h-[90vh] transition-all duration-300">
@@ -628,6 +668,7 @@
         </div>
         
         <div class="flex gap-2">
+          <!-- Tombol Download (Masih Dipertahankan) -->
           <a href="komik.pdf" download="Komik_LinguaPlay.pdf" title="Unduh Komik" class="text-slate-400 hover:text-emerald-500 text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
             <i class="fa-solid fa-download"></i>
           </a>
@@ -640,15 +681,29 @@
         </div>
       </div>
 
-      <!-- PDF Viewer Area (Canvas untuk HP) -->
+      <!-- Area Baca PDF (Di-render murni sebagai Canvas untuk HP) -->
       <div id="pdfScrollContainer" class="flex-grow w-full rounded-2xl border border-slate-200 bg-slate-100/70 p-2 md:p-4 overflow-y-auto custom-scrollbar relative flex flex-col items-center gap-4">
         
-        <div id="pdfLoadingIndicator" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-100/90 z-20 rounded-xl hidden">
-          <i class="fa-solid fa-spinner fa-spin text-4xl text-brand-purple mb-3"></i>
-          <p class="font-bold text-slate-600">Memuat Komik...</p>
+        <!-- Loading Animation Kustom (Bar Progres Neon) -->
+        <div id="pdfLoadingIndicator" class="absolute inset-0 flex flex-col items-center justify-center bg-[#0B1727] z-20 rounded-xl hidden">
+          <div class="w-full max-w-[240px]">
+            <p class="font-bold text-sky-100 tracking-widest text-sm mb-2 ml-1 drop-shadow-md">Memuat gambar . . .</p>
+            <div class="flex h-6 w-full rounded-full border-2 border-sky-600/50 p-1 gap-1 bg-[#050B14]">
+              <div class="flex-1 rounded-l-full loading-segment seg-1"></div>
+              <div class="flex-1 loading-segment seg-2"></div>
+              <div class="flex-1 loading-segment seg-3"></div>
+              <div class="flex-1 loading-segment seg-4"></div>
+              <div class="flex-1 loading-segment seg-5"></div>
+              <div class="flex-1 loading-segment seg-6"></div>
+              <div class="flex-1 loading-segment seg-7"></div>
+              <div class="flex-1 loading-segment seg-8"></div>
+              <div class="flex-1 loading-segment seg-9"></div>
+              <div class="flex-1 rounded-r-full loading-segment seg-10"></div>
+            </div>
+          </div>
         </div>
 
-        <!-- Tempat Canvas Hasil Render PDF -->
+        <!-- Wadah Gambar PDF -->
         <div id="pdfCanvasWrapper" class="flex flex-col items-center gap-4 w-full"></div>
 
       </div>
@@ -683,9 +738,9 @@
   <script>
     let activeGroupName = "Kelompok Kamu"; 
     let internalStudentsList = []; 
-    let userAnswers = []; // Menyimpan riwayat jawaban kuis
+    let userAnswers = []; 
 
-    // Simulasi Skor Dasar Kelompok Lain (Leaderboard Real-time)
+    // Simulasi Skor Dasar Kelompok Lain
     let groupScores = {
       "Kelompok 1": { score: 60, accuracy: 60 },
       "Kelompok 2": { score: 40, accuracy: 40 },
@@ -693,7 +748,7 @@
       "Kelompok 4": { score: 50, accuracy: 50 }
     };
 
-    // Setting PDF.js Worker
+    // Konfigurasi Worker PDF.js agar cepat dimuat
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js';
 
     // ================= CUSTOM MODAL NOTIFICATION =================
@@ -765,7 +820,7 @@
     }
 
 
-    // ================= SISTEM SUARA NATURAL & ANTI-BUG =================
+    // ================= SISTEM SUARA =================
     let audioCtx = null;
     let audioUnlocked = false;
 
@@ -867,7 +922,7 @@
       }
     }
 
-    // ================= RENDER PDF.JS (SUPPORT HP FULL) =================
+    // ================= RENDER PDF.JS =================
     let isPdfLoaded = false;
 
     async function openComicPdfViewer() {
@@ -879,7 +934,6 @@
         content.classList.remove('scale-95');
       }, 10);
 
-      // Cek apakah PDF sudah dirender sebelumnya
       if (isPdfLoaded) return;
       
       const loading = document.getElementById('pdfLoadingIndicator');
@@ -893,16 +947,12 @@
         
         for(let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             const page = await pdf.getPage(pageNum);
-            
-            // Atur skala lebih besar agar tajam di HP
             const viewport = page.getViewport({ scale: 1.5 });
             
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             canvas.height = viewport.height;
             canvas.width = viewport.width;
-            
-            // Kelas CSS untuk memastikan canvas responsif (max-w-full)
             canvas.className = "w-full max-w-3xl h-auto rounded-xl shadow-md border-2 border-slate-200 bg-white object-contain";
             
             canvasWrapper.appendChild(canvas);
@@ -911,17 +961,22 @@
             await page.render(renderCtx).promise;
         }
         isPdfLoaded = true;
+        loading.classList.add('hidden');
       } catch(err) {
-        console.error("Gagal Render PDF:", err);
-        loading.innerHTML = `
-          <i class="fa-solid fa-triangle-exclamation text-rose-500 text-4xl mb-3"></i>
-          <p class="font-bold text-slate-700 text-lg">Gagal Memuat Komik</p>
-          <p class="text-sm text-slate-500 mt-1 max-w-xs text-center">Pastikan file <b>komik.pdf</b> sudah diunggah di folder yang sama.</p>
+        console.error("Gagal Render PDF (Jalankan via Local Server):", err);
+        // Fallback aman untuk tes lokal tanpa server
+        canvasWrapper.innerHTML = `
+          <div class="w-full h-full flex flex-col">
+            <div class="bg-amber-100 text-amber-800 text-xs p-3 rounded-lg mb-3 flex items-start gap-2">
+              <i class="fa-solid fa-circle-info mt-0.5"></i>
+              <p>Membuka dalam mode pratinjau lokal. Untuk tampilan HP yang optimal, jalankan file ini menggunakan Web Server.</p>
+            </div>
+            <iframe src="komik.pdf#toolbar=0" class="w-full flex-grow min-h-[60vh] rounded-xl border border-slate-300"></iframe>
+          </div>
         `;
-        return; // Jangan sembunyikan loading jika error
+        isPdfLoaded = true; 
+        loading.classList.add('hidden');
       }
-
-      loading.classList.add('hidden');
     }
 
     function closeComicPdfViewer() {
@@ -1105,7 +1160,6 @@
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
         playSound('correct'); 
         
-        // Simpan Active Group
         activeGroupName = groups[groupIndex].name;
         
         if(internalStudentsList.length === 0) {
@@ -1248,7 +1302,7 @@
           <button 
             type="button" 
             onclick="submitEssayAnswer()" 
-            class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 px-8 rounded-2xl font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2 self-end"
+            class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 px-8 rounded-2xl font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1.5 active:shadow-none transition-all flex items-center justify-center gap-2 self-end"
           >
             <span>Kirim Jawabanmu Sekarang!</span>
             <i class="fa-solid fa-paper-plane"></i>
