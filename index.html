@@ -99,7 +99,7 @@
       box-shadow: 0 2px 0 #1D4ED8, 0 6px 12px rgba(37, 99, 235, 0.3);
     }
 
-    /* Roda Putar */
+    /* Roda Putar Custom Center Button */
     .wheel-container {
       position: relative;
       width: 100%;
@@ -160,43 +160,49 @@
     @keyframes soft-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
     .animate-soft-float { animation: soft-float 4s ease-in-out infinite; }
 
-    /* Custom Loading Bar (Neon Style) */
-    .neon-loader-container {
-      background-color: #040d1a;
-    }
-    .neon-bar-wrapper {
-      display: flex;
+    /* Custom Loading Bar Animation */
+    .loading-box-outline {
       width: 100%;
-      height: 20px;
-      border: 2px solid #0284c7;
+      max-width: 250px;
+      height: 22px;
+      border: 2px solid #0284c7; /* Warna biru outline */
       border-radius: 999px;
-      padding: 2px;
-      gap: 2px;
-      background-color: #031428;
+      padding: 3px;
+      position: relative;
       overflow: hidden;
     }
-    .neon-segment {
-      flex: 1;
-      background-color: #082f49;
-      animation: neonSweep 1.5s infinite linear;
-    }
-    .neon-segment:first-child { border-top-left-radius: 999px; border-bottom-left-radius: 999px; }
-    .neon-segment:last-child { border-top-right-radius: 999px; border-bottom-right-radius: 999px; }
 
-    @keyframes neonSweep {
-      0%, 100% { background-color: #082f49; box-shadow: none; }
-      30%, 50% { background-color: #06b6d4; box-shadow: 0 0 10px #06b6d4, inset 0 0 5px #06b6d4; }
+    .loading-box-fill {
+      height: 100%;
+      width: 30%;
+      background-color: #38bdf8; /* Warna biru menyala */
+      border-radius: 999px;
+      position: absolute;
+      animation: loadingSlide 1.2s infinite ease-in-out alternate;
     }
-    .seg-1 { animation-delay: 0.0s; }
-    .seg-2 { animation-delay: 0.1s; }
-    .seg-3 { animation-delay: 0.2s; }
-    .seg-4 { animation-delay: 0.3s; }
-    .seg-5 { animation-delay: 0.4s; }
-    .seg-6 { animation-delay: 0.5s; }
-    .seg-7 { animation-delay: 0.6s; }
-    .seg-8 { animation-delay: 0.7s; }
-    .seg-9 { animation-delay: 0.8s; }
-    .seg-10 { animation-delay: 0.9s; }
+
+    @keyframes loadingSlide {
+      0% { left: 3px; }
+      100% { left: calc(100% - 30% - 3px); }
+    }
+
+    /* Fullscreen Behavior Customization */
+    #pdfScrollContainer:fullscreen { 
+      background-color: #0f172a !important; 
+      width: 100vw; 
+      height: 100vh; 
+      border: none; 
+      border-radius: 0; 
+      padding-top: 20px;
+    }
+    #pdfScrollContainer:-webkit-full-screen { 
+      background-color: #0f172a !important; 
+      width: 100vw; 
+      height: 100vh; 
+      border: none; 
+      border-radius: 0; 
+      padding-top: 20px;
+    }
   </style>
 </head>
 <body class="text-slate-800 antialiased p-2 md:p-8 flex flex-col justify-between">
@@ -475,11 +481,9 @@
                 Yuk, buka buku cerita bergambar sekarang! Baca perlahan, pahami alurnya, dan diskusikan bersama teman satu timmu sebelum lanjut ke kuis.
               </p>
               
-              <!-- Tombol hanya 1 (Ayo Baca Sekarang) -->
               <button onclick="openComicPdfViewer()" class="w-full sm:w-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-formal text-base md:text-lg px-10 py-4 rounded-[1.5rem] font-bold shadow-[0_8px_0_#1E40AF] active:translate-y-2 active:shadow-none transition-all flex items-center justify-center gap-3 group-hover:shadow-[0_8px_0_#1E40AF,0_15px_20px_rgba(37,99,235,0.4)]">
                 <i class="fa-solid fa-book-open"></i> Ayo Baca Sekarang!
               </button>
-
             </div>
           </div>
         </div>
@@ -593,7 +597,7 @@
           <p class="text-sky-100 text-sm md:text-base mt-3 font-medium drop-shadow-sm">Hore! Semua kelompok sudah menyelesaikan tantangan dengan hebat!</p>
         </div>
 
-        <!-- BLOK PODIUM JUARA (DIPERBAIKI UNTUK RESPONSIVITAS HP) -->
+        <!-- BLOK PODIUM JUARA (REALTIME) -->
         <div class="flex flex-row items-end justify-center gap-2 sm:gap-5 mt-16 mb-12 h-[18rem] sm:h-[22rem] relative px-1 w-full max-w-3xl mx-auto">
           
           <!-- PODIUM JUARA 2 (KIRI - SILVER) -->
@@ -654,12 +658,13 @@
 
   </main>
 
-  <!-- ================= POP-UP BACA PDF KOMIK (DUKUNGAN HP) ================= -->
+  <!-- ================= POP-UP BACA PDF KOMIK ================= -->
   <div id="pdfModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6 transition-all duration-300">
     
     <div id="pdfModalContent" class="bg-white rounded-3xl max-w-4xl w-full p-4 md:p-6 relative border-4 border-brand-purple/20 shadow-2xl flex flex-col h-[90vh] transition-all duration-300">
       
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+      <!-- Bagian Header Putih -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3" id="pdfHeader">
         <div class="flex items-center gap-3">
           <span class="w-9 h-9 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-bold">
             <i class="fa-solid fa-book-open"></i>
@@ -682,23 +687,19 @@
       </div>
 
       <!-- Area Baca PDF (Di-render murni sebagai Canvas untuk HP) -->
-      <div id="pdfScrollContainer" class="flex-grow w-full rounded-2xl border border-slate-200 bg-slate-100/70 p-2 md:p-4 overflow-y-auto custom-scrollbar relative flex flex-col items-center gap-4">
+      <div id="pdfScrollContainer" class="flex-grow w-full rounded-2xl border border-slate-200 bg-slate-900 p-2 md:p-4 overflow-y-auto custom-scrollbar relative flex flex-col items-center gap-4">
         
-        <!-- Loading Animation Kustom (Bar Progres Neon) -->
-        <div id="pdfLoadingIndicator" class="absolute inset-0 flex flex-col items-center justify-center bg-[#0B1727] z-20 rounded-xl hidden">
-          <div class="w-full max-w-[240px]">
-            <p class="font-bold text-sky-100 tracking-widest text-sm mb-2 ml-1 drop-shadow-md">Memuat gambar . . .</p>
-            <div class="flex h-6 w-full rounded-full border-2 border-sky-600/50 p-1 gap-1 bg-[#050B14]">
-              <div class="flex-1 rounded-l-full loading-segment seg-1"></div>
-              <div class="flex-1 loading-segment seg-2"></div>
-              <div class="flex-1 loading-segment seg-3"></div>
-              <div class="flex-1 loading-segment seg-4"></div>
-              <div class="flex-1 loading-segment seg-5"></div>
-              <div class="flex-1 loading-segment seg-6"></div>
-              <div class="flex-1 loading-segment seg-7"></div>
-              <div class="flex-1 loading-segment seg-8"></div>
-              <div class="flex-1 loading-segment seg-9"></div>
-              <div class="flex-1 rounded-r-full loading-segment seg-10"></div>
+        <!-- Tombol Exit Fullscreen Floating (hanya muncul saat fullscreen) -->
+        <button onclick="toggleFullscreen()" id="btnFloatingExit" class="fixed top-4 right-4 z-50 bg-rose-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hidden hover:bg-rose-600 transition border-2 border-white/20">
+          <i class="fa-solid fa-compress"></i>
+        </button>
+
+        <!-- Loading Animation Kustom (Bar Progres Animasi Bolak-Balik) -->
+        <div id="pdfLoadingIndicator" class="absolute inset-0 flex flex-col items-center justify-center bg-[#0f172a] z-20 rounded-xl hidden">
+          <div class="w-full flex flex-col items-center">
+            <p class="font-bold text-sky-100 tracking-widest text-sm mb-3 drop-shadow-md">Memuat gambar . . .</p>
+            <div class="loading-box-outline">
+              <div class="loading-box-fill"></div>
             </div>
           </div>
         </div>
@@ -708,7 +709,7 @@
 
       </div>
 
-      <div class="flex items-center justify-between pt-3 border-t border-slate-100 mt-3">
+      <div class="flex items-center justify-between pt-3 border-t border-slate-100 mt-3" id="pdfFooter">
         <p class="text-xs text-slate-400 font-medium hidden sm:block">Baca ceritanya sampai selesai ya, lalu klik tombol biru untuk mulai kuis!</p>
         <button onclick="closeComicPdfViewer(); goToPage('quiz');" class="bg-brand-purple hover:bg-brand-darkPurple text-white px-5 py-2.5 rounded-xl font-formal text-xs font-bold shadow-md transition flex items-center gap-1.5 ml-auto">
           Selesai Baca, Ayo Kuis! <i class="fa-solid fa-arrow-right"></i>
@@ -819,7 +820,6 @@
       }, 300);
     }
 
-
     // ================= SISTEM SUARA =================
     let audioCtx = null;
     let audioUnlocked = false;
@@ -897,32 +897,47 @@
       }
     }
 
-    let isFullscreen = false;
+    // ================= FULLSCREEN API KHUSUS AREA KOMIK =================
     function toggleFullscreen() {
-      const modalOverlay = document.getElementById('pdfModal');
-      const modalContent = document.getElementById('pdfModalContent');
-      const btnIcon = document.getElementById('btnFullscreen').querySelector('i');
+      const container = document.getElementById('pdfScrollContainer');
       
-      isFullscreen = !isFullscreen;
-      
-      if (isFullscreen) {
-        modalOverlay.classList.remove('p-3', 'md:p-6');
-        modalOverlay.classList.add('p-0');
-        modalContent.classList.remove('max-w-4xl', 'h-[90vh]', 'rounded-3xl', 'border-4');
-        modalContent.classList.add('max-w-full', 'h-screen', 'rounded-none', 'border-0');
-        btnIcon.classList.remove('fa-expand');
-        btnIcon.classList.add('fa-compress');
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        // Masuk Fullscreen khusus untuk kotak gelap
+        if (container.requestFullscreen) {
+          container.requestFullscreen();
+        } else if (container.webkitRequestFullscreen) { /* Safari */
+          container.webkitRequestFullscreen();
+        }
       } else {
-        modalOverlay.classList.add('p-3', 'md:p-6');
-        modalOverlay.classList.remove('p-0');
-        modalContent.classList.add('max-w-4xl', 'h-[90vh]', 'rounded-3xl', 'border-4');
-        modalContent.classList.remove('max-w-full', 'h-screen', 'rounded-none', 'border-0');
-        btnIcon.classList.remove('fa-compress');
-        btnIcon.classList.add('fa-expand');
+        // Keluar Fullscreen
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+          document.webkitExitFullscreen();
+        }
       }
     }
 
-    // ================= RENDER PDF.JS =================
+    // Mendeteksi perubahan layar penuh untuk mengganti icon/tombol
+    document.addEventListener('fullscreenchange', updateFullscreenUI);
+    document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
+
+    function updateFullscreenUI() {
+      const btnIcon = document.getElementById('btnFullscreen').querySelector('i');
+      const floatingBtn = document.getElementById('btnFloatingExit');
+      
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        btnIcon.classList.remove('fa-expand');
+        btnIcon.classList.add('fa-compress');
+        floatingBtn.classList.remove('hidden'); // Tampilkan tombol merah melayang
+      } else {
+        btnIcon.classList.remove('fa-compress');
+        btnIcon.classList.add('fa-expand');
+        floatingBtn.classList.add('hidden'); // Sembunyikan tombol merah melayang
+      }
+    }
+
+    // ================= RENDER PDF.JS (SUPPORT HP) =================
     let isPdfLoaded = false;
 
     async function openComicPdfViewer() {
@@ -934,6 +949,7 @@
         content.classList.remove('scale-95');
       }, 10);
 
+      // Cek apakah PDF sudah dirender sebelumnya
       if (isPdfLoaded) return;
       
       const loading = document.getElementById('pdfLoadingIndicator');
@@ -947,12 +963,15 @@
         
         for(let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
             const page = await pdf.getPage(pageNum);
+            
+            // Atur skala agar tajam di HP
             const viewport = page.getViewport({ scale: 1.5 });
             
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             canvas.height = viewport.height;
             canvas.width = viewport.width;
+            
             canvas.className = "w-full max-w-3xl h-auto rounded-xl shadow-md border-2 border-slate-200 bg-white object-contain";
             
             canvasWrapper.appendChild(canvas);
@@ -963,7 +982,7 @@
         isPdfLoaded = true;
         loading.classList.add('hidden');
       } catch(err) {
-        console.error("Gagal Render PDF (Jalankan via Local Server):", err);
+        console.error("Gagal Render PDF:", err);
         // Fallback aman untuk tes lokal tanpa server
         canvasWrapper.innerHTML = `
           <div class="w-full h-full flex flex-col">
@@ -982,11 +1001,17 @@
     function closeComicPdfViewer() {
       const modal = document.getElementById('pdfModal');
       const content = document.getElementById('pdfModalContent');
+      
+      // Jika tertutup saat fullscreen, keluar fullscreen dulu
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+         if (document.exitFullscreen) document.exitFullscreen();
+         else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
+
       modal.classList.add('opacity-0');
       content.classList.add('scale-95');
       setTimeout(() => {
         modal.classList.add('hidden');
-        if (isFullscreen) toggleFullscreen(); 
       }, 300);
     }
 
@@ -1160,6 +1185,7 @@
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
         playSound('correct'); 
         
+        // Simpan Active Group
         activeGroupName = groups[groupIndex].name;
         
         if(internalStudentsList.length === 0) {
@@ -1302,7 +1328,7 @@
           <button 
             type="button" 
             onclick="submitEssayAnswer()" 
-            class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 px-8 rounded-2xl font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1.5 active:shadow-none transition-all flex items-center justify-center gap-2 self-end"
+            class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 px-8 rounded-2xl font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2 self-end"
           >
             <span>Kirim Jawabanmu Sekarang!</span>
             <i class="fa-solid fa-paper-plane"></i>
