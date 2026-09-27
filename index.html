@@ -13,8 +13,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
   <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <!-- PDF.js untuk Render PDF Murni di Browser (Dukungan penuh untuk HP) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -165,22 +163,20 @@
       width: 100%;
       max-width: 250px;
       height: 22px;
-      border: 2px solid #0284c7; /* Warna biru outline */
+      border: 2px solid #0284c7; 
       border-radius: 999px;
       padding: 3px;
       position: relative;
       overflow: hidden;
     }
-
     .loading-box-fill {
       height: 100%;
       width: 30%;
-      background-color: #38bdf8; /* Warna biru menyala */
+      background-color: #38bdf8; 
       border-radius: 999px;
       position: absolute;
       animation: loadingSlide 1.2s infinite ease-in-out alternate;
     }
-
     @keyframes loadingSlide {
       0% { left: 3px; }
       100% { left: calc(100% - 30% - 3px); }
@@ -207,7 +203,7 @@
 </head>
 <body class="text-slate-800 antialiased p-2 md:p-8 flex flex-col justify-between">
 
-  <main class="max-w-7xl mx-auto w-full flex-grow flex items-center justify-center">
+  <main class="max-w-7xl mx-auto w-full flex-grow flex items-center justify-center pb-20 md:pb-0">
 
     <!-- ================= 0. BERANDA ================= -->
     <section id="page-landing" class="page-section active w-full max-w-6xl mx-auto">
@@ -248,9 +244,9 @@
           <p class="text-sky-50 text-sm md:text-base mt-3 font-medium drop-shadow-md">Selesaikan 4 langkah seru ini bareng teman-temanmu ya!</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-none mx-auto w-full">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-none mx-auto w-full items-stretch">
           <!-- Langkah 1 -->
-          <div onclick="goToPage('spin')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-amber-50/90 to-amber-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(245,158,11,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-amber-300/80 flex flex-col justify-between min-h-[380px] group transition-all duration-300 hover:-translate-y-2">
+          <div onclick="goToPage('spin')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-amber-50/90 to-amber-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(245,158,11,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-amber-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
             <div>
               <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-500 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-amber-500/30 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                 <i class="fa-solid fa-dharmachakra"></i>
@@ -265,14 +261,14 @@
           </div>
 
           <!-- Langkah 2 -->
-          <div onclick="goToPage('komik')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-sky-50/90 to-sky-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(14,165,233,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-sky-300/80 flex flex-col justify-between min-h-[380px] group transition-all duration-300 hover:-translate-y-2">
+          <div onclick="goToPage('komik')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-sky-50/90 to-sky-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(14,165,233,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-sky-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
             <div>
               <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-sky-500 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-sky-500/30 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
                 <i class="fa-solid fa-book-open"></i>
               </div>
               <span class="text-xs font-extrabold text-sky-600 uppercase tracking-wider drop-shadow-sm">Langkah 2</span>
               <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Baca Cerita Komik</h3>
-              <p class="text-sm text-slate-600 leading-relaxed font-medium">Buka dan baca cerita bergambar yang lucu dan menarik bareng timmu.</p>
+              <p class="text-sm text-slate-600 leading-relaxed font-medium">Buka dan baca cerita bergambar dan jawab kuis di sela-sela ceritanya.</p>
             </div>
             <div class="mt-8 flex items-center text-sky-600 font-bold text-sm gap-2 group-hover:translate-x-2 transition-transform">
               Ayo Membaca <i class="fa-solid fa-arrow-right"></i>
@@ -280,13 +276,13 @@
           </div>
 
           <!-- Langkah 3 -->
-          <div onclick="goToPage('quiz')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-rose-50/90 to-rose-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(244,63,94,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-rose-300/80 flex flex-col justify-between min-h-[380px] group transition-all duration-300 hover:-translate-y-2">
+          <div onclick="goToPage('quiz')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-rose-50/90 to-rose-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(244,63,94,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-rose-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
             <div>
               <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-400 to-rose-500 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-rose-500/30 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                 <i class="fa-solid fa-bolt"></i>
               </div>
               <span class="text-xs font-extrabold text-rose-600 uppercase tracking-wider drop-shadow-sm">Langkah 3</span>
-              <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Tebak Kuis Seru</h3>
+              <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Tebak Kuis Akhir</h3>
               <p class="text-sm text-slate-600 leading-relaxed font-medium">Jawab 10 soal seru tentang cerita tadi dan dapatkan poin penuh!</p>
             </div>
             <div class="mt-8 flex items-center text-rose-600 font-bold text-sm gap-2 group-hover:translate-x-2 transition-transform">
@@ -295,7 +291,7 @@
           </div>
 
           <!-- Langkah 4 -->
-          <div onclick="goToPage('nilai')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-indigo-50/90 to-indigo-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(99,102,241,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-indigo-300/80 flex flex-col justify-between min-h-[380px] group transition-all duration-300 hover:-translate-y-2">
+          <div onclick="goToPage('nilai')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-indigo-50/90 to-indigo-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(99,102,241,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-indigo-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
             <div>
               <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-600 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-indigo-600/30 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
                 <i class="fa-solid fa-award"></i>
@@ -478,12 +474,20 @@
               </div>
               <h3 class="font-formal text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight mt-2 drop-shadow-sm">Siap Terbang ke Dunia Cerita? ✈️</h3>
               <p class="text-slate-600 font-medium mt-4 mb-10 max-w-lg mx-auto text-sm md:text-base leading-relaxed">
-                Yuk, buka buku cerita bergambar sekarang! Baca perlahan, pahami alurnya, dan diskusikan bersama teman satu timmu sebelum lanjut ke kuis.
+                Yuk, buka buku cerita bergambar sekarang! Baca perlahan, pahami alurnya, dan jawab evaluasi di sela-sela ceritanya bersama teman satu timmu.
               </p>
               
-              <button onclick="openComicPdfViewer()" class="w-full sm:w-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-formal text-base md:text-lg px-10 py-4 rounded-[1.5rem] font-bold shadow-[0_8px_0_#1E40AF] active:translate-y-2 active:shadow-none transition-all flex items-center justify-center gap-3 group-hover:shadow-[0_8px_0_#1E40AF,0_15px_20px_rgba(37,99,235,0.4)]">
-                <i class="fa-solid fa-book-open"></i> Ayo Baca Sekarang!
-              </button>
+              <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+                <!-- Tombol Baca -->
+                <button onclick="openComicViewer()" class="w-full sm:w-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-formal text-base md:text-lg px-8 py-4 rounded-[1.5rem] font-bold shadow-[0_8px_0_#1E40AF] active:translate-y-2 active:shadow-none transition-all flex items-center justify-center gap-3">
+                  <i class="fa-solid fa-book-open"></i> Ayo Baca Sekarang!
+                </button>
+                <!-- Tombol Unduh PDF -->
+                <a href="komik.pdf" download="Komik_LinguaPlay.pdf" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-formal text-base md:text-lg px-8 py-4 rounded-[1.5rem] font-bold shadow-[0_8px_0_#047857] active:translate-y-2 active:shadow-none transition-all flex items-center justify-center gap-3">
+                  <i class="fa-solid fa-download"></i> Unduh Komik (PDF)
+                </a>
+              </div>
+              
             </div>
           </div>
         </div>
@@ -499,8 +503,8 @@
               <i class="fa-solid fa-bolt"></i>
             </span>
             <div class="text-center md:text-left">
-              <h3 class="font-formal text-2xl font-extrabold text-white drop-shadow-md">Kuis Berhadiah Poin</h3>
-              <p class="text-sm text-sky-100 mt-1 font-medium drop-shadow-sm">Jawab pertanyaan berikut berdasarkan cerita komik!</p>
+              <h3 class="font-formal text-2xl font-extrabold text-white drop-shadow-md">Kuis Akhir Berhadiah</h3>
+              <p class="text-sm text-sky-100 mt-1 font-medium drop-shadow-sm">Jawab 10 pertanyaan ini untuk menentukan pemenang!</p>
             </div>
           </div>
           <div class="flex items-center gap-3">
@@ -526,59 +530,7 @@
       </div>
     </section>
 
-    <!-- ================= 5. RUANG CATATAN ================= -->
-    <section id="page-diskusi" class="page-section w-full">
-      <div class="main-panel backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-sky-300/40">
-        <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
-          <div>
-            <span class="text-xs font-bold text-emerald-500 uppercase tracking-wider">Aktivitas Bersama</span>
-            <h2 class="font-fun text-3xl font-bold text-slate-900">Papan Catatan Kelompok</h2>
-          </div>
-          <div class="flex items-center gap-2">
-            <button onclick="goToPage('landing')" title="Kembali ke Beranda" class="text-xs bg-brand-softPurple text-brand-purple hover:bg-brand-purple hover:text-white px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5">
-              <i class="fa-solid fa-house"></i>
-              <span class="hidden sm:inline">Beranda</span>
-            </button>
-            <button onclick="goToPage('dashboard')" class="text-xs bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-xl font-bold transition">
-              <i class="fa-solid fa-arrow-left mr-1"></i> Pilihan Misi
-            </button>
-          </div>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="md:col-span-1 bg-emerald-50 p-6 rounded-3xl border border-emerald-100">
-            <h4 class="font-fun text-lg font-bold text-emerald-900 mb-2">Tips Menulis Cerita:</h4>
-            <ul class="text-xs text-emerald-800 space-y-2 list-disc list-inside">
-              <li>Siapa saja tokoh baik dan tokoh jahatnya?</li>
-              <li>Ceritakan secara singkat kejadian apa yang paling seru!</li>
-              <li>Pelajaran baik apa yang bisa kita tiru di rumah atau sekolah?</li>
-            </ul>
-          </div>
-
-          <div class="md:col-span-2 bg-white p-6 rounded-3xl border border-slate-200">
-            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Tempel Catatan Baru:</label>
-            <div class="flex gap-2 mb-3">
-              <input type="text" id="groupNameInput" placeholder="Nama Kelompokmu (Misal: Kelompok 1)" class="w-1/3 text-xs p-3 rounded-xl border border-slate-200 focus:outline-brand-purple">
-              <input type="text" id="discussionInput" placeholder="Tuliskan pesan cerita yang kamu dapatkan..." class="w-2/3 text-xs p-3 rounded-xl border border-slate-200 focus:outline-brand-purple">
-            </div>
-            <button onclick="postDiscussion()" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-fun font-bold px-5 py-2.5 rounded-xl transition">
-              <i class="fa-solid fa-paper-plane mr-1"></i> Tempel di Papan Kelas
-            </button>
-
-            <div class="mt-6 border-t pt-4">
-              <h5 class="text-xs font-bold text-slate-400 uppercase mb-3">Catatan Teman-Temanmu:</h5>
-              <div id="notesBoard" class="space-y-2 max-h-48 overflow-y-auto pr-2">
-                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs">
-                  <span class="font-bold text-amber-800">Kelompok 1:</span> Kita harus selalu menepati janji dan tidak boleh sombong kepada orang lain! ✨
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= 6. PAPAN SKOR PODIUM & ULASAN ================= -->
+    <!-- ================= 5. PAPAN PEMENANG & ULASAN KUIS ================= -->
     <section id="page-nilai" class="page-section w-full">
       <div class="w-full max-w-5xl mx-auto py-6 px-4 md:px-0">
         
@@ -597,10 +549,10 @@
           <p class="text-sky-100 text-sm md:text-base mt-3 font-medium drop-shadow-sm">Hore! Semua kelompok sudah menyelesaikan tantangan dengan hebat!</p>
         </div>
 
-        <!-- BLOK PODIUM JUARA (REALTIME) -->
+        <!-- BLOK PODIUM JUARA -->
         <div class="flex flex-row items-end justify-center gap-2 sm:gap-5 mt-16 mb-12 h-[18rem] sm:h-[22rem] relative px-1 w-full max-w-3xl mx-auto">
           
-          <!-- PODIUM JUARA 2 (KIRI - SILVER) -->
+          <!-- PODIUM JUARA 2 -->
           <div class="w-[31%] max-w-[140px] h-48 sm:h-64 bg-gradient-to-t from-slate-200/90 to-white/40 backdrop-blur-xl border-t-2 border-l border-r border-white/80 rounded-t-[2rem] shadow-[0_-5px_25px_rgba(0,0,0,0.1)] flex flex-col items-center justify-start pt-6 sm:pt-8 relative group hover:-translate-y-1 transition-transform px-1 text-center">
             <div class="absolute -top-6 sm:-top-10 w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-slate-100 to-slate-300 rounded-full flex items-center justify-center text-lg sm:text-2xl shadow-lg shadow-slate-400/50 border-[2px] sm:border-[3px] border-white z-20">🥈</div>
             <h3 class="font-formal font-bold text-slate-800 text-[10px] sm:text-lg mt-1 sm:mt-2 leading-tight break-words w-full" id="podium-rank-2-title">Kelompok 3</h3>
@@ -610,7 +562,7 @@
             <div class="mt-auto mb-3 sm:mb-5 text-4xl sm:text-6xl font-black text-white/50 drop-shadow-md">#2</div>
           </div>
 
-          <!-- PODIUM JUARA 1 (TENGAH - EMAS) -->
+          <!-- PODIUM JUARA 1 -->
           <div class="w-[36%] max-w-[180px] h-60 sm:h-80 bg-gradient-to-t from-amber-400/90 to-yellow-100/60 backdrop-blur-xl border-t-2 border-l border-r border-white/90 rounded-t-[2.5rem] shadow-[0_-10px_30px_rgba(245,158,11,0.3)] flex flex-col items-center justify-start pt-8 sm:pt-10 relative z-10 group hover:-translate-y-1 transition-transform px-1 text-center">
             <div class="absolute -top-8 sm:-top-12 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-amber-300 to-amber-500 rounded-full flex items-center justify-center text-2xl sm:text-3xl shadow-xl shadow-amber-500/50 border-[2px] sm:border-[3px] border-white z-20 animate-bounce">🥇</div>
             <h3 class="font-formal font-extrabold text-slate-900 text-xs sm:text-xl mt-1 sm:mt-2 leading-tight break-words w-full" id="podium-rank-1-title">Skor Kamu</h3>
@@ -620,7 +572,7 @@
             <div class="mt-auto mb-4 sm:mb-6 text-5xl sm:text-7xl font-black text-white/60 drop-shadow-lg">#1</div>
           </div>
 
-          <!-- PODIUM JUARA 3 (KANAN - PERUNGGU) -->
+          <!-- PODIUM JUARA 3 -->
           <div class="w-[31%] max-w-[140px] h-40 sm:h-56 bg-gradient-to-t from-orange-300/90 to-orange-100/40 backdrop-blur-xl border-t-2 border-l border-r border-white/70 rounded-t-[2rem] shadow-[0_-5px_25px_rgba(0,0,0,0.1)] flex flex-col items-center justify-start pt-5 sm:pt-7 relative group hover:-translate-y-1 transition-transform px-1 text-center">
             <div class="absolute -top-5 sm:-top-10 w-9 h-9 sm:w-14 sm:h-14 bg-gradient-to-br from-orange-200 to-orange-400 rounded-full flex items-center justify-center text-base sm:text-2xl shadow-lg shadow-orange-500/40 border-[2px] sm:border-[3px] border-white z-20">🥉</div>
             <h3 class="font-formal font-bold text-slate-800 text-[9px] sm:text-lg mt-1 sm:mt-2 leading-tight break-words w-full" id="podium-rank-3-title">Kelompok 2</h3>
@@ -647,7 +599,6 @@
             <i class="fa-solid fa-list-check text-amber-400 mr-2"></i> Ulasan Jawaban Kamu
           </h3>
           <p class="text-center text-sm text-sky-200 font-medium mb-8 drop-shadow-sm">Pelajari kembali jawabanmu di bawah ini agar makin pintar!</p>
-          
           <div id="reviewContainer" class="space-y-4">
             <!-- Review items go here dynamically -->
           </div>
@@ -658,12 +609,12 @@
 
   </main>
 
-  <!-- ================= POP-UP BACA PDF KOMIK ================= -->
+  <!-- ================= POP-UP BACA GAMBAR KOMIK ================= -->
   <div id="pdfModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6 transition-all duration-300">
     
     <div id="pdfModalContent" class="bg-white rounded-3xl max-w-4xl w-full p-4 md:p-6 relative border-4 border-brand-purple/20 shadow-2xl flex flex-col h-[90vh] transition-all duration-300">
       
-      <!-- Bagian Header Putih -->
+      <!-- Bagian Header -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3" id="pdfHeader">
         <div class="flex items-center gap-3">
           <span class="w-9 h-9 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-bold">
@@ -673,28 +624,24 @@
         </div>
         
         <div class="flex gap-2">
-          <!-- Tombol Download (Masih Dipertahankan) -->
-          <a href="komik.pdf" download="Komik_LinguaPlay.pdf" title="Unduh Komik" class="text-slate-400 hover:text-emerald-500 text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
-            <i class="fa-solid fa-download"></i>
-          </a>
           <button onclick="toggleFullscreen()" id="btnFullscreen" title="Perbesar Layar" class="text-slate-400 hover:text-brand-purple text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
             <i class="fa-solid fa-expand"></i>
           </button>
-          <button onclick="closeComicPdfViewer()" title="Tutup Komik" class="text-slate-400 hover:text-rose-500 text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
+          <button onclick="closeComicViewer()" title="Tutup Komik" class="text-slate-400 hover:text-rose-500 text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
       </div>
 
-      <!-- Area Baca PDF (Di-render murni sebagai Canvas untuk HP) -->
-      <div id="pdfScrollContainer" class="flex-grow w-full rounded-2xl border border-slate-200 bg-slate-900 p-2 md:p-4 overflow-y-auto custom-scrollbar relative flex flex-col items-center gap-4">
+      <!-- Area Baca Gambar Murni Terintegrasi dengan Soal (Cocok untuk HP) -->
+      <div id="pdfScrollContainer" class="flex-grow w-full rounded-2xl border border-slate-200 bg-slate-900 p-2 md:p-4 overflow-y-auto custom-scrollbar relative flex flex-col items-center gap-0">
         
-        <!-- Tombol Exit Fullscreen Floating (hanya muncul saat fullscreen) -->
+        <!-- Tombol Exit Fullscreen Floating -->
         <button onclick="toggleFullscreen()" id="btnFloatingExit" class="fixed top-4 right-4 z-50 bg-rose-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hidden hover:bg-rose-600 transition border-2 border-white/20">
           <i class="fa-solid fa-compress"></i>
         </button>
 
-        <!-- Loading Animation Kustom (Bar Progres Animasi Bolak-Balik) -->
+        <!-- Loading Animation Kustom -->
         <div id="pdfLoadingIndicator" class="absolute inset-0 flex flex-col items-center justify-center bg-[#0f172a] z-20 rounded-xl hidden">
           <div class="w-full flex flex-col items-center">
             <p class="font-bold text-sky-100 tracking-widest text-sm mb-3 drop-shadow-md">Memuat gambar . . .</p>
@@ -704,14 +651,16 @@
           </div>
         </div>
 
-        <!-- Wadah Gambar PDF -->
-        <div id="pdfCanvasWrapper" class="flex flex-col items-center gap-4 w-full"></div>
+        <!-- Wadah Susunan Gambar Komik & Soal -->
+        <div id="comicCanvasWrapper" class="flex flex-col w-full max-w-2xl bg-white shadow-2xl min-h-full pb-8">
+          <!-- Gambar dan soal akan dirender oleh JS di sini -->
+        </div>
 
       </div>
 
       <div class="flex items-center justify-between pt-3 border-t border-slate-100 mt-3" id="pdfFooter">
         <p class="text-xs text-slate-400 font-medium hidden sm:block">Baca ceritanya sampai selesai ya, lalu klik tombol biru untuk mulai kuis!</p>
-        <button onclick="closeComicPdfViewer(); goToPage('quiz');" class="bg-brand-purple hover:bg-brand-darkPurple text-white px-5 py-2.5 rounded-xl font-formal text-xs font-bold shadow-md transition flex items-center gap-1.5 ml-auto">
+        <button onclick="closeComicViewer(); goToPage('quiz');" class="bg-brand-purple hover:bg-brand-darkPurple text-white px-5 py-2.5 rounded-xl font-formal text-xs font-bold shadow-md transition flex items-center gap-1.5 ml-auto">
           Selesai Baca, Ayo Kuis! <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
@@ -719,7 +668,7 @@
     </div>
   </div>
 
-  <!-- ================= CUSTOM MODAL (ALERT/CONFIRM) ================= -->
+  <!-- ================= CUSTOM MODAL (HANYA UNTUK WARNING KOSONG SAAT RODA PUTAR) ================= -->
   <div id="customModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
     <div class="bg-white/95 backdrop-blur-xl border border-white/50 rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300" id="customModalContent">
       <div class="text-center">
@@ -748,9 +697,6 @@
       "Kelompok 3": { score: 70, accuracy: 70 },
       "Kelompok 4": { score: 50, accuracy: 50 }
     };
-
-    // Konfigurasi Worker PDF.js agar cepat dimuat
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js';
 
     // ================= CUSTOM MODAL NOTIFICATION =================
     function showNotification(type, title, message, confirmCallback = null) {
@@ -866,22 +812,26 @@
       const t = audioCtx.currentTime;
       
       if (type === 'correct') {
-        playBeep(523.25, 'sine', t, 0.2, 0.4); 
-        playBeep(659.25, 'sine', t + 0.15, 0.3, 0.4); 
-        playBeep(1046.50, 'sine', t + 0.3, 0.5, 0.3); 
+        playBeep(523.25, 'square', t, 0.1, 0.2); 
+        playBeep(659.25, 'square', t + 0.1, 0.1, 0.2); 
+        playBeep(783.99, 'square', t + 0.2, 0.1, 0.2); 
+        playBeep(1046.50, 'square', t + 0.3, 0.4, 0.3); 
+        playBeep(1318.51, 'sine', t + 0.3, 0.6, 0.3); 
       } 
       else if (type === 'wrong') {
-        playBeep(350, 'square', t, 0.25, 0.15);
-        playBeep(250, 'square', t + 0.25, 0.4, 0.15);
+        playBeep(329.63, 'sawtooth', t, 0.2, 0.2); 
+        playBeep(311.13, 'sawtooth', t + 0.2, 0.2, 0.2); 
+        playBeep(293.66, 'sawtooth', t + 0.4, 0.2, 0.2); 
+        playBeep(277.18, 'sawtooth', t + 0.6, 0.6, 0.2); 
       } 
       else if (type === 'win') {
-        playBeep(261.63, 'square', t, 0.2, 0.1);
-        playBeep(329.63, 'square', t + 0.2, 0.2, 0.1);
-        playBeep(392.00, 'square', t + 0.4, 0.2, 0.1);
-        
-        playBeep(523.25, 'sine', t + 0.6, 2.0, 0.4); 
-        playBeep(659.25, 'sine', t + 0.6, 2.0, 0.3); 
-        playBeep(1046.50, 'sine', t + 0.6, 2.0, 0.2); 
+        playBeep(392.00, 'square', t, 0.15, 0.2); 
+        playBeep(392.00, 'square', t + 0.15, 0.15, 0.2); 
+        playBeep(392.00, 'square', t + 0.3, 0.15, 0.2); 
+        playBeep(523.25, 'square', t + 0.45, 0.4, 0.2); 
+        playBeep(392.00, 'square', t + 0.85, 0.2, 0.2); 
+        playBeep(523.25, 'square', t + 1.05, 0.6, 0.3); 
+        playBeep(659.25, 'sine', t + 1.05, 0.8, 0.3); 
       }
       else if (type === 'alert') {
         playBeep(400, 'sine', t, 0.15, 0.2);
@@ -897,28 +847,25 @@
       }
     }
 
-    // ================= FULLSCREEN API KHUSUS AREA KOMIK =================
+    // ================= FULLSCREEN API =================
     function toggleFullscreen() {
       const container = document.getElementById('pdfScrollContainer');
       
       if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-        // Masuk Fullscreen khusus untuk kotak gelap
         if (container.requestFullscreen) {
           container.requestFullscreen();
-        } else if (container.webkitRequestFullscreen) { /* Safari */
+        } else if (container.webkitRequestFullscreen) { 
           container.webkitRequestFullscreen();
         }
       } else {
-        // Keluar Fullscreen
         if (document.exitFullscreen) {
           document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) { /* Safari */
+        } else if (document.webkitExitFullscreen) { 
           document.webkitExitFullscreen();
         }
       }
     }
 
-    // Mendeteksi perubahan layar penuh untuk mengganti icon/tombol
     document.addEventListener('fullscreenchange', updateFullscreenUI);
     document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
 
@@ -929,80 +876,116 @@
       if (document.fullscreenElement || document.webkitFullscreenElement) {
         btnIcon.classList.remove('fa-expand');
         btnIcon.classList.add('fa-compress');
-        floatingBtn.classList.remove('hidden'); // Tampilkan tombol merah melayang
+        floatingBtn.classList.remove('hidden'); 
       } else {
         btnIcon.classList.remove('fa-compress');
         btnIcon.classList.add('fa-expand');
-        floatingBtn.classList.add('hidden'); // Sembunyikan tombol merah melayang
+        floatingBtn.classList.add('hidden'); 
       }
     }
 
-    // ================= RENDER PDF.JS (SUPPORT HP) =================
-    let isPdfLoaded = false;
+    // ================= MAPPING SOAL AYO BERPIKIR =================
+    const inlineQuestions = {
+      2: { type: "LITERAL 1", q: "Apa yang dilakukan Raka pada malam hari hingga ia tidur larut?" },
+      3: { type: "LITERAL 2", q: "Mengapa Raka tidak sempat sarapan sebelum berangkat ke sekolah?" },
+      4: { type: "INFERENSI 1", q: "Mengapa Raka merasa lemas dan sulit berkonsentrasi saat belajar di kelas?" },
+      6: { type: "INFERENSI 2", q: "Menurutmu, apa hubungan antara kebiasaan Raka tidur larut dengan kondisi tubuhnya pada pagi hari?" },
+      7: { type: "EVALUASI 1", q: "Menurutmu, apakah kebiasaan Raka bermain gim hingga larut malam merupakan kebiasaan yang baik? Jelaskan alasanmu." },
+      9: { type: "INFERENSI 3", q: "Mengapa Raka mulai mengubah kebiasaannya setelah mendengarkan penjelasan Bu Guru?" },
+      10: { type: "EVALUASI 2", q: "Apakah keputusan Raka untuk mulai sarapan, berolahraga, dan tidur lebih awal sudah tepat? Jelaskan alasanmu." },
+      15: { type: "EVALUASI 3", q: "Menurutmu, dari kebiasaan sehat yang dilakukan Raka, kebiasaan manakah yang paling penting untuk menjaga kesehatan? Jelaskan alasanmu." },
+      17: { type: "EVALUASI 4", q: "Jika kamu menjadi teman Raka, apakah kamu akan menyarankan Raka untuk mengubah kebiasaannya seperti dalam cerita? Jelaskan alasanmu." }
+    };
 
-    async function openComicPdfViewer() {
+    let isComicLoaded = false;
+
+    function openComicViewer() {
       const modal = document.getElementById('pdfModal');
       const content = document.getElementById('pdfModalContent');
+      
       modal.classList.remove('hidden');
       setTimeout(() => {
         modal.classList.remove('opacity-0');
         content.classList.remove('scale-95');
       }, 10);
 
-      // Cek apakah PDF sudah dirender sebelumnya
-      if (isPdfLoaded) return;
+      if (isComicLoaded) return;
       
       const loading = document.getElementById('pdfLoadingIndicator');
-      const canvasWrapper = document.getElementById('pdfCanvasWrapper');
+      const wrapper = document.getElementById('comicCanvasWrapper');
       
       loading.classList.remove('hidden');
-      canvasWrapper.innerHTML = '';
+      wrapper.innerHTML = '';
 
-      try {
-        const pdf = await pdfjsLib.getDocument('komik.pdf').promise;
+      setTimeout(() => {
+        let htmlImages = '';
         
-        for(let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-            const page = await pdf.getPage(pageNum);
-            
-            // Atur skala agar tajam di HP
-            const viewport = page.getViewport({ scale: 1.5 });
-            
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            
-            canvas.className = "w-full max-w-3xl h-auto rounded-xl shadow-md border-2 border-slate-200 bg-white object-contain";
-            
-            canvasWrapper.appendChild(canvas);
-            
-            const renderCtx = { canvasContext: ctx, viewport: viewport };
-            await page.render(renderCtx).promise;
+        for (let i = 1; i <= 18; i++) {
+            htmlImages += `<img src="komik-${i}.jpg" alt="Halaman ${i}" class="w-full h-auto object-cover border-b-2 border-slate-200" onerror="this.src='https://placehold.co/600x800/e2e8f0/475569?text=Halaman+${i}+Tidak+Ditemukan';">`;
+
+            if (inlineQuestions[i]) {
+                htmlImages += `
+                  <div class="bg-gradient-to-br from-sky-50 to-blue-100 p-5 md:p-7 m-4 md:mx-8 rounded-2xl border-2 border-blue-200 border-l-8 border-l-blue-500 shadow-lg flex flex-col relative z-10">
+                    <div class="flex items-center gap-2 mb-4">
+                      <span class="bg-blue-600 text-white text-[10px] sm:text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-widest shadow-sm"><i class="fa-solid fa-brain mr-1"></i> Ayo Berpikir</span>
+                      <span class="text-xs sm:text-sm font-bold text-blue-800 tracking-wider">${inlineQuestions[i].type}</span>
+                    </div>
+                    <p class="font-formal font-bold text-slate-800 text-sm sm:text-base mb-4 leading-relaxed">${inlineQuestions[i].q}</p>
+                    <textarea id="eval-input-${i}" class="w-full p-4 text-sm rounded-xl border-2 border-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 mb-4 resize-none shadow-inner bg-white/90 transition-all" rows="3" placeholder="Tuliskan jawabanmu di sini..."></textarea>
+                    <button id="btn-eval-${i}" onclick="submitInlineAnswer(${i})" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-6 py-3 rounded-xl shadow-[0_4px_0_#1d4ed8] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center sm:justify-start w-full sm:w-max">
+                      <i class="fa-solid fa-paper-plane mr-2"></i> Simpan Jawaban
+                    </button>
+                  </div>
+                `;
+            }
         }
-        isPdfLoaded = true;
-        loading.classList.add('hidden');
-      } catch(err) {
-        console.error("Gagal Render PDF:", err);
-        // Fallback aman untuk tes lokal tanpa server
-        canvasWrapper.innerHTML = `
-          <div class="w-full h-full flex flex-col">
-            <div class="bg-amber-100 text-amber-800 text-xs p-3 rounded-lg mb-3 flex items-start gap-2">
-              <i class="fa-solid fa-circle-info mt-0.5"></i>
-              <p>Membuka dalam mode pratinjau lokal. Untuk tampilan HP yang optimal, jalankan file ini menggunakan Web Server.</p>
+
+        htmlImages += `
+          <div class="bg-gradient-to-br from-amber-50 to-yellow-100 p-5 md:p-8 m-4 md:mx-8 rounded-3xl border-2 border-amber-200 shadow-xl mt-8 mb-16 flex flex-col">
+            <h3 class="font-fun text-xl md:text-2xl font-bold text-amber-700 mb-6 text-center drop-shadow-sm"><i class="fa-solid fa-list-check mr-2"></i> Ayo Menyimpulkan Cerita</h3>
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-[11px] font-extrabold text-amber-800 uppercase tracking-wide mb-1">1. ORIENTASI</label>
+                    <p class="text-[11px] md:text-xs text-amber-700 mb-2 font-medium">Siapa tokoh utama dan bagaimana keadaan Raka pada awal cerita?</p>
+                    <textarea class="w-full p-3 text-sm rounded-2xl border-2 border-white focus:outline-none focus:border-amber-400 shadow-inner bg-white/80 resize-none" rows="2" placeholder="Jawabanmu..."></textarea>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-extrabold text-amber-800 uppercase tracking-wide mb-1">2. KOMPLIKASI</label>
+                    <p class="text-[11px] md:text-xs text-amber-700 mb-2 font-medium">Masalah apa yang dialami Raka?</p>
+                    <textarea class="w-full p-3 text-sm rounded-2xl border-2 border-white focus:outline-none focus:border-amber-400 shadow-inner bg-white/80 resize-none" rows="2" placeholder="Jawabanmu..."></textarea>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-extrabold text-amber-800 uppercase tracking-wide mb-1">3. RESOLUSI</label>
+                    <p class="text-[11px] md:text-xs text-amber-700 mb-2 font-medium">Bagaimana Raka menyelesaikan masalahnya?</p>
+                    <textarea class="w-full p-3 text-sm rounded-2xl border-2 border-white focus:outline-none focus:border-amber-400 shadow-inner bg-white/80 resize-none" rows="2" placeholder="Jawabanmu..."></textarea>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-extrabold text-amber-800 uppercase tracking-wide mb-1">4. KODA</label>
+                    <p class="text-[11px] md:text-xs text-amber-700 mb-2 font-medium">Apa pesan yang dapat kamu ambil dari cerita?</p>
+                    <textarea class="w-full p-3 text-sm rounded-2xl border-2 border-white focus:outline-none focus:border-amber-400 shadow-inner bg-white/80 resize-none" rows="2" placeholder="Jawabanmu..."></textarea>
+                </div>
             </div>
-            <iframe src="komik.pdf#toolbar=0" class="w-full flex-grow min-h-[60vh] rounded-xl border border-slate-300"></iframe>
+            <hr class="border-amber-200/60 my-8">
+            <h3 class="font-fun text-xl md:text-2xl font-bold text-amber-700 mb-3 text-center"><i class="fa-solid fa-pen-nib mr-2"></i> Ayo Menceritakan Kembali</h3>
+            <p class="text-[11px] md:text-xs text-amber-800 mb-4 font-medium leading-relaxed text-center max-w-lg mx-auto">Tuliskan kembali cerita <b>“Sehatlah Ragaku, Semangat Belajarku”</b> dengan bahasamu sendiri (3–5 paragraf).</p>
+            <textarea class="w-full p-4 text-sm rounded-2xl border-2 border-white focus:outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100 mb-5 resize-none shadow-inner bg-white/80" rows="6" placeholder="Tuliskan ceritamu yang hebat di sini..."></textarea>
+            
+            <button id="btnSimpanCerita" onclick="submitKesimpulan()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-2xl transition-all shadow-[0_6px_0_#d97706] active:translate-y-1.5 active:shadow-none flex items-center justify-center gap-2">
+                <i class="fa-solid fa-save text-lg"></i> Simpan Semua Pekerjaan
+            </button>
           </div>
         `;
-        isPdfLoaded = true; 
+        
+        wrapper.innerHTML = htmlImages;
+        isComicLoaded = true;
         loading.classList.add('hidden');
-      }
+      }, 1500); 
     }
 
-    function closeComicPdfViewer() {
+    function closeComicViewer() {
       const modal = document.getElementById('pdfModal');
       const content = document.getElementById('pdfModalContent');
       
-      // Jika tertutup saat fullscreen, keluar fullscreen dulu
       if (document.fullscreenElement || document.webkitFullscreenElement) {
          if (document.exitFullscreen) document.exitFullscreen();
          else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
@@ -1013,6 +996,45 @@
       setTimeout(() => {
         modal.classList.add('hidden');
       }, 300);
+    }
+
+    // Script untuk memproses Jawaban Langsung (Tanpa Pop-up)
+    function submitInlineAnswer(id) {
+      const input = document.getElementById('eval-input-' + id);
+      const btn = document.getElementById('btn-eval-' + id);
+      
+      if(input.value.trim().length < 5) {
+        playSound('wrong');
+        // Memberi efek berkedip merah pada input text sebagai ganti popup
+        input.classList.add('border-rose-500', 'bg-rose-50');
+        input.value = '';
+        input.placeholder = "Tuliskan jawaban yang lebih panjang dan jelas ya...";
+        setTimeout(() => {
+          input.classList.remove('border-rose-500', 'bg-rose-50');
+        }, 2000);
+        return;
+      }
+      
+      playSound('correct');
+      
+      // Mengunci teks dan merubah warna tombol tanpa popup sama sekali
+      btn.innerHTML = `<i class="fa-solid fa-check"></i> Jawaban Tersimpan`;
+      btn.className = "bg-emerald-500 text-white text-sm font-bold px-6 py-3 rounded-xl flex items-center justify-center sm:justify-start gap-2 w-full sm:w-max cursor-not-allowed opacity-90 transition-all";
+      btn.onclick = null; 
+      
+      input.disabled = true;
+      input.className = "w-full p-4 text-sm rounded-xl border-2 border-emerald-300 bg-emerald-50 text-emerald-800 mb-4 resize-none font-medium";
+    }
+
+    function submitKesimpulan() {
+      playSound('win');
+      // Mengubah tombol menjadi hijau tanpa memunculkan pop-up
+      const btn = document.getElementById('btnSimpanCerita');
+      if (btn) {
+          btn.innerHTML = `<i class="fa-solid fa-check-circle text-xl"></i> Tersimpan Sempurna!`;
+          btn.className = "w-full bg-emerald-500 text-white font-bold py-4 rounded-2xl transition-all shadow-[0_6px_0_#059669] cursor-not-allowed flex items-center justify-center gap-2";
+          btn.onclick = null;
+      }
     }
 
     // ================= RODA PUTAR =================
@@ -1080,7 +1102,6 @@
         drawWheel(); 
       } else if (internalStudentsList.includes(name)) {
         playSound('alert');
-        showNotification('warning', 'Nama Sudah Ada', `Nama <b>${name}</b> sudah dimasukkan ke dalam daftar!`);
       }
     }
 
@@ -1091,17 +1112,15 @@
     }
 
     function clearAllNames() {
+      internalStudentsList = [];
+      assignedStudents = groups.map(() => []);
+      assignmentCount = 0;
+      currentRotation = 0;
+      canvas.style.transform = 'rotate(0deg)';
+      renderStudentList();
+      updateGroupList();
+      drawWheel();
       playSound('alert');
-      showNotification('confirm', 'Hapus Semua Nama?', 'Yakin ingin menghapus semua nama siswa dari daftar ini?', () => {
-        internalStudentsList = [];
-        assignedStudents = groups.map(() => []);
-        assignmentCount = 0;
-        currentRotation = 0;
-        canvas.style.transform = 'rotate(0deg)';
-        renderStudentList();
-        updateGroupList();
-        drawWheel();
-      });
     }
 
     function renderStudentList() {
@@ -1152,7 +1171,6 @@
     function spinWheel() {
       if (internalStudentsList.length === 0) {
         playSound('wrong');
-        showNotification('warning', 'Daftar Kosong', 'Ups! Daftarnya kosong. Kamu harus menambahkan nama teman-temanmu di kolom kiri terlebih dahulu.');
         return;
       }
 
@@ -1185,16 +1203,8 @@
         confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
         playSound('correct'); 
         
-        // Simpan Active Group
         activeGroupName = groups[groupIndex].name;
         
-        if(internalStudentsList.length === 0) {
-          setTimeout(() => {
-            playSound('win');
-            showNotification('success', 'Selesai!', 'Yay! Semua siswa sudah berhasil masuk ke kelompoknya masing-masing. Silakan <b>Lanjut Baca Komik!</b>');
-          }, 600);
-        }
-
       }, 4000);
     }
 
@@ -1327,8 +1337,8 @@
           ></textarea>
           <button 
             type="button" 
-            onclick="submitEssayAnswer()" 
-            class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 px-8 rounded-2xl font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-2 self-end"
+            onclick="submitFinalEssayAnswer()" 
+            class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 px-8 rounded-2xl font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1.5 active:shadow-none transition-all flex items-center justify-center gap-2 self-end"
           >
             <span>Kirim Jawabanmu Sekarang!</span>
             <i class="fa-solid fa-paper-plane"></i>
@@ -1376,19 +1386,18 @@
       }, 2500); 
     }
 
-    function submitEssayAnswer() {
+    function submitFinalEssayAnswer() {
       const answerInput = document.getElementById('essayAnswerInput');
       const answerText = answerInput.value.trim().toLowerCase();
 
-      if (answerText.length === 0) {
+      if (answerText.length < 5) {
         playSound('wrong');
-        showNotification('warning', 'Jawaban Kosong', 'Ups! Kamu belum menuliskan jawaban apa pun. Ayo isi dulu ya!');
-        return;
-      }
-
-      if (answerText.length < 6) {
-        playSound('wrong');
-        showNotification('warning', 'Jawaban Terlalu Singkat', 'Ayo, tuliskan kalimat jawaban yang lebih lengkap dan jelas ya!');
+        answerInput.classList.add('border-rose-500', 'bg-rose-50');
+        answerInput.value = '';
+        answerInput.placeholder = "Tuliskan jawaban yang lebih panjang dan jelas ya...";
+        setTimeout(() => {
+          answerInput.classList.remove('border-rose-500', 'bg-rose-50');
+        }, 2000);
         return;
       }
 
@@ -1527,32 +1536,9 @@
       goToPage('quiz');
     }
 
+    // PENTING: Inisialisasi awal kuis agar tidak blank saat pertama kali masuk halaman
     renderQuestion();
 
-    // Catatan Kelas
-    function postDiscussion() {
-      const grp = document.getElementById('groupNameInput').value.trim();
-      const txt = document.getElementById('discussionInput').value.trim();
-      
-      if (!grp || !txt) {
-        playSound('alert');
-        showNotification('warning', 'Kolom Kosong', 'Pastikan nama kelompok dan catatan cerita sudah diisi ya!');
-        return;
-      }
-
-      const board = document.getElementById('notesBoard');
-      const newCard = document.createElement('div');
-      newCard.className = "p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs animate-pulse";
-      newCard.innerHTML = `<span class="font-bold text-emerald-800">${grp}:</span> ${txt}`;
-      board.prepend(newCard);
-
-      document.getElementById('discussionInput').value = '';
-    }
-
-    function triggerCelebration() {
-      playSound('win');
-      confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-    }
   </script>
 </body>
 </html>
