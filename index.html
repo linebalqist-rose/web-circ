@@ -58,15 +58,6 @@
         0 15px 35px -5px rgba(0, 0, 0, 0.2), 
         0 0 25px 4px rgba(14, 165, 233, 0.35);
     }
-    .main-panel:hover,
-    .main-panel:focus-within {
-      transform: translateY(-6px) scale(1.008);
-      border-color: rgba(56, 189, 248, 0.9) !important;
-      box-shadow: 
-        0 25px 45px -10px rgba(0, 0, 0, 0.25),
-        0 0 40px 10px rgba(14, 165, 233, 0.55),
-        0 0 20px 4px rgba(186, 230, 253, 0.8) !important;
-    }
 
     .font-fun { font-family: 'Fredoka', cursive, sans-serif; }
 
@@ -97,7 +88,7 @@
       box-shadow: 0 2px 0 #1D4ED8, 0 6px 12px rgba(37, 99, 235, 0.3);
     }
 
-    /* Roda Putar Custom Center Button */
+    /* Roda Putar & Canvas */
     .wheel-container {
       position: relative;
       width: 100%;
@@ -105,9 +96,10 @@
       aspect-ratio: 1 / 1;
       margin: 0 auto;
     }
-    #wheelCanvas {
+    .wheelCanvas {
       width: 100%;
       height: 100%;
+      transform-origin: center center; /* Memastikan roda berputar tepat di poros */
       filter: saturate(1.1) drop-shadow(0 15px 25px rgba(0,0,0,0.15));
       transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
     }
@@ -138,8 +130,6 @@
       transform: translate(-50%, -48%) scale(0.95);
       box-shadow: 0 2px 5px rgba(37, 99, 235, 0.5), inset 0 4px 8px rgba(0,0,0,0.2);
     }
-    .wheel-center-btn i { font-size: 1.25rem; margin-bottom: 2px; }
-    
     .spin-needle-top {
       position: absolute;
       top: -15px;
@@ -160,45 +150,31 @@
 
     /* Custom Loading Bar Animation */
     .loading-box-outline {
-      width: 100%;
-      max-width: 250px;
-      height: 22px;
-      border: 2px solid #0284c7; 
-      border-radius: 999px;
-      padding: 3px;
-      position: relative;
-      overflow: hidden;
+      width: 100%; max-width: 250px; height: 22px; border: 2px solid #0284c7; 
+      border-radius: 999px; padding: 3px; position: relative; overflow: hidden;
     }
     .loading-box-fill {
-      height: 100%;
-      width: 30%;
-      background-color: #38bdf8; 
-      border-radius: 999px;
-      position: absolute;
-      animation: loadingSlide 1.2s infinite ease-in-out alternate;
+      height: 100%; width: 30%; background-color: #38bdf8; border-radius: 999px;
+      position: absolute; animation: loadingSlide 1.2s infinite ease-in-out alternate;
     }
-    @keyframes loadingSlide {
-      0% { left: 3px; }
-      100% { left: calc(100% - 30% - 3px); }
+    @keyframes loadingSlide { 0% { left: 3px; } 100% { left: calc(100% - 30% - 3px); } }
+
+    /* Kertas Ujian Lined Textarea */
+    .lined-paper {
+      background-image: repeating-linear-gradient(transparent, transparent 31px, #a7f3d0 31px, #a7f3d0 32px);
+      background-attachment: local;
+      line-height: 32px;
+      padding: 8px 20px 20px 20px; 
     }
 
-    /* Fullscreen Behavior Customization */
-    #pdfScrollContainer:fullscreen { 
-      background-color: #0f172a !important; 
-      width: 100vw; 
-      height: 100vh; 
-      border: none; 
-      border-radius: 0; 
-      padding-top: 20px;
-    }
-    #pdfScrollContainer:-webkit-full-screen { 
-      background-color: #0f172a !important; 
-      width: 100vw; 
-      height: 100vh; 
-      border: none; 
-      border-radius: 0; 
-      padding-top: 20px;
-    }
+    /* Fullscreen Modifiers */
+    #pdfScrollContainer:fullscreen { background-color: #0f172a !important; width: 100vw; height: 100vh; border: none; border-radius: 0; padding-top: 20px; }
+    #pdfScrollContainer:-webkit-full-screen { background-color: #0f172a !important; width: 100vw; height: 100vh; border: none; border-radius: 0; padding-top: 20px; }
+
+    /* Slider Animations */
+    .slide-panel { display: none; animation: fadeIn 0.4s ease-in-out; }
+    .slide-panel.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
   </style>
 </head>
 <body class="text-slate-800 antialiased p-2 md:p-8 flex flex-col justify-between">
@@ -214,9 +190,9 @@
             <span class="text-brand-purple">Bahasa Indonesia!</span>
           </h1>
           <p class="text-slate-600 text-sm sm:text-base font-medium max-w-md mb-8 leading-relaxed">
-            Yuk, baca cerita komik bergambar yang seru, jawab kuis tebak-tebakan, dan kumpulkan bintang bersama teman sekelasmu! ⭐
+            Yuk, baca cerita komik bergambar yang seru, selesaikan lembar kerjanya, dan kumpulkan bintang bersama teman sekelasmu! ⭐
           </p>
-          <button onclick="goToPage('dashboard')" class="btn-game-chunky text-white px-9 py-4 rounded-2xl font-formal text-base md:text-lg font-bold flex items-center gap-3 select-none">
+          <button onclick="goToPage('dashboard')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-9 py-4 rounded-[1.5rem] font-formal text-base md:text-lg font-bold shadow-[0_8px_0_#1E40AF] active:translate-y-2 active:shadow-none transition-all flex items-center justify-center gap-3">
             <span>Mulai Petualangan!</span>
             <i class="fa-solid fa-arrow-right"></i>
           </button>
@@ -230,7 +206,7 @@
       </div>
     </section>
 
-    <!-- ================= 1. PILIH MISI ================= -->
+    <!-- ================= 1. PILIH MISI (DASBOR 7 KARTU) ================= -->
     <section id="page-dashboard" class="page-section w-full max-w-6xl mx-auto">
       <div class="w-full py-6 px-2 md:px-0">
         <div class="flex justify-end mb-6">
@@ -241,10 +217,11 @@
         </div>
         <div class="text-center max-w-2xl mx-auto mb-14">
           <h2 class="font-fun text-4xl md:text-5xl font-bold text-white drop-shadow-lg mt-2">Pilih Petualanganmu! 🎯</h2>
-          <p class="text-sky-50 text-sm md:text-base mt-3 font-medium drop-shadow-md">Selesaikan 4 langkah seru ini bareng teman-temanmu ya!</p>
+          <p class="text-sky-50 text-sm md:text-base mt-3 font-medium drop-shadow-md">Selesaikan langkah-langkah seru ini bareng teman-temanmu ya!</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-none mx-auto w-full items-stretch">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 max-w-none mx-auto w-full items-stretch">
+          
           <!-- Langkah 1 -->
           <div onclick="goToPage('spin')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-amber-50/90 to-amber-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(245,158,11,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-amber-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
             <div>
@@ -254,9 +231,6 @@
               <span class="text-xs font-extrabold text-amber-600 uppercase tracking-wider drop-shadow-sm">Langkah 1</span>
               <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Bagi Kelompok</h3>
               <p class="text-sm text-slate-600 leading-relaxed font-medium">Putar roda ajaib untuk cari tahu siapa saja teman satu timmu!</p>
-            </div>
-            <div class="mt-8 flex items-center text-amber-600 font-bold text-sm gap-2 group-hover:translate-x-2 transition-transform">
-              Putar Roda <i class="fa-solid fa-arrow-right"></i>
             </div>
           </div>
 
@@ -268,53 +242,81 @@
               </div>
               <span class="text-xs font-extrabold text-sky-600 uppercase tracking-wider drop-shadow-sm">Langkah 2</span>
               <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Baca Cerita Komik</h3>
-              <p class="text-sm text-slate-600 leading-relaxed font-medium">Buka dan baca cerita bergambar dan jawab kuis di sela-sela ceritanya.</p>
-            </div>
-            <div class="mt-8 flex items-center text-sky-600 font-bold text-sm gap-2 group-hover:translate-x-2 transition-transform">
-              Ayo Membaca <i class="fa-solid fa-arrow-right"></i>
+              <p class="text-sm text-slate-600 leading-relaxed font-medium">Buka dan baca cerita bergambar dan jawab soal evaluasi di sela-sela ceritanya.</p>
             </div>
           </div>
 
-          <!-- Langkah 3 -->
-          <div onclick="goToPage('quiz')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-rose-50/90 to-rose-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(244,63,94,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-rose-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
+          <!-- Langkah 3 (LKPD) -->
+          <div onclick="goToPage('evaluasi_akhir')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-rose-50/90 to-rose-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(244,63,94,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-rose-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
             <div>
               <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-400 to-rose-500 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-rose-500/30 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
-                <i class="fa-solid fa-bolt"></i>
+                <i class="fa-solid fa-pen-nib"></i>
               </div>
               <span class="text-xs font-extrabold text-rose-600 uppercase tracking-wider drop-shadow-sm">Langkah 3</span>
-              <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Tebak Kuis Akhir</h3>
-              <p class="text-sm text-slate-600 leading-relaxed font-medium">Jawab 10 soal seru tentang cerita tadi dan dapatkan poin penuh!</p>
-            </div>
-            <div class="mt-8 flex items-center text-rose-600 font-bold text-sm gap-2 group-hover:translate-x-2 transition-transform">
-              Mulai Kuis <i class="fa-solid fa-arrow-right"></i>
+              <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3 leading-tight">Ayo Pahami dan Ceritakan</h3>
+              <p class="text-sm text-slate-600 leading-relaxed font-medium">Temukan isi cerita, analisis unsurnya, lalu ceritakan kembali menggunakan bahasamu!</p>
             </div>
           </div>
 
-          <!-- Langkah 4 -->
-          <div onclick="goToPage('nilai')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-indigo-50/90 to-indigo-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(99,102,241,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-indigo-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
+          <!-- Langkah 4 (RODA PRESENTASI) -->
+          <div onclick="goToPage('spin-presentasi')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-indigo-50/90 to-indigo-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(99,102,241,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-indigo-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
             <div>
               <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-600 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-indigo-600/30 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                <i class="fa-solid fa-person-chalkboard"></i>
+              </div>
+              <span class="text-xs font-extrabold text-indigo-600 uppercase tracking-wider drop-shadow-sm">Langkah 4</span>
+              <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3 leading-tight">Ayo Presentasi</h3>
+              <p class="text-sm text-slate-600 leading-relaxed font-medium">Presentasikan hasil kerja kelompokmu di depan kelas secara acak!</p>
+            </div>
+          </div>
+
+          <!-- Langkah 5 (PERKUAT) -->
+          <div onclick="goToPage('perkuat')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-teal-50/90 to-teal-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(20,184,166,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-teal-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
+            <div>
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-400 to-teal-500 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-teal-500/30 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                <i class="fa-solid fa-lightbulb"></i>
+              </div>
+              <span class="text-xs font-extrabold text-teal-600 uppercase tracking-wider drop-shadow-sm">Langkah 5</span>
+              <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3 leading-tight">Mari Kita Perkuat!</h3>
+              <p class="text-sm text-slate-600 leading-relaxed font-medium">Bahas 6 pertanyaan pendalaman materi bersama temanmu secara interaktif.</p>
+            </div>
+          </div>
+
+          <!-- Langkah 6 (KUIS AKHIR) -->
+          <div onclick="goToPage('quiz')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-fuchsia-50/90 to-fuchsia-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(217,70,239,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-fuchsia-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
+            <div>
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-fuchsia-400 to-fuchsia-500 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-fuchsia-500/30 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                <i class="fa-solid fa-gamepad"></i>
+              </div>
+              <span class="text-xs font-extrabold text-fuchsia-600 uppercase tracking-wider drop-shadow-sm">Langkah 6</span>
+              <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3 leading-tight">Tebak Kuis Akhir</h3>
+              <p class="text-sm text-slate-600 leading-relaxed font-medium">Uji wawasanmu! Jawab 10 soal seru dan kumpulkan poinmu.</p>
+            </div>
+          </div>
+
+          <!-- Langkah 7 (PAPAN PEMENANG) -->
+          <div onclick="goToPage('nilai')" class="cursor-pointer p-7 rounded-[2rem] bg-gradient-to-br from-orange-50/90 to-orange-200/50 backdrop-blur-xl border border-white/70 shadow-[0_8px_20px_rgba(0,0,0,0.06),inset_0_1px_3px_rgba(255,255,255,0.8)] hover:shadow-[0_12px_30px_rgba(249,115,22,0.3),inset_0_2px_4px_rgba(255,255,255,1)] hover:border-orange-300/80 flex flex-col justify-between h-full group transition-all duration-300 hover:-translate-y-2">
+            <div>
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-500 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-orange-500/30 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
                 <i class="fa-solid fa-award"></i>
               </div>
-              <span class="text-xs font-extrabold text-indigo-600 uppercase tracking-wider drop-shadow-sm">Hadiah</span>
+              <span class="text-xs font-extrabold text-orange-600 uppercase tracking-wider drop-shadow-sm">Langkah 7</span>
               <h3 class="font-formal text-2xl font-bold text-slate-800 mt-1.5 mb-3">Papan Pemenang</h3>
               <p class="text-sm text-slate-600 leading-relaxed font-medium">Lihat perolehan nilai dan rayakan kemenangan kelompokmu bersama piala emas!</p>
             </div>
-            <div class="mt-8 flex items-center text-indigo-600 font-bold text-sm gap-2 group-hover:translate-x-2 transition-transform">
-              Lihat Skor <i class="fa-solid fa-arrow-right"></i>
-            </div>
           </div>
+
         </div>
       </div>
     </section>
 
-    <!-- ================= 2. RODA PUTAR ================= -->
+    <!-- ================= 2. RODA PUTAR KELOMPOK (LANGKAH 1) ================= -->
     <section id="page-spin" class="page-section w-full">
       <div class="bg-white/10 backdrop-blur-2xl border border-white/30 rounded-[2.5rem] p-6 md:p-8 w-full shadow-2xl">
         <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4 border-b border-white/20 pb-4">
           <div class="flex items-center gap-4 text-white drop-shadow-md">
             <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-2xl shadow-lg border-2 border-white/50">
-              <i class="fa-solid fa-graduation-cap"></i>
+              <i class="fa-solid fa-dharmachakra"></i>
             </div>
             <div>
               <h2 class="font-formal text-2xl md:text-3xl font-bold">Pembentukan Kelompok</h2>
@@ -329,6 +331,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          <!-- KIRI: INPUT NAMA -->
           <div class="lg:col-span-3 flex flex-col gap-4">
             <div class="bg-white/90 backdrop-blur-md rounded-3xl p-5 shadow-lg border border-white">
               <h4 class="font-formal font-bold text-slate-800 flex items-center gap-2 mb-2">
@@ -349,11 +352,9 @@
                 <h4 class="font-formal font-bold text-slate-800 text-sm">Daftar Nama Siswa</h4>
                 <span id="studentCountBadge" class="bg-blue-100 text-blue-700 text-[10px] font-extrabold px-2 py-1 rounded-lg">0 siswa</span>
               </div>
-              
               <div id="studentNameList" class="flex-grow max-h-[300px] overflow-y-auto custom-scrollbar pr-2 space-y-2 mb-4">
                 <div class="text-xs text-slate-400 text-center py-4 italic">Belum ada nama yang dimasukkan.</div>
               </div>
-
               <div class="mt-auto pt-4 border-t border-slate-100">
                 <button onclick="clearAllNames()" class="w-full bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-500 text-xs font-bold py-2.5 rounded-xl border border-slate-200 transition-all">
                   <i class="fa-solid fa-trash-can mr-1"></i> Hapus Semua Nama
@@ -362,21 +363,24 @@
             </div>
           </div>
 
+          <!-- TENGAH: RODA PUTAR KELOMPOK -->
           <div class="lg:col-span-5 flex flex-col items-center justify-center p-4">
             <div class="text-center mb-8">
               <h2 class="font-fun text-3xl font-extrabold text-white drop-shadow-md">Spin Wheel <br>Pembagian Kelompok</h2>
               <p class="text-sm text-sky-100 mt-2 max-w-sm mx-auto font-medium">Klik tombol putar untuk membagi siswa ke dalam kelompok secara acak dan merata.</p>
             </div>
             <div class="wheel-container">
-              <i class="fa-solid fa-location-dot spin-needle-top"></i>
-              <canvas id="wheelCanvas" width="400" height="400" class="rounded-full border-4 border-white"></canvas>
-              <button id="spinBtn" onclick="spinWheel()" class="wheel-center-btn">
+              <i class="fa-solid fa-location-dot spin-needle-top text-rose-500"></i>
+              <!-- PENTING: ID TERPISAH -->
+              <canvas id="wheelCanvasKelompok" class="wheelCanvas rounded-full border-4 border-white" width="400" height="400"></canvas>
+              <button id="spinBtnKelompok" onclick="spinWheelKelompok()" class="wheel-center-btn">
                 <i class="fa-solid fa-rotate-right"></i>
                 <span>Putar</span>
               </button>
             </div>
           </div>
 
+          <!-- KANAN: DAFTAR KELOMPOK -->
           <div class="lg:col-span-4 flex flex-col h-full">
             <div class="bg-white/90 backdrop-blur-md rounded-3xl p-5 shadow-lg border border-white h-full flex flex-col">
               <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-100">
@@ -399,7 +403,6 @@
                     <i class="fa-solid fa-user-xmark mr-2 opacity-50"></i> Belum ada anggota
                   </div>
                 </div>
-
                 <div class="border border-sky-200 rounded-2xl overflow-hidden bg-sky-50/30">
                   <div class="bg-sky-100/50 px-4 py-2 flex justify-between items-center border-b border-sky-100">
                     <div class="flex items-center gap-2">
@@ -412,7 +415,6 @@
                     <i class="fa-solid fa-user-xmark mr-2 opacity-50"></i> Belum ada anggota
                   </div>
                 </div>
-
                 <div class="border border-emerald-200 rounded-2xl overflow-hidden bg-emerald-50/30">
                   <div class="bg-emerald-100/50 px-4 py-2 flex justify-between items-center border-b border-emerald-100">
                     <div class="flex items-center gap-2">
@@ -425,7 +427,6 @@
                     <i class="fa-solid fa-user-xmark mr-2 opacity-50"></i> Belum ada anggota
                   </div>
                 </div>
-
                 <div class="border border-purple-200 rounded-2xl overflow-hidden bg-purple-50/30">
                   <div class="bg-purple-100/50 px-4 py-2 flex justify-between items-center border-b border-purple-100">
                     <div class="flex items-center gap-2">
@@ -478,29 +479,280 @@
               </p>
               
               <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
-                <!-- Tombol Baca -->
                 <button onclick="openComicViewer()" class="w-full sm:w-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-formal text-base md:text-lg px-8 py-4 rounded-[1.5rem] font-bold shadow-[0_8px_0_#1E40AF] active:translate-y-2 active:shadow-none transition-all flex items-center justify-center gap-3">
                   <i class="fa-solid fa-book-open"></i> Ayo Baca Sekarang!
                 </button>
-                <!-- Tombol Unduh PDF -->
                 <a href="komik.pdf" download="Komik_LinguaPlay.pdf" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-formal text-base md:text-lg px-8 py-4 rounded-[1.5rem] font-bold shadow-[0_8px_0_#047857] active:translate-y-2 active:shadow-none transition-all flex items-center justify-center gap-3">
                   <i class="fa-solid fa-download"></i> Unduh Komik (PDF)
                 </a>
               </div>
-              
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ================= 4. KUIS SERU ================= -->
-    <section id="page-quiz" class="page-section w-full">
-      <div class="w-full max-w-4xl mx-auto py-6 px-4 md:px-0">
+    <!-- ================= 4. AYO PAHAMI DAN CERITAKAN (LKPD INTERAKTIF) ================= -->
+    <section id="page-evaluasi_akhir" class="page-section w-full">
+      <div class="w-full max-w-5xl mx-auto py-6 px-4 md:px-0">
+        
         <div class="flex flex-col md:flex-row items-center justify-between pb-6 mb-4 gap-4 border-b border-white/20">
           <div class="flex items-center gap-4">
-            <span class="w-12 h-12 rounded-2xl bg-amber-400 text-white font-fun font-bold flex items-center justify-center shadow-lg text-2xl">
-              <i class="fa-solid fa-bolt"></i>
+            <span class="w-12 h-12 rounded-2xl bg-rose-400 text-white font-fun font-bold flex items-center justify-center shadow-lg text-2xl">
+              <i class="fa-solid fa-pen-nib"></i>
+            </span>
+            <div class="text-center md:text-left">
+              <h3 class="font-formal text-2xl font-extrabold text-white drop-shadow-md">Ayo Pahami dan Ceritakan</h3>
+              <p class="text-sm text-sky-100 mt-1 font-medium drop-shadow-sm">Ikuti 3 kegiatan seru di bawah ini bersama kelompokmu!</p>
+            </div>
+          </div>
+          <button onclick="goToPage('dashboard')" class="bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-4 py-2.5 rounded-xl text-sm font-bold shadow-md border border-white/40 transition-all">
+            <i class="fa-solid fa-arrow-left md:mr-1"></i> <span class="hidden md:inline">Menu Utama</span>
+          </button>
+        </div>
+
+        <div class="bg-white/30 backdrop-blur-2xl p-4 md:p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden border border-white/60">
+          <!-- PROGRESS INDICATOR -->
+          <div class="flex justify-between items-center mb-6 px-2">
+            <div class="flex gap-2" id="slide-indicators">
+              <span class="w-3 h-3 rounded-full bg-slate-700 transition-all duration-300 indicator-dot" id="dot-1"></span>
+              <span class="w-3 h-3 rounded-full bg-white/60 transition-all duration-300 indicator-dot" id="dot-2"></span>
+              <span class="w-3 h-3 rounded-full bg-white/60 transition-all duration-300 indicator-dot" id="dot-3"></span>
+            </div>
+            <span class="text-xs font-extrabold text-slate-700 tracking-widest uppercase bg-white/40 px-3 py-1 rounded-lg" id="slide-tracker">Kegiatan 1 dari 3</span>
+          </div>
+
+          <!-- SLIDE 1 (MERAH) -->
+          <div id="slide-1" class="slide-panel active w-full bg-gradient-to-br from-rose-100/80 to-rose-200/40 backdrop-blur-xl border border-white/60 p-6 md:p-8 rounded-[2rem] shadow-lg mb-4">
+            <h3 class="font-formal font-bold text-2xl text-rose-900 mb-2">Kegiatan 1 — Menemukan Isi Cerita</h3>
+            <p class="text-sm text-rose-700 font-medium mb-6"><b>Tujuan 1 &rarr;</b> Menentukan ide pokok, informasi penting, dan pesan cerita.</p>
+            
+            <div class="space-y-6">
+              <div>
+                <label class="block font-bold text-rose-900 mb-3">1. Tentukan ide pokok setiap bagian cerita!</label>
+                <div class="bg-white/60 backdrop-blur-sm rounded-2xl border border-rose-200/60 overflow-hidden shadow-inner p-2 md:p-4">
+                  <table class="w-full text-left border-collapse">
+                    <tbody class="text-sm">
+                      <tr>
+                        <td class="p-3 border-b border-rose-200/50 font-bold text-rose-800 w-1/3">Orientasi</td>
+                        <td class="p-2 border-b border-rose-200/50"><input type="text" class="w-full bg-white/90 border border-rose-200 rounded-xl p-3 focus:ring-2 focus:ring-rose-400 focus:outline-none shadow-sm" placeholder="Tuliskan ide pokoknya..."></td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 border-b border-rose-200/50 font-bold text-rose-800">Komplikasi</td>
+                        <td class="p-2 border-b border-rose-200/50"><input type="text" class="w-full bg-white/90 border border-rose-200 rounded-xl p-3 focus:ring-2 focus:ring-rose-400 focus:outline-none shadow-sm" placeholder="Tuliskan ide pokoknya..."></td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 border-b border-rose-200/50 font-bold text-rose-800">Resolusi</td>
+                        <td class="p-2 border-b border-rose-200/50"><input type="text" class="w-full bg-white/90 border border-rose-200 rounded-xl p-3 focus:ring-2 focus:ring-rose-400 focus:outline-none shadow-sm" placeholder="Tuliskan ide pokoknya..."></td>
+                      </tr>
+                      <tr>
+                        <td class="p-3 font-bold text-rose-800">Koda</td>
+                        <td class="p-2"><input type="text" class="w-full bg-white/90 border border-rose-200 rounded-xl p-3 focus:ring-2 focus:ring-rose-400 focus:outline-none shadow-sm" placeholder="Tuliskan ide pokoknya..."></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+              <div>
+                <label class="block font-bold text-rose-900 mb-3">2. Tuliskan 3 informasi penting yang kamu temukan!</label>
+                <div class="space-y-3 bg-white/60 backdrop-blur-sm p-4 rounded-2xl border border-rose-200/60 shadow-inner">
+                  <div class="flex items-center gap-3">
+                    <span class="font-black text-rose-400">1.</span>
+                    <input type="text" class="w-full bg-white/80 border border-rose-200 rounded-xl p-2.5 focus:border-rose-400 focus:ring-2 focus:ring-rose-400 focus:outline-none text-sm shadow-sm" placeholder="...">
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="font-black text-rose-400">2.</span>
+                    <input type="text" class="w-full bg-white/80 border border-rose-200 rounded-xl p-2.5 focus:border-rose-400 focus:ring-2 focus:ring-rose-400 focus:outline-none text-sm shadow-sm" placeholder="...">
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="font-bold text-rose-400">3.</span>
+                    <input type="text" class="w-full bg-white/80 border border-rose-200 rounded-xl p-2.5 focus:border-rose-400 focus:ring-2 focus:ring-rose-400 focus:outline-none text-sm shadow-sm" placeholder="...">
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-rose-900 mb-2">3. Apa pesan yang dapat kamu ambil dari cerita?</label>
+                <textarea class="w-full bg-white/80 border-2 border-rose-200 rounded-2xl p-4 text-sm focus:ring-4 focus:ring-rose-200 focus:border-rose-400 focus:outline-none resize-none shadow-inner" rows="3" placeholder="Tuliskan pesan moralnya di sini..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2 (KUNING) -->
+          <div id="slide-2" class="slide-panel w-full bg-gradient-to-br from-amber-100/80 to-amber-200/40 backdrop-blur-xl border border-white/60 p-6 md:p-8 rounded-[2rem] shadow-lg mb-4">
+            <h3 class="font-formal font-bold text-2xl text-amber-900 mb-2">Kegiatan 2 — Menganalisis Unsur Cerita</h3>
+            <p class="text-sm text-amber-700 font-medium mb-6"><b>Tujuan 2 &rarr;</b> Menganalisis unsur-unsur teks narasi.</p>
+            
+            <div class="bg-white/60 backdrop-blur-sm rounded-2xl border border-amber-200/60 overflow-hidden shadow-inner p-2 md:p-4">
+              <table class="w-full text-left border-collapse">
+                <tbody class="text-sm">
+                  <tr>
+                    <td class="p-3 border-b border-amber-200/50 font-bold text-amber-800 w-1/3">Tokoh</td>
+                    <td class="p-2 border-b border-amber-200/50"><input type="text" class="w-full bg-white/90 border border-amber-200 rounded-xl p-3 focus:ring-2 focus:ring-amber-400 focus:outline-none shadow-sm" placeholder="Siapa saja tokohnya..."></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 border-b border-amber-200/50 font-bold text-amber-800">Penokohan</td>
+                    <td class="p-2 border-b border-amber-200/50"><input type="text" class="w-full bg-white/90 border border-amber-200 rounded-xl p-3 focus:ring-2 focus:ring-amber-400 focus:outline-none shadow-sm" placeholder="Bagaimana sifatnya..."></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 border-b border-amber-200/50 font-bold text-amber-800">Latar</td>
+                    <td class="p-2 border-b border-amber-200/50"><input type="text" class="w-full bg-white/90 border border-amber-200 rounded-xl p-3 focus:ring-2 focus:ring-amber-400 focus:outline-none shadow-sm" placeholder="Kapan dan dimana..."></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 border-b border-amber-200/50 font-bold text-amber-800">Alur</td>
+                    <td class="p-2 border-b border-amber-200/50"><input type="text" class="w-full bg-white/90 border border-amber-200 rounded-xl p-3 focus:ring-2 focus:ring-amber-400 focus:outline-none shadow-sm" placeholder="Jalannya cerita..."></td>
+                  </tr>
+                  <tr>
+                    <td class="p-3 font-bold text-amber-800">Hubungan antarkejadian</td>
+                    <td class="p-2"><textarea class="w-full bg-white/90 border border-amber-200 rounded-xl p-3 focus:ring-2 focus:ring-amber-400 focus:outline-none resize-none shadow-sm" rows="3" placeholder="Sebab akibat kejadian..."></textarea></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- SLIDE 3 (HIJAU) -->
+          <div id="slide-3" class="slide-panel w-full bg-gradient-to-br from-emerald-100/80 to-emerald-200/40 backdrop-blur-xl border border-white/60 p-6 md:p-8 rounded-[2rem] shadow-lg mb-4">
+            <h3 class="font-formal font-bold text-2xl text-emerald-900 mb-2">Kegiatan 3 — Menceritakan Kembali</h3>
+            <p class="text-sm text-emerald-700 font-medium mb-6"><b>Tujuan 3 &rarr;</b> Menceritakan kembali menggunakan bahasa sendiri.</p>
+            
+            <div class="bg-emerald-50/80 backdrop-blur-md border-l-4 border-emerald-500 p-5 rounded-r-2xl mb-6 shadow-sm">
+              <p class="text-sm font-bold text-emerald-900 mb-3">Maka LKPD bisa memberi kerangka bantuan:</p>
+              <ul class="text-sm text-emerald-800 space-y-2 list-none">
+                <li><span class="font-extrabold text-emerald-900">Orientasi:</span> Siapa tokohnya? Di mana dan kapan cerita terjadi?</li>
+                <li><span class="font-extrabold text-emerald-900">Komplikasi:</span> Masalah apa yang dialami Raka?</li>
+                <li><span class="font-extrabold text-emerald-900">Resolusi:</span> Bagaimana Raka menyelesaikan masalahnya?</li>
+                <li><span class="font-extrabold text-emerald-900">Koda:</span> Apa yang dapat dipelajari dari cerita tersebut?</li>
+              </ul>
+            </div>
+
+            <p class="text-sm font-bold text-emerald-900 mb-3"><i class="fa-solid fa-pen-nib text-emerald-600 mr-1"></i> Sekarang ceritakan kembali cerita tersebut menggunakan bahasamu sendiri secara runtut.</p>
+            
+            <textarea id="storyTextarea" class="w-full h-64 border-2 border-emerald-300/50 rounded-2xl text-base focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-200/50 lined-paper shadow-inner resize-none transition-all bg-white/90 text-slate-800" placeholder="Mulai ceritamu di sini..."></textarea>
+            
+            <button id="btnSelesaiLkpd" onclick="submitLKPD()" class="w-full mt-6 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl transition-all shadow-[0_6px_0_#047857] active:translate-y-1.5 active:shadow-none flex items-center justify-center gap-2">
+              <i class="fa-solid fa-paper-plane text-lg"></i> Kumpulkan Lembar Kerja (Selesai)
+            </button>
+          </div>
+
+          <!-- TOMBOL NAVIGASI BAWAH -->
+          <div class="flex justify-between items-center mt-6">
+            <button id="btnPrevSlide" onclick="changeSlide(-1)" class="px-6 py-3 bg-white/60 hover:bg-white text-slate-700 font-bold rounded-xl border border-white transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-sm">
+              <i class="fa-solid fa-arrow-left mr-1"></i> Kembali
+            </button>
+            <button id="btnNextSlide" onclick="changeSlide(1)" class="px-6 py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl shadow-[0_4px_0_#0f172a] active:translate-y-1 active:shadow-none transition-all">
+              Lanjut Kegiatan <i class="fa-solid fa-arrow-right ml-1"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 5. RODA PRESENTASI (LANGKAH 4) ================= -->
+    <section id="page-spin-presentasi" class="page-section w-full">
+      <div class="w-full max-w-4xl mx-auto py-6 px-4 md:px-0">
+        <div class="flex justify-end mb-8">
+          <button onclick="goToPage('dashboard')" class="bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-5 py-2.5 rounded-2xl font-fun font-bold text-sm shadow-md border border-white/40 transition-all hover:scale-105">
+            <i class="fa-solid fa-arrow-left mr-1"></i> <span class="hidden md:inline">Kembali ke Menu</span>
+          </button>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-2xl border border-white/30 rounded-[2.5rem] p-8 md:p-14 w-full shadow-2xl flex flex-col items-center justify-center relative">
+          <div class="text-center mb-10">
+            <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-3xl shadow-lg border-2 border-white mx-auto mb-4 text-white">
+              <i class="fa-solid fa-person-chalkboard"></i>
+            </div>
+            <h2 class="font-fun text-3xl md:text-5xl font-extrabold text-white drop-shadow-lg">Siapa yang Maju Duluan?</h2>
+            <p class="text-sm md:text-base text-sky-100 mt-3 max-w-md mx-auto font-medium">Klik tombol putar untuk mengundi urutan presentasi kelompok secara adil!</p>
+          </div>
+
+          <!-- Roda Presentasi dengan Container Normal (Menghindari Bug Titik Poros) -->
+          <div class="wheel-container mb-8 mt-4 relative">
+            <i class="fa-solid fa-location-dot spin-needle-top text-rose-500"></i>
+            <!-- CANVAS PENTING: ID Unik dan Class Unik -->
+            <canvas id="wheelCanvasPresentasi" class="wheelCanvas rounded-full border-4 border-white" width="400" height="400"></canvas>
+            <button id="spinBtnPres" onclick="spinWheelPresentasi()" class="wheel-center-btn">
+              <i class="fa-solid fa-rotate-right"></i>
+              <span>Putar</span>
+            </button>
+          </div>
+          
+          <div id="btnLanjutKeLangkah5" class="mt-8 hidden w-full max-w-md mx-auto">
+             <button onclick="goToPage('perkuat')" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-4 rounded-2xl transition-all shadow-[0_6px_0_#0f766e] active:translate-y-1.5 active:shadow-none flex items-center justify-center gap-2">
+                 Lanjut ke Langkah 5 (Mari Kita Perkuat) <i class="fa-solid fa-arrow-right ml-1"></i>
+             </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 6. MARI KITA PERKUAT (LANGKAH 5 - SLIDER) ================= -->
+    <section id="page-perkuat" class="page-section w-full">
+      <div class="w-full max-w-4xl mx-auto py-6 px-4 md:px-0">
+        
+        <div class="flex flex-col md:flex-row items-center justify-between pb-6 mb-6 gap-4 border-b border-white/20">
+          <div class="flex items-center gap-4">
+            <span class="w-12 h-12 rounded-2xl bg-teal-400 text-white font-fun font-bold flex items-center justify-center shadow-lg text-2xl">
+              <i class="fa-solid fa-lightbulb"></i>
+            </span>
+            <div class="text-center md:text-left">
+              <h3 class="font-formal text-2xl font-extrabold text-white drop-shadow-md">Mari Kita Perkuat!</h3>
+              <p class="text-sm text-sky-100 mt-1 font-medium drop-shadow-sm">Bahas bersama 6 pertanyaan penguatan untuk mendalami isi cerita.</p>
+            </div>
+          </div>
+          <button onclick="goToPage('dashboard')" class="bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-4 py-2.5 rounded-xl text-sm font-bold shadow-md border border-white/40 transition-all">
+            <i class="fa-solid fa-arrow-left md:mr-1"></i> <span class="hidden md:inline">Menu Utama</span>
+          </button>
+        </div>
+
+        <div class="bg-white/80 backdrop-blur-xl rounded-[2rem] p-6 md:p-10 shadow-xl overflow-hidden relative min-h-[350px]">
+           <div class="flex justify-between items-center mb-6 border-b border-slate-200 pb-4">
+             <span id="penguatan-counter" class="text-xs font-extrabold text-teal-600 bg-teal-100 px-3 py-1 rounded-lg uppercase tracking-widest">Soal 1 dari 6</span>
+           </div>
+
+           <!-- SLIDE KONTEN -->
+           <div id="penguatan-slide" class="transition-transform duration-300 ease-in-out">
+              <div class="flex gap-4">
+                 <div id="penguatan-num" class="w-10 h-10 shrink-0 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center font-bold text-lg border-2 border-white shadow-sm">1</div>
+                 <div class="w-full">
+                   <p id="penguatan-q" class="font-formal font-bold text-lg md:text-xl text-slate-800 mb-5 leading-relaxed">Pertanyaan?</p>
+                   
+                   <button onclick="togglePenguatanAnswer()" class="bg-teal-500 hover:bg-teal-600 text-white px-5 py-2.5 rounded-xl font-bold shadow-[0_4px_0_#0f766e] active:translate-y-1 active:shadow-none transition-all flex items-center gap-2 text-sm">
+                     Ayo Lihat Jawabannya! <i id="penguatan-icon" class="fa-solid fa-chevron-down transition-transform"></i>
+                   </button>
+                   
+                   <div id="penguatan-a" class="hidden mt-5 p-5 bg-teal-50 border-l-4 border-teal-500 rounded-r-2xl text-slate-700 font-medium leading-relaxed text-sm md:text-base">
+                     Jawaban
+                   </div>
+                 </div>
+              </div>
+           </div>
+
+           <!-- TOMBOL NAVIGASI -->
+           <div class="flex justify-between mt-8 pt-6 border-t border-slate-200">
+              <button id="btn-prev-penguatan" onclick="changePenguatan(-1)" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-600 font-bold rounded-xl transition-all disabled:opacity-50 text-sm">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Sebelumnya
+              </button>
+              <button id="btn-next-penguatan" onclick="changePenguatan(1)" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl shadow-[0_4px_0_#0f766e] active:translate-y-1 active:shadow-none transition-all text-sm">
+                Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+              </button>
+           </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 7. KUIS AKHIR 10 SOAL (LANGKAH 6) ================= -->
+    <section id="page-quiz" class="page-section w-full">
+      <div class="w-full max-w-4xl mx-auto py-6 px-4 md:px-0">
+        
+        <div class="flex flex-col md:flex-row items-center justify-between pb-6 mb-4 gap-4 border-b border-white/20">
+          <div class="flex items-center gap-4">
+            <span class="w-12 h-12 rounded-2xl bg-fuchsia-500 text-white font-fun font-bold flex items-center justify-center shadow-lg text-2xl">
+              <i class="fa-solid fa-gamepad"></i>
             </span>
             <div class="text-center md:text-left">
               <h3 class="font-formal text-2xl font-extrabold text-white drop-shadow-md">Kuis Akhir Berhadiah</h3>
@@ -518,24 +770,36 @@
         </div>
 
         <div id="quizContainer">
-          <div class="bg-white/10 backdrop-blur-xl border border-white/40 p-8 md:p-12 rounded-[2rem] mb-8 text-center shadow-[0_8px_30px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.5)] relative overflow-hidden">
+          <div class="bg-white/10 backdrop-blur-xl border border-white/40 p-8 md:p-12 rounded-[2rem] mb-8 text-center shadow-[0_8px_30px_rgba(0,0,0,0.1)] relative overflow-hidden">
             <span class="relative text-sm font-extrabold text-amber-300 tracking-widest uppercase mb-3 block drop-shadow-md" id="questionNumber">Soal Nomor 1 dari 10</span>
-            <h4 class="relative font-formal text-xl md:text-2xl font-bold text-white leading-snug drop-shadow-lg" id="questionText">
-              Pertanyaan kuis sedang disiapkan...
-            </h4>
+            <h4 class="relative font-formal text-xl md:text-2xl font-bold text-white leading-snug drop-shadow-lg" id="questionText">Pertanyaan kuis sedang disiapkan...</h4>
           </div>
           <div id="optionsContainer"></div>
         </div>
         <div id="feedbackArea" class="hidden text-center mt-8 p-6 rounded-3xl font-formal shadow-2xl transition-all"></div>
+        
+        <!-- QUIZ REVIEW SECTION -->
+        <div id="quizReviewSection" class="w-full max-w-4xl mx-auto mt-14 mb-8 bg-white/10 backdrop-blur-2xl border border-white/30 rounded-[2.5rem] p-6 md:p-10 shadow-2xl hidden">
+          <h3 class="font-fun text-2xl md:text-3xl font-bold text-white mb-2 text-center drop-shadow-md">
+            <i class="fa-solid fa-list-check text-amber-400 mr-2"></i> Ulasan Jawaban Kamu
+          </h3>
+          <p class="text-center text-sm text-sky-200 font-medium mb-8 drop-shadow-sm">Pelajari kembali jawabanmu di bawah ini agar makin pintar!</p>
+          <div id="reviewContainer" class="space-y-4"></div>
+          
+          <button onclick="goToPage('nilai'); triggerCelebration();" class="w-full mt-8 bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-8 py-4 rounded-[1.5rem] font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1.5 active:shadow-none transition-all flex justify-center items-center gap-2">
+            Lihat Papan Pemenang (Langkah 7) <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
       </div>
     </section>
 
-    <!-- ================= 5. PAPAN PEMENANG & ULASAN KUIS ================= -->
+    <!-- ================= 8. PAPAN PEMENANG (LANGKAH 7) ================= -->
     <section id="page-nilai" class="page-section w-full">
       <div class="w-full max-w-5xl mx-auto py-6 px-4 md:px-0">
         
         <div class="flex justify-end mb-8">
-          <button onclick="goToPage('landing')" title="Kembali ke Beranda" class="flex items-center gap-2 bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-5 py-2.5 rounded-2xl font-fun font-bold text-sm shadow-md border border-white/40 transition-all hover:scale-105">
+          <button onclick="goToPage('dashboard')" title="Kembali ke Beranda" class="flex items-center gap-2 bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-brand-purple px-5 py-2.5 rounded-2xl font-fun font-bold text-sm shadow-md border border-white/40 transition-all hover:scale-105">
             <i class="fa-solid fa-house"></i>
             <span class="drop-shadow-sm">Kembali ke Depan</span>
           </button>
@@ -549,16 +813,14 @@
           <p class="text-sky-100 text-sm md:text-base mt-3 font-medium drop-shadow-sm">Hore! Semua kelompok sudah menyelesaikan tantangan dengan hebat!</p>
         </div>
 
-        <!-- BLOK PODIUM JUARA -->
         <div class="flex flex-row items-end justify-center gap-2 sm:gap-5 mt-16 mb-12 h-[18rem] sm:h-[22rem] relative px-1 w-full max-w-3xl mx-auto">
-          
           <!-- PODIUM JUARA 2 -->
           <div class="w-[31%] max-w-[140px] h-48 sm:h-64 bg-gradient-to-t from-slate-200/90 to-white/40 backdrop-blur-xl border-t-2 border-l border-r border-white/80 rounded-t-[2rem] shadow-[0_-5px_25px_rgba(0,0,0,0.1)] flex flex-col items-center justify-start pt-6 sm:pt-8 relative group hover:-translate-y-1 transition-transform px-1 text-center">
             <div class="absolute -top-6 sm:-top-10 w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-slate-100 to-slate-300 rounded-full flex items-center justify-center text-lg sm:text-2xl shadow-lg shadow-slate-400/50 border-[2px] sm:border-[3px] border-white z-20">🥈</div>
             <h3 class="font-formal font-bold text-slate-800 text-[10px] sm:text-lg mt-1 sm:mt-2 leading-tight break-words w-full" id="podium-rank-2-title">Kelompok 3</h3>
             <span class="font-fun text-2xl sm:text-4xl text-slate-700 mt-1 sm:mt-2 drop-shadow-sm" id="podium-rank-2-score">70</span>
             <span class="text-[8px] sm:text-xs text-slate-500 uppercase tracking-widest font-bold mt-0 sm:mt-1">Poin</span>
-            <p class="text-[8px] sm:text-[10px] font-bold text-slate-500 mt-1 sm:mt-2 leading-tight uppercase px-1" id="podium-rank-2-acc">Benar 7/10</p>
+            <p class="text-[8px] sm:text-[10px] font-bold text-slate-500 mt-1 sm:mt-2 leading-tight uppercase px-1" id="podium-rank-2-acc">Selesai</p>
             <div class="mt-auto mb-3 sm:mb-5 text-4xl sm:text-6xl font-black text-white/50 drop-shadow-md">#2</div>
           </div>
 
@@ -578,10 +840,9 @@
             <h3 class="font-formal font-bold text-slate-800 text-[9px] sm:text-lg mt-1 sm:mt-2 leading-tight break-words w-full" id="podium-rank-3-title">Kelompok 2</h3>
             <span class="font-fun text-xl sm:text-4xl text-orange-900 mt-1 sm:mt-2 drop-shadow-sm" id="podium-rank-3-score">40</span>
             <span class="text-[7px] sm:text-xs text-orange-800/80 uppercase tracking-widest font-bold mt-0 sm:mt-1">Poin</span>
-            <p class="text-[7px] sm:text-[10px] font-bold text-orange-700/60 mt-1 leading-tight uppercase px-1" id="podium-rank-3-acc">Benar 4/10</p>
+            <p class="text-[7px] sm:text-[10px] font-bold text-orange-700/60 mt-1 leading-tight uppercase px-1" id="podium-rank-3-acc">Selesai</p>
             <div class="mt-auto mb-2 sm:mb-4 text-3xl sm:text-6xl font-black text-white/50 drop-shadow-md">#3</div>
           </div>
-
         </div>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
@@ -593,28 +854,14 @@
           </button>
         </div>
 
-        <!-- ================= ULASAN KUIS (GLASSMORPHISM) ================= -->
-        <div id="quizReviewSection" class="w-full max-w-4xl mx-auto mt-14 mb-8 bg-white/10 backdrop-blur-2xl border border-white/30 rounded-[2.5rem] p-6 md:p-10 shadow-2xl hidden">
-          <h3 class="font-fun text-2xl md:text-3xl font-bold text-white mb-2 text-center drop-shadow-md">
-            <i class="fa-solid fa-list-check text-amber-400 mr-2"></i> Ulasan Jawaban Kamu
-          </h3>
-          <p class="text-center text-sm text-sky-200 font-medium mb-8 drop-shadow-sm">Pelajari kembali jawabanmu di bawah ini agar makin pintar!</p>
-          <div id="reviewContainer" class="space-y-4">
-            <!-- Review items go here dynamically -->
-          </div>
-        </div>
-
       </div>
     </section>
 
   </main>
 
-  <!-- ================= POP-UP BACA GAMBAR KOMIK ================= -->
+  <!-- ================= POP-UP BACA PDF KOMIK ================= -->
   <div id="pdfModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6 transition-all duration-300">
-    
     <div id="pdfModalContent" class="bg-white rounded-3xl max-w-4xl w-full p-4 md:p-6 relative border-4 border-brand-purple/20 shadow-2xl flex flex-col h-[90vh] transition-all duration-300">
-      
-      <!-- Bagian Header -->
       <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3" id="pdfHeader">
         <div class="flex items-center gap-3">
           <span class="w-9 h-9 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-sm font-bold">
@@ -622,7 +869,6 @@
           </span>
           <h3 id="pdfModalBadge" class="font-formal text-xl font-bold text-slate-800">Cerita Komik</h3>
         </div>
-        
         <div class="flex gap-2">
           <button onclick="toggleFullscreen()" id="btnFullscreen" title="Perbesar Layar" class="text-slate-400 hover:text-brand-purple text-xl w-8 h-8 flex items-center justify-center rounded-xl hover:bg-slate-100 transition">
             <i class="fa-solid fa-expand"></i>
@@ -633,15 +879,10 @@
         </div>
       </div>
 
-      <!-- Area Baca Gambar Murni Terintegrasi dengan Soal (Cocok untuk HP) -->
       <div id="pdfScrollContainer" class="flex-grow w-full rounded-2xl border border-slate-200 bg-slate-900 p-2 md:p-4 overflow-y-auto custom-scrollbar relative flex flex-col items-center gap-0">
-        
-        <!-- Tombol Exit Fullscreen Floating -->
         <button onclick="toggleFullscreen()" id="btnFloatingExit" class="fixed top-4 right-4 z-50 bg-rose-500 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg hidden hover:bg-rose-600 transition border-2 border-white/20">
           <i class="fa-solid fa-compress"></i>
         </button>
-
-        <!-- Loading Animation Kustom -->
         <div id="pdfLoadingIndicator" class="absolute inset-0 flex flex-col items-center justify-center bg-[#0f172a] z-20 rounded-xl hidden">
           <div class="w-full flex flex-col items-center">
             <p class="font-bold text-sky-100 tracking-widest text-sm mb-3 drop-shadow-md">Memuat gambar . . .</p>
@@ -650,25 +891,19 @@
             </div>
           </div>
         </div>
-
-        <!-- Wadah Susunan Gambar Komik & Soal -->
-        <div id="comicCanvasWrapper" class="flex flex-col w-full max-w-2xl bg-white shadow-2xl min-h-full pb-8">
-          <!-- Gambar dan soal akan dirender oleh JS di sini -->
-        </div>
-
+        <div id="comicCanvasWrapper" class="flex flex-col w-full max-w-2xl bg-white shadow-2xl min-h-full pb-8"></div>
       </div>
 
       <div class="flex items-center justify-between pt-3 border-t border-slate-100 mt-3" id="pdfFooter">
-        <p class="text-xs text-slate-400 font-medium hidden sm:block">Baca ceritanya sampai selesai ya, lalu klik tombol biru untuk mulai kuis!</p>
-        <button onclick="closeComicViewer(); goToPage('quiz');" class="bg-brand-purple hover:bg-brand-darkPurple text-white px-5 py-2.5 rounded-xl font-formal text-xs font-bold shadow-md transition flex items-center gap-1.5 ml-auto">
-          Selesai Baca, Ayo Kuis! <i class="fa-solid fa-arrow-right"></i>
+        <p class="text-xs text-slate-400 font-medium hidden sm:block">Baca ceritanya sampai selesai ya, lalu klik tombol biru untuk mulai lembar kerja!</p>
+        <button onclick="closeComicViewer(); goToPage('evaluasi_akhir');" class="bg-brand-purple hover:bg-brand-darkPurple text-white px-5 py-2.5 rounded-xl font-formal text-xs font-bold shadow-md transition flex items-center gap-1.5 ml-auto">
+          Selesai Baca, Lanjut Langkah 3! <i class="fa-solid fa-arrow-right"></i>
         </button>
       </div>
-
     </div>
   </div>
 
-  <!-- ================= CUSTOM MODAL (HANYA UNTUK WARNING KOSONG SAAT RODA PUTAR) ================= -->
+  <!-- ================= CUSTOM MODAL POPUP ================= -->
   <div id="customModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
     <div class="bg-white/95 backdrop-blur-xl border border-white/50 rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl transform scale-95 transition-transform duration-300" id="customModalContent">
       <div class="text-center">
@@ -689,8 +924,6 @@
     let activeGroupName = "Kelompok Kamu"; 
     let internalStudentsList = []; 
     let userAnswers = []; 
-
-    // Simulasi Skor Dasar Kelompok Lain
     let groupScores = {
       "Kelompok 1": { score: 60, accuracy: 60 },
       "Kelompok 2": { score: 40, accuracy: 40 },
@@ -699,7 +932,7 @@
     };
 
     // ================= CUSTOM MODAL NOTIFICATION =================
-    function showNotification(type, title, message, confirmCallback = null) {
+    function showNotification(type, title, message, callback = null, customBtnText = null) {
       const modal = document.getElementById('customModal');
       const content = document.getElementById('customModalContent');
       const titleEl = document.getElementById('customModalTitle');
@@ -716,38 +949,27 @@
       } else if (type === 'success') {
         iconEl.className = "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 text-emerald-500 text-3xl mb-4 shadow-inner border-2 border-white";
         iconEl.innerHTML = '<i class="fa-solid fa-check"></i>';
-      } else if (type === 'confirm') {
-        iconEl.className = "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-amber-100 text-amber-500 text-3xl mb-4 shadow-inner border-2 border-white";
-        iconEl.innerHTML = '<i class="fa-solid fa-circle-question"></i>';
+      } else if (type === 'presentation') {
+        iconEl.className = "mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-emerald-100 text-emerald-500 text-4xl mb-4 shadow-inner border-4 border-white animate-bounce";
+        iconEl.innerHTML = '<i class="fa-solid fa-microphone-lines"></i>';
       } else {
         iconEl.className = "mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 text-blue-500 text-3xl mb-4 shadow-inner border-2 border-white";
         iconEl.innerHTML = '<i class="fa-solid fa-bell"></i>';
       }
 
       btnContainer.innerHTML = '';
-      if (type === 'confirm') {
-        const cancelBtn = document.createElement('button');
-        cancelBtn.className = "px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-sm transition-all";
-        cancelBtn.innerText = "Batal";
-        cancelBtn.onclick = hideNotification;
-        
-        const confirmBtn = document.createElement('button');
-        confirmBtn.className = "px-5 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl font-bold text-sm shadow-[0_4px_0_#BE123C] active:translate-y-1 active:shadow-none transition-all";
-        confirmBtn.innerText = "Ya, Hapus";
-        confirmBtn.onclick = () => {
-          hideNotification();
-          if (confirmCallback) confirmCallback();
-        };
-        
-        btnContainer.appendChild(cancelBtn);
-        btnContainer.appendChild(confirmBtn);
-      } else {
-        const okBtn = document.createElement('button');
-        okBtn.className = "px-8 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl font-bold text-sm shadow-[0_4px_0_#1E40AF] active:translate-y-1 active:shadow-none transition-all";
-        okBtn.innerText = "Mengerti";
-        okBtn.onclick = hideNotification;
-        btnContainer.appendChild(okBtn);
+      
+      const okBtn = document.createElement('button');
+      okBtn.className = "px-8 py-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl font-bold text-sm shadow-[0_4px_0_#1E40AF] active:translate-y-1 active:shadow-none transition-all";
+      if(type === 'presentation' || type === 'success'){
+         okBtn.className = "px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold text-sm shadow-[0_4px_0_#047857] active:translate-y-1 active:shadow-none transition-all";
       }
+      okBtn.innerHTML = customBtnText ? customBtnText : "Mengerti";
+      okBtn.onclick = () => {
+         hideNotification();
+         if (callback) callback();
+      };
+      btnContainer.appendChild(okBtn);
 
       modal.classList.remove('hidden');
       setTimeout(() => {
@@ -766,7 +988,7 @@
       }, 300);
     }
 
-    // ================= SISTEM SUARA =================
+    // ================= SISTEM SUARA (SUPER MERIAH) =================
     let audioCtx = null;
     let audioUnlocked = false;
 
@@ -790,19 +1012,15 @@
     function playBeep(freq, typeStr, timeStart, dur, volume) {
       if (!audioCtx) unlockAudio();
       if (audioCtx.state === 'suspended') audioCtx.resume();
-      
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.connect(gain);
       gain.connect(audioCtx.destination);
-      
       osc.type = typeStr;
       osc.frequency.setValueAtTime(freq, timeStart);
-      
       gain.gain.setValueAtTime(0, timeStart);
-      gain.gain.linearRampToValueAtTime(volume, timeStart + 0.05);
+      gain.gain.linearRampToValueAtTime(volume, timeStart + 0.02);
       gain.gain.linearRampToValueAtTime(0, timeStart + dur);
-      
       osc.start(timeStart);
       osc.stop(timeStart + dur);
     }
@@ -810,32 +1028,58 @@
     function playSound(type) {
       if (!audioCtx) unlockAudio();
       const t = audioCtx.currentTime;
-      
       if (type === 'correct') {
-        playBeep(523.25, 'square', t, 0.1, 0.2); 
-        playBeep(659.25, 'square', t + 0.1, 0.1, 0.2); 
-        playBeep(783.99, 'square', t + 0.2, 0.1, 0.2); 
-        playBeep(1046.50, 'square', t + 0.3, 0.4, 0.3); 
-        playBeep(1318.51, 'sine', t + 0.3, 0.6, 0.3); 
-      } 
-      else if (type === 'wrong') {
-        playBeep(329.63, 'sawtooth', t, 0.2, 0.2); 
-        playBeep(311.13, 'sawtooth', t + 0.2, 0.2, 0.2); 
-        playBeep(293.66, 'sawtooth', t + 0.4, 0.2, 0.2); 
-        playBeep(277.18, 'sawtooth', t + 0.6, 0.6, 0.2); 
-      } 
-      else if (type === 'win') {
-        playBeep(392.00, 'square', t, 0.15, 0.2); 
-        playBeep(392.00, 'square', t + 0.15, 0.15, 0.2); 
-        playBeep(392.00, 'square', t + 0.3, 0.15, 0.2); 
-        playBeep(523.25, 'square', t + 0.45, 0.4, 0.2); 
-        playBeep(392.00, 'square', t + 0.85, 0.2, 0.2); 
-        playBeep(523.25, 'square', t + 1.05, 0.6, 0.3); 
-        playBeep(659.25, 'sine', t + 1.05, 0.8, 0.3); 
+        /* SUARA BENAR CEMERLANG (Magical Twinkle) */
+        playBeep(1046.50, 'sine', t, 0.1, 0.6);       // C6
+        playBeep(1318.51, 'sine', t + 0.08, 0.1, 0.6); // E6
+        playBeep(1567.98, 'sine', t + 0.16, 0.1, 0.6); // G6
+        playBeep(2093.00, 'sine', t + 0.24, 0.3, 0.6); // C7
+        playBeep(2637.02, 'sine', t + 0.32, 0.6, 0.4); // E7
+      } else if (type === 'wrong') {
+        /* SUARA SALAH NYARING & HEBOH (Buzzer Style) */
+        playBeep(300, 'sawtooth', t, 0.4, 0.8);
+        playBeep(310, 'sawtooth', t, 0.4, 0.8); // Dissonance
+        playBeep(280, 'sawtooth', t + 0.45, 0.6, 0.9);
+        playBeep(290, 'sawtooth', t + 0.45, 0.6, 0.9);
+      } else if (type === 'win') {
+        /* TEROMPET KEMENANGAN */
+        playBeep(392.00, 'square', t, 0.15, 0.8); 
+        playBeep(392.00, 'square', t + 0.15, 0.15, 0.8); 
+        playBeep(392.00, 'square', t + 0.3, 0.15, 0.8); 
+        playBeep(523.25, 'square', t + 0.45, 0.4, 0.8); 
+        playBeep(392.00, 'square', t + 0.85, 0.2, 0.8); 
+        playBeep(523.25, 'square', t + 1.05, 0.6, 0.9); 
+        playBeep(659.25, 'sine', t + 1.05, 0.8, 0.9); 
+      } else if (type === 'alert') {
+        playBeep(600, 'sine', t, 0.1, 0.6); 
       }
-      else if (type === 'alert') {
-        playBeep(400, 'sine', t, 0.15, 0.2);
-      }
+    }
+
+    /* SUARA KOIN BERPUTAR UNTUK RODA */
+    function playMetallicTick() {
+      if (!audioCtx) unlockAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.type = 'sine'; 
+      osc.frequency.setValueAtTime(1200, t); 
+      osc.frequency.exponentialRampToValueAtTime(600, t + 0.1); 
+
+      gain.gain.setValueAtTime(0.8, t);
+      gain.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
+
+      osc.start(t);
+      osc.stop(t + 0.1);
+    }
+
+    function triggerCelebration() {
+      playSound('win');
+      confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
     }
 
     function goToPage(pageId) {
@@ -847,10 +1091,8 @@
       }
     }
 
-    // ================= FULLSCREEN API =================
     function toggleFullscreen() {
       const container = document.getElementById('pdfScrollContainer');
-      
       if (!document.fullscreenElement && !document.webkitFullscreenElement) {
         if (container.requestFullscreen) {
           container.requestFullscreen();
@@ -872,7 +1114,6 @@
     function updateFullscreenUI() {
       const btnIcon = document.getElementById('btnFullscreen').querySelector('i');
       const floatingBtn = document.getElementById('btnFloatingExit');
-      
       if (document.fullscreenElement || document.webkitFullscreenElement) {
         btnIcon.classList.remove('fa-expand');
         btnIcon.classList.add('fa-compress');
@@ -884,7 +1125,7 @@
       }
     }
 
-    // ================= MAPPING SOAL AYO BERPIKIR =================
+    // ================= MAPPING SOAL AYO BERPIKIR (Di Komik) =================
     const inlineQuestions = {
       2: { type: "LITERAL 1", q: "Apa yang dilakukan Raka pada malam hari hingga ia tidur larut?" },
       3: { type: "LITERAL 2", q: "Mengapa Raka tidak sempat sarapan sebelum berangkat ke sekolah?" },
@@ -913,16 +1154,13 @@
       
       const loading = document.getElementById('pdfLoadingIndicator');
       const wrapper = document.getElementById('comicCanvasWrapper');
-      
       loading.classList.remove('hidden');
       wrapper.innerHTML = '';
 
       setTimeout(() => {
         let htmlImages = '';
-        
         for (let i = 1; i <= 18; i++) {
             htmlImages += `<img src="komik-${i}.jpg" alt="Halaman ${i}" class="w-full h-auto object-cover border-b-2 border-slate-200" onerror="this.src='https://placehold.co/600x800/e2e8f0/475569?text=Halaman+${i}+Tidak+Ditemukan';">`;
-
             if (inlineQuestions[i]) {
                 htmlImages += `
                   <div class="bg-gradient-to-br from-sky-50 to-blue-100 p-5 md:p-7 m-4 md:mx-8 rounded-2xl border-2 border-blue-200 border-l-8 border-l-blue-500 shadow-lg flex flex-col relative z-10">
@@ -939,277 +1177,207 @@
                 `;
             }
         }
-
-        htmlImages += `
-          <div class="bg-gradient-to-br from-amber-50 to-yellow-100 p-5 md:p-8 m-4 md:mx-8 rounded-3xl border-2 border-amber-200 shadow-xl mt-8 mb-16 flex flex-col">
-            <h3 class="font-fun text-xl md:text-2xl font-bold text-amber-700 mb-6 text-center drop-shadow-sm"><i class="fa-solid fa-list-check mr-2"></i> Ayo Menyimpulkan Cerita</h3>
-            <div class="space-y-5">
-                <div>
-                    <label class="block text-[11px] font-extrabold text-amber-800 uppercase tracking-wide mb-1">1. ORIENTASI</label>
-                    <p class="text-[11px] md:text-xs text-amber-700 mb-2 font-medium">Siapa tokoh utama dan bagaimana keadaan Raka pada awal cerita?</p>
-                    <textarea class="w-full p-3 text-sm rounded-2xl border-2 border-white focus:outline-none focus:border-amber-400 shadow-inner bg-white/80 resize-none" rows="2" placeholder="Jawabanmu..."></textarea>
-                </div>
-                <div>
-                    <label class="block text-[11px] font-extrabold text-amber-800 uppercase tracking-wide mb-1">2. KOMPLIKASI</label>
-                    <p class="text-[11px] md:text-xs text-amber-700 mb-2 font-medium">Masalah apa yang dialami Raka?</p>
-                    <textarea class="w-full p-3 text-sm rounded-2xl border-2 border-white focus:outline-none focus:border-amber-400 shadow-inner bg-white/80 resize-none" rows="2" placeholder="Jawabanmu..."></textarea>
-                </div>
-                <div>
-                    <label class="block text-[11px] font-extrabold text-amber-800 uppercase tracking-wide mb-1">3. RESOLUSI</label>
-                    <p class="text-[11px] md:text-xs text-amber-700 mb-2 font-medium">Bagaimana Raka menyelesaikan masalahnya?</p>
-                    <textarea class="w-full p-3 text-sm rounded-2xl border-2 border-white focus:outline-none focus:border-amber-400 shadow-inner bg-white/80 resize-none" rows="2" placeholder="Jawabanmu..."></textarea>
-                </div>
-                <div>
-                    <label class="block text-[11px] font-extrabold text-amber-800 uppercase tracking-wide mb-1">4. KODA</label>
-                    <p class="text-[11px] md:text-xs text-amber-700 mb-2 font-medium">Apa pesan yang dapat kamu ambil dari cerita?</p>
-                    <textarea class="w-full p-3 text-sm rounded-2xl border-2 border-white focus:outline-none focus:border-amber-400 shadow-inner bg-white/80 resize-none" rows="2" placeholder="Jawabanmu..."></textarea>
-                </div>
-            </div>
-            <hr class="border-amber-200/60 my-8">
-            <h3 class="font-fun text-xl md:text-2xl font-bold text-amber-700 mb-3 text-center"><i class="fa-solid fa-pen-nib mr-2"></i> Ayo Menceritakan Kembali</h3>
-            <p class="text-[11px] md:text-xs text-amber-800 mb-4 font-medium leading-relaxed text-center max-w-lg mx-auto">Tuliskan kembali cerita <b>“Sehatlah Ragaku, Semangat Belajarku”</b> dengan bahasamu sendiri (3–5 paragraf).</p>
-            <textarea class="w-full p-4 text-sm rounded-2xl border-2 border-white focus:outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-100 mb-5 resize-none shadow-inner bg-white/80" rows="6" placeholder="Tuliskan ceritamu yang hebat di sini..."></textarea>
-            
-            <button id="btnSimpanCerita" onclick="submitKesimpulan()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-2xl transition-all shadow-[0_6px_0_#d97706] active:translate-y-1.5 active:shadow-none flex items-center justify-center gap-2">
-                <i class="fa-solid fa-save text-lg"></i> Simpan Semua Pekerjaan
-            </button>
-          </div>
-        `;
-        
         wrapper.innerHTML = htmlImages;
         isComicLoaded = true;
         loading.classList.add('hidden');
       }, 1500); 
     }
 
-    function closeComicViewer() {
-      const modal = document.getElementById('pdfModal');
-      const content = document.getElementById('pdfModalContent');
-      
-      if (document.fullscreenElement || document.webkitFullscreenElement) {
-         if (document.exitFullscreen) document.exitFullscreen();
-         else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-      }
-
-      modal.classList.add('opacity-0');
-      content.classList.add('scale-95');
-      setTimeout(() => {
-        modal.classList.add('hidden');
-      }, 300);
-    }
-
-    // Script untuk memproses Jawaban Langsung (Tanpa Pop-up)
     function submitInlineAnswer(id) {
       const input = document.getElementById('eval-input-' + id);
       const btn = document.getElementById('btn-eval-' + id);
-      
       if(input.value.trim().length < 5) {
         playSound('wrong');
-        // Memberi efek berkedip merah pada input text sebagai ganti popup
         input.classList.add('border-rose-500', 'bg-rose-50');
         input.value = '';
         input.placeholder = "Tuliskan jawaban yang lebih panjang dan jelas ya...";
-        setTimeout(() => {
-          input.classList.remove('border-rose-500', 'bg-rose-50');
-        }, 2000);
+        setTimeout(() => { input.classList.remove('border-rose-500', 'bg-rose-50'); }, 2000);
         return;
       }
-      
       playSound('correct');
-      
-      // Mengunci teks dan merubah warna tombol tanpa popup sama sekali
       btn.innerHTML = `<i class="fa-solid fa-check"></i> Jawaban Tersimpan`;
       btn.className = "bg-emerald-500 text-white text-sm font-bold px-6 py-3 rounded-xl flex items-center justify-center sm:justify-start gap-2 w-full sm:w-max cursor-not-allowed opacity-90 transition-all";
       btn.onclick = null; 
-      
       input.disabled = true;
       input.className = "w-full p-4 text-sm rounded-xl border-2 border-emerald-300 bg-emerald-50 text-emerald-800 mb-4 resize-none font-medium";
     }
 
-    function submitKesimpulan() {
+    function closeComicViewer() {
+      const modal = document.getElementById('pdfModal');
+      const content = document.getElementById('pdfModalContent');
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+         if (document.exitFullscreen) document.exitFullscreen();
+         else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      }
+      modal.classList.add('opacity-0');
+      content.classList.add('scale-95');
+      setTimeout(() => { modal.classList.add('hidden'); }, 300);
+    }
+
+    // ================= SCRIPT SLIDE LKPD (LANGKAH 3) =================
+    let currentSlide = 1;
+    const totalSlides = 3;
+
+    function changeSlide(direction) {
+      const oldSlide = document.getElementById(`slide-${currentSlide}`);
+      const oldDot = document.getElementById(`dot-${currentSlide}`);
+      if(oldSlide) oldSlide.classList.remove('active');
+      if(oldDot) {
+          oldDot.classList.remove('bg-slate-700');
+          oldDot.classList.add('bg-white/60');
+      }
+
+      currentSlide += direction;
+      if (currentSlide < 1) currentSlide = 1;
+      if (currentSlide > totalSlides) currentSlide = totalSlides;
+
+      const newSlide = document.getElementById(`slide-${currentSlide}`);
+      const newDot = document.getElementById(`dot-${currentSlide}`);
+      if(newSlide) newSlide.classList.add('active');
+      if(newDot) {
+          newDot.classList.remove('bg-white/60');
+          newDot.classList.add('bg-slate-700');
+      }
+      
+      const tracker = document.getElementById('slide-tracker');
+      if(tracker) tracker.innerText = `Kegiatan ${currentSlide} dari ${totalSlides}`;
+
+      const btnPrev = document.getElementById('btnPrevSlide');
+      const btnNext = document.getElementById('btnNextSlide');
+
+      if(btnPrev) btnPrev.disabled = (currentSlide === 1);
+      if(btnNext) {
+          btnNext.disabled = (currentSlide === totalSlides);
+          if(currentSlide === totalSlides) {
+            btnNext.classList.add('hidden');
+          } else {
+            btnNext.classList.remove('hidden');
+          }
+      }
+    }
+
+    function submitLKPD() {
+      const textarea = document.getElementById('storyTextarea');
+      if(textarea.value.trim().length < 20) {
+        playSound('wrong');
+        textarea.classList.add('border-rose-500', 'bg-rose-50');
+        textarea.value = '';
+        textarea.placeholder = "Ayo tuliskan cerita yang lebih panjang minimal 3 paragraf ya!";
+        setTimeout(() => {
+          textarea.classList.remove('border-rose-500', 'bg-rose-50');
+        }, 2000);
+        return;
+      }
+
       playSound('win');
-      // Mengubah tombol menjadi hijau tanpa memunculkan pop-up
-      const btn = document.getElementById('btnSimpanCerita');
-      if (btn) {
-          btn.innerHTML = `<i class="fa-solid fa-check-circle text-xl"></i> Tersimpan Sempurna!`;
-          btn.className = "w-full bg-emerald-500 text-white font-bold py-4 rounded-2xl transition-all shadow-[0_6px_0_#059669] cursor-not-allowed flex items-center justify-center gap-2";
+      const btn = document.getElementById('btnSelesaiLkpd');
+      if(btn) {
+          btn.innerHTML = `<i class="fa-solid fa-check-circle text-xl"></i> Pekerjaan Tersimpan Sempurna!`;
+          btn.className = "w-full mt-6 bg-emerald-600 text-white font-bold py-4 rounded-2xl transition-all shadow-[0_6px_0_#047857] cursor-not-allowed flex items-center justify-center gap-2";
           btn.onclick = null;
       }
+      textarea.disabled = true;
+      setTimeout(() => { goToPage('spin-presentasi'); }, 2000);
     }
 
-    // ================= RODA PUTAR =================
-    const canvas = document.getElementById('wheelCanvas');
-    const ctx = canvas.getContext('2d');
-    const wheelColors = ["#FF3158", "#FFB300", "#00D67D", "#009BFF", "#A200FF", "#FF0084"];
-    const groups = [
-      { name: "Kelompok 1" },
-      { name: "Kelompok 2" },
-      { name: "Kelompok 3" },
-      { name: "Kelompok 4" }
+    // ================= MARI KITA PERKUAT SLIDER (LANGKAH 5) =================
+    const penguatanData = [
+      {
+        q: "Apa judul cerita yang telah kita baca?",
+        a: "<b>Jawaban:</b> “Sehatlah Ragaku, Semangat Belajarku”."
+      },
+      {
+        q: "Siapa saja tokoh yang terdapat dalam cerita tersebut dan di mana saja latar tempat terjadinya cerita?",
+        a: "<b>Jawaban:</b> Tokoh dalam cerita yaitu Raka, Sinta, Beni, Ibu Raka, dan Bu Guru. Latar tempatnya yaitu kamar Raka, rumah Raka, dan sekolah."
+      },
+      {
+        q: "Apa saja struktur cerita dalam e-comic “Sehatlah Ragaku, Semangat Belajarku”? Jelaskan secara singkat isi dari setiap struktur tersebut.",
+        a: `<b>Jawaban:</b><ul class="list-disc list-inside mt-2 space-y-2">
+              <li><b class="text-teal-800">Orientasi:</b> Memperkenalkan Raka dan kebiasaannya bermain gim hingga larut malam. Akibatnya, Raka bangun kesiangan dan tidak sarapan sebelum sekolah.</li>
+              <li><b class="text-teal-800">Komplikasi:</b> Raka merasa lelah, lapar, lemas, dan sulit berkonsentrasi di sekolah karena kebiasaan hidup yang kurang sehat.</li>
+              <li><b class="text-teal-800">Resolusi:</b> Raka menyadari kesalahannya dan mulai mengubah kebiasaannya dengan tidur lebih awal, sarapan, minum cukup, berolahraga, serta mengatur waktu bermain gim.</li>
+              <li><b class="text-teal-800">Koda:</b> Raka dan teman-temannya menyadari bahwa kesehatan harus dijaga melalui kebiasaan baik setiap hari.</li>
+            </ul>`
+      },
+      {
+        q: "Bagaimana hubungan antara kebiasaan Raka tidur larut dan tidak sarapan dengan keadaan Raka di sekolah? Jelaskan hubungan sebab dan akibatnya berdasarkan cerita!",
+        a: "<b>Jawaban:</b> Raka tidur larut karena bermain gim sehingga bangun kesiangan dan tidak sempat sarapan. Akibatnya, Raka merasa lelah, lapar, lemas, mengantuk, dan sulit berkonsentrasi saat belajar di sekolah."
+      },
+      {
+        q: "Sebutkan dua informasi penting yang menunjukkan bahwa Raka mulai menerapkan pola hidup sehat dalam kehidupan sehari-hari!",
+        a: `<b>Jawaban:</b><ul class="list-disc list-inside mt-2 space-y-1">
+              <li>Raka tidur lebih awal dan mengurangi waktu bermain gim.</li>
+              <li>Raka sarapan dengan makanan bergizi dan membawa air minum.</li>
+            </ul><p class="mt-3 text-sm text-teal-800 bg-teal-100/60 p-3 rounded-lg border border-teal-200"><i>Jawaban lain yang sesuai: Raka mulai berolahraga dan menjaga kebersihan dengan mencuci tangan.</i></p>`
+      },
+      {
+        q: "Apa pesan yang dapat kamu ambil dari cerita “Sehatlah Ragaku, Semangat Belajarku” tentang pentingnya menerapkan pola hidup sehat sebagai siswa?",
+        a: "<b>Jawaban:</b> Kita harus membiasakan pola hidup sehat setiap hari, seperti makan makanan bergizi, sarapan, minum air yang cukup, berolahraga, menjaga kebersihan, tidur yang cukup, dan mengatur waktu bermain agar tubuh tetap sehat sehingga dapat belajar dan beraktivitas dengan baik."
+      }
     ];
-    let assignedStudents = groups.map(() => []);
-    let assignmentCount = 0;
-    let currentRotation = 0;
 
-    function drawWheelOn(targetCanvas, targetCtx) {
-      const wheelItems = internalStudentsList.length ? internalStudentsList : ["Kosong", "Kosong", "Kosong", "Kosong", "Kosong", "Kosong"];
-      const numSegments = wheelItems.length;
-      const arc = (2 * Math.PI) / numSegments;
-      const radius = targetCanvas.width / 2;
+    let currentPIndex = 0;
 
-      targetCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
-
-      wheelItems.forEach((student, i) => {
-        const angle = i * arc;
-        targetCtx.beginPath();
-        targetCtx.fillStyle = wheelColors[i % wheelColors.length];
-        targetCtx.moveTo(radius, radius);
-        targetCtx.arc(radius, radius, radius - 8, angle, angle + arc);
-        targetCtx.fill();
-        targetCtx.strokeStyle = "#ffffff";
-        targetCtx.lineWidth = 4;
-        targetCtx.stroke();
-
-        targetCtx.save();
-        targetCtx.translate(radius, radius);
-        targetCtx.rotate(angle + arc / 2);
-        targetCtx.textAlign = "right";
-        targetCtx.fillStyle = "#ffffff"; 
-        targetCtx.shadowColor = "rgba(0,0,0,0.3)";
-        targetCtx.shadowBlur = 4;
-        targetCtx.font = `bold ${wheelItems.length > 10 ? 12 : 16}px Fredoka`;
-        const label = student.length > 12 ? `${student.slice(0, 11)}...` : student;
-        targetCtx.fillText(label, radius - 30, 6);
-        targetCtx.restore();
-      });
-    }
-
-    function drawWheel() { drawWheelOn(canvas, ctx); }
-    drawWheel(); 
-
-    function handleEnter(e) {
-      if(e.key === 'Enter') addSingleName();
-    }
-
-    function addSingleName() {
-      const input = document.getElementById('singleNameInput');
-      const name = input.value.trim();
+    function renderPenguatan(direction = 0) {
+      const slide = document.getElementById('penguatan-slide');
       
-      if(name && !internalStudentsList.includes(name)) {
-        internalStudentsList.push(name);
-        input.value = '';
-        renderStudentList();
-        drawWheel(); 
-      } else if (internalStudentsList.includes(name)) {
-        playSound('alert');
-      }
-    }
-
-    function removeName(index) {
-      internalStudentsList.splice(index, 1);
-      renderStudentList();
-      drawWheel(); 
-    }
-
-    function clearAllNames() {
-      internalStudentsList = [];
-      assignedStudents = groups.map(() => []);
-      assignmentCount = 0;
-      currentRotation = 0;
-      canvas.style.transform = 'rotate(0deg)';
-      renderStudentList();
-      updateGroupList();
-      drawWheel();
-      playSound('alert');
-    }
-
-    function renderStudentList() {
-      const listDiv = document.getElementById('studentNameList');
-      const badge = document.getElementById('studentCountBadge');
-      
-      badge.innerText = `${internalStudentsList.length} siswa`;
-      listDiv.innerHTML = '';
-
-      if (internalStudentsList.length === 0) {
-        listDiv.innerHTML = '<div class="text-xs text-slate-400 text-center py-4 italic">Belum ada nama yang dimasukkan.</div>';
-        return;
-      }
-
-      internalStudentsList.forEach((name, idx) => {
-        const item = document.createElement('div');
-        item.className = "flex justify-between items-center bg-slate-50 border border-slate-100 rounded-xl px-3 py-2 text-sm";
-        item.innerHTML = `
-          <div class="flex items-center gap-3">
-            <span class="text-slate-400 font-bold text-xs w-4">${idx + 1}</span>
-            <span class="font-medium text-slate-700">${name}</span>
-          </div>
-          <button onclick="removeName(${idx})" class="text-slate-400 hover:text-rose-500 transition-colors px-2">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        `;
-        listDiv.appendChild(item); 
-      });
-    }
-
-    function updateGroupList() {
-      assignedStudents.forEach((members, index) => {
-        const countBadge = document.getElementById(`count-group-${index}`);
-        const memberContainer = document.getElementById(`members-group-${index}`);
-        
-        countBadge.innerText = `${members.length} siswa`;
-        
-        if (members.length > 0) {
-          memberContainer.innerHTML = `<ul class="list-disc list-inside space-y-1 w-full text-slate-600 font-medium">
-            ${members.map(m => `<li>${m}</li>`).join('')}
-          </ul>`;
-        } else {
-          memberContainer.innerHTML = `<i class="fa-solid fa-user-xmark mr-2 opacity-50"></i> Belum ada anggota`;
-        }
-      });
-    }
-
-    function spinWheel() {
-      if (internalStudentsList.length === 0) {
-        playSound('wrong');
-        return;
-      }
-
-      const btn = document.getElementById('spinBtn');
-      btn.disabled = true;
-      const spins = 5; 
-      
-      const selectedIndex = Math.floor(Math.random() * internalStudentsList.length);
-      
-      const segmentCenter = ((selectedIndex + 0.5) / internalStudentsList.length) * 360;
-      const targetAngle = 270 - segmentCenter;
-      const targetOffset = (targetAngle - (currentRotation % 360) + 360) % 360;
-      currentRotation += (spins * 360) + targetOffset;
-
-      canvas.style.transform = `rotate(${currentRotation}deg)`;
+      if(direction === 1) slide.style.transform = 'translateX(-100%)';
+      else if(direction === -1) slide.style.transform = 'translateX(100%)';
+      slide.style.opacity = '0';
 
       setTimeout(() => {
-        btn.disabled = false;
+        document.getElementById('penguatan-counter').innerText = `Soal ${currentPIndex + 1} dari 6`;
+        document.getElementById('penguatan-num').innerText = currentPIndex + 1;
+        document.getElementById('penguatan-q').innerHTML = penguatanData[currentPIndex].q;
+        document.getElementById('penguatan-a').innerHTML = penguatanData[currentPIndex].a;
         
-        const winner = internalStudentsList.splice(selectedIndex, 1)[0];
-        
-        const groupIndex = assignmentCount % groups.length;
-        assignedStudents[groupIndex].push(winner);
-        assignmentCount++;
-        
-        renderStudentList(); 
-        drawWheel();         
-        updateGroupList();   
+        document.getElementById('penguatan-a').classList.add('hidden');
+        document.getElementById('penguatan-icon').classList.remove('rotate-180');
 
-        confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
-        playSound('correct'); 
+        if(direction === 1) slide.style.transform = 'translateX(100%)';
+        else if(direction === -1) slide.style.transform = 'translateX(-100%)';
         
-        activeGroupName = groups[groupIndex].name;
-        
-      }, 4000);
+        void slide.offsetWidth; 
+
+        slide.style.transform = 'translateX(0)';
+        slide.style.opacity = '1';
+
+        document.getElementById('btn-prev-penguatan').disabled = (currentPIndex === 0);
+        if(currentPIndex === penguatanData.length - 1) {
+            document.getElementById('btn-next-penguatan').innerHTML = `<i class="fa-solid fa-flag-checkered mr-2"></i> Selesai!`;
+        } else {
+            document.getElementById('btn-next-penguatan').innerHTML = `Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>`;
+        }
+      }, 300);
     }
 
-    // ================= KUIS 10 SOAL =================
-    const questions = [
+    function changePenguatan(dir) {
+      if (dir === 1 && currentPIndex === penguatanData.length - 1) {
+         triggerCelebration();
+         goToPage('quiz'); // Lanjut ke Kuis Akhir
+         return;
+      }
+      currentPIndex += dir;
+      renderPenguatan(dir);
+    }
+
+    function togglePenguatanAnswer() {
+      const a = document.getElementById('penguatan-a');
+      const icon = document.getElementById('penguatan-icon');
+      if(a.classList.contains('hidden')) {
+         a.classList.remove('hidden');
+         icon.classList.add('rotate-180');
+         playSound('alert');
+      } else {
+         a.classList.add('hidden');
+         icon.classList.remove('rotate-180');
+      }
+    }
+
+    renderPenguatan(0);
+
+    // ================= KUIS 10 SOAL (LANGKAH 6) =================
+    const quizQuestions = [
       {
         type: "multiple-choice",
         q: "1. Apa yang dilakukan Raka hingga tidur larut malam?",
@@ -1287,7 +1455,7 @@
         type: "essay",
         q: "9. Menurutmu, dari kebiasaan hidup sehat yang dilakukan Raka, kebiasaan manakah yang paling penting? Jelaskan alasanmu!",
         placeholder: "Tuliskan pendapat kelompokmu di sini...",
-        explanation: "<strong>Pembahasan:</strong> (Semua kebiasaan penting, namun bisa memilih salah satu. Misalnya: tidur cukup agar otak beristirahat, atau sarapan sebagai sumber energi)."
+        explanation: "<strong>Pembahasan:</strong> Semua kebiasaan penting, namun bisa memilih salah satu. Misalnya: tidur cukup agar otak beristirahat, atau sarapan sebagai sumber energi."
       },
       {
         type: "essay",
@@ -1302,8 +1470,8 @@
     let correctCount = 0;
 
     function renderQuestion() {
-      const qData = questions[currentQ];
-      document.getElementById('questionNumber').innerText = `Soal Nomor ${currentQ + 1} dari ${questions.length}`;
+      const qData = quizQuestions[currentQ];
+      document.getElementById('questionNumber').innerText = `Soal Nomor ${currentQ + 1} dari ${quizQuestions.length}`;
       document.getElementById('questionText').innerText = qData.q;
       
       const optContainer = document.getElementById('optionsContainer');
@@ -1323,33 +1491,23 @@
           const btn = document.createElement('button');
           btn.className = `${style.bg} ${style.shadow} hover:brightness-110 text-white p-5 md:p-6 rounded-[1.5rem] font-formal font-bold text-left transition transform active:translate-y-2 active:shadow-none flex items-center gap-4`;
           btn.innerHTML = `<span class="w-8 h-8 md:w-10 md:h-10 bg-white/25 rounded-full flex items-center justify-center text-sm md:text-base shrink-0 font-extrabold shadow-inner drop-shadow-sm">${String.fromCharCode(65 + idx)}</span> <span class="text-sm md:text-base leading-snug drop-shadow-sm">${opt.text}</span>`;
-          btn.onclick = () => selectAnswer(opt);
+          btn.onclick = () => selectQuizAnswer(opt);
           optContainer.appendChild(btn);
         });
       } else if (qData.type === "essay") {
         optContainer.className = "flex flex-col gap-5";
         optContainer.innerHTML = `
-          <textarea 
-            id="essayAnswerInput" 
-            rows="4" 
-            placeholder="${qData.placeholder}" 
-            class="w-full p-5 rounded-[1.25rem] border-2 border-slate-200 text-sm md:text-base font-medium focus:outline-none focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/20 shadow-inner resize-none transition-all"
-          ></textarea>
-          <button 
-            type="button" 
-            onclick="submitFinalEssayAnswer()" 
-            class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 px-8 rounded-2xl font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1.5 active:shadow-none transition-all flex items-center justify-center gap-2 self-end"
-          >
-            <span>Kirim Jawabanmu Sekarang!</span>
-            <i class="fa-solid fa-paper-plane"></i>
+          <textarea id="essayAnswerInput" rows="4" placeholder="${qData.placeholder}" class="w-full p-5 rounded-[1.25rem] border-2 border-slate-200 text-sm md:text-base font-medium focus:outline-none focus:border-brand-purple focus:ring-4 focus:ring-brand-purple/20 shadow-inner resize-none transition-all"></textarea>
+          <button type="button" onclick="submitFinalEssayAnswer()" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white py-4 px-8 rounded-2xl font-formal font-bold text-sm shadow-[0_6px_0_#1E40AF] active:translate-y-1.5 active:shadow-none transition-all flex items-center justify-center gap-2 self-end">
+            <span>Kirim Jawabanmu Sekarang!</span><i class="fa-solid fa-paper-plane"></i>
           </button>
         `;
       }
     }
 
-    function selectAnswer(opt) {
+    function selectQuizAnswer(opt) {
       const isCorrect = opt.correct;
-      const qData = questions[currentQ];
+      const qData = quizQuestions[currentQ];
       const feedback = document.getElementById('feedbackArea');
       feedback.classList.remove('hidden');
 
@@ -1378,7 +1536,7 @@
       setTimeout(() => {
         feedback.classList.add('hidden');
         currentQ++;
-        if (currentQ < questions.length) {
+        if (currentQ < quizQuestions.length) {
           renderQuestion();
         } else {
           finishQuiz();
@@ -1395,27 +1553,17 @@
         answerInput.classList.add('border-rose-500', 'bg-rose-50');
         answerInput.value = '';
         answerInput.placeholder = "Tuliskan jawaban yang lebih panjang dan jelas ya...";
-        setTimeout(() => {
-          answerInput.classList.remove('border-rose-500', 'bg-rose-50');
-        }, 2000);
+        setTimeout(() => { answerInput.classList.remove('border-rose-500', 'bg-rose-50'); }, 2000);
         return;
       }
 
-      const invalidPhrases = [
-        "tidak tahu", "tidak tau", "nggak tau", "ngga tau", "gatau", 
-        "gak tau", "kurang tau", "asal", "kosong", "bodo", "terserah", "ntah", "tau ah"
-      ];
+      const invalidPhrases = ["tidak tahu", "tidak tau", "nggak tau", "ngga tau", "gatau", "gak tau", "kurang tau", "asal", "kosong", "bodo", "terserah", "ntah", "tau ah"];
       const isInvalid = invalidPhrases.some(phrase => answerText.includes(phrase));
 
-      const validKeywords = [
-        "gim", "game", "larut", "malam", "sarapan", "tidur", "istirahat", 
-        "lemas", "ngantuk", "konsentrasi", "olahraga", "sehat", "bugar", 
-        "air", "minum", "ingatkan", "teman", "bantu", "energi", "fokus", 
-        "kesiangan", "telat", "waktu", "pagi", "kesehatan", "kurang", "main"
-      ];
+      const validKeywords = ["gim", "game", "larut", "malam", "sarapan", "tidur", "istirahat", "lemas", "ngantuk", "konsentrasi", "olahraga", "sehat", "bugar", "air", "minum", "ingatkan", "teman", "bantu", "energi", "fokus", "kesiangan", "telat", "waktu", "pagi", "kesehatan", "kurang", "main"];
       const hasValidKeyword = validKeywords.some(keyword => answerText.includes(keyword));
 
-      const qData = questions[currentQ];
+      const qData = quizQuestions[currentQ];
       const feedback = document.getElementById('feedbackArea');
       feedback.classList.remove('hidden');
 
@@ -1446,7 +1594,7 @@
       setTimeout(() => {
         feedback.classList.add('hidden');
         currentQ++;
-        if (currentQ < questions.length) {
+        if (currentQ < quizQuestions.length) {
           renderQuestion();
         } else {
           finishQuiz();
@@ -1461,7 +1609,6 @@
 
       userAnswers.forEach((ans) => {
         const isCorrect = ans.isCorrect;
-        
         const icon = isCorrect 
           ? '<div class="w-10 h-10 rounded-full bg-emerald-400 text-white flex items-center justify-center text-xl shadow-lg shadow-emerald-500/30 border-2 border-white/50"><i class="fa-solid fa-check"></i></div>' 
           : '<div class="w-10 h-10 rounded-full bg-rose-500 text-white flex items-center justify-center text-xl shadow-lg shadow-rose-500/30 border-2 border-white/50"><i class="fa-solid fa-xmark"></i></div>';
@@ -1487,17 +1634,14 @@
           </div>
         `;
       });
-      
       reviewSection.classList.remove('hidden');
     }
 
     function finishQuiz() {
       playSound('win');
-      const accuracyPercent = Math.round((correctCount / questions.length) * 100);
+      const accuracyPercent = Math.round((correctCount / quizQuestions.length) * 100);
       
       if (groupScores[activeGroupName]) {
-        groupScores[activeGroupName] = { score: score, accuracy: accuracyPercent };
-      } else {
         groupScores[activeGroupName] = { score: score, accuracy: accuracyPercent };
       }
 
@@ -1511,34 +1655,276 @@
          if (group) {
             let titleText = group.name;
             if (group.name === activeGroupName) titleText += " (Kamu)";
-            
             document.getElementById(`podium-rank-${rank}-title`).innerText = titleText;
             document.getElementById(`podium-rank-${rank}-score`).innerText = group.score;
-            document.getElementById(`podium-rank-${rank}-acc`).innerText = `Benar ${Math.round((group.accuracy/100)*questions.length)} dari ${questions.length} soal`;
+            document.getElementById(`podium-rank-${rank}-acc`).innerText = `Benar ${Math.round((group.accuracy/100)*quizQuestions.length)} dari ${quizQuestions.length} soal`;
          }
       });
 
       renderQuizReview();
 
-      goToPage('nilai');
-      triggerCelebration();
+      showNotification('success', 'Kuis Selesai!', 'Kamu telah menyelesaikan semua soal! Silakan pelajari ulasan jawabanmu di bawah, lalu klik tombol untuk melihat Papan Pemenang.');
     }
 
-    function restartQuiz() {
-      currentQ = 0;
-      score = 0;
-      correctCount = 0;
-      userAnswers = []; 
-      document.getElementById('quizScoreDisplay').innerText = '0';
-      document.getElementById('feedbackArea').classList.add('hidden');
-      document.getElementById('quizReviewSection').classList.add('hidden');
-      renderQuestion();
-      goToPage('quiz');
-    }
-
-    // PENTING: Inisialisasi awal kuis agar tidak blank saat pertama kali masuk halaman
     renderQuestion();
 
+    // ================= RODA PUTAR PRESENTASI (LANGKAH 4 BERGILIRAN) =================
+    const canvasPres = document.getElementById('wheelCanvasPresentasi');
+    const ctxPres = canvasPres.getContext('2d');
+    let groupsPres = ["Kelompok 1", "Kelompok 2", "Kelompok 3", "Kelompok 4"];
+    const colorsPresBase = ["#FF3158", "#FFB300", "#00D67D", "#009BFF", "#A200FF", "#FF0084"];
+    let currentRotationPres = 0;
+
+    function drawWheelPresentasi() {
+      const numSegments = groupsPres.length;
+      const arc = (2 * Math.PI) / numSegments;
+      const radius = canvasPres.width / 2;
+
+      ctxPres.clearRect(0, 0, canvasPres.width, canvasPres.height);
+      
+      if(groupsPres.length === 0) return;
+
+      groupsPres.forEach((group, i) => {
+        const angle = i * arc;
+        ctxPres.beginPath();
+        ctxPres.fillStyle = colorsPresBase[i % colorsPresBase.length];
+        ctxPres.moveTo(radius, radius);
+        ctxPres.arc(radius, radius, radius - 8, angle, angle + arc);
+        ctxPres.fill();
+        ctxPres.strokeStyle = "#ffffff";
+        ctxPres.lineWidth = 4;
+        ctxPres.stroke();
+        ctxPres.save();
+        ctxPres.translate(radius, radius);
+        ctxPres.rotate(angle + arc / 2);
+        ctxPres.textAlign = "right";
+        ctxPres.textBaseline = "middle";
+        ctxPres.fillStyle = "#ffffff"; 
+        ctxPres.shadowColor = "rgba(0,0,0,0.3)";
+        ctxPres.shadowBlur = 4;
+        ctxPres.font = `bold 24px Fredoka`;
+        ctxPres.fillText(group, radius - 40, 0);
+        ctxPres.restore();
+      });
+    }
+
+    if (canvasPres) drawWheelPresentasi();
+
+    function spinWheelPresentasi() {
+      if (groupsPres.length === 0) return;
+
+      const btn = document.getElementById('spinBtnPres');
+      btn.disabled = true;
+      const spins = 5; 
+      
+      const selectedIndex = Math.floor(Math.random() * groupsPres.length);
+      const segmentCenter = ((selectedIndex + 0.5) / groupsPres.length) * 360;
+      const targetAngle = 270 - segmentCenter;
+      const targetOffset = (targetAngle - (currentRotationPres % 360) + 360) % 360;
+      currentRotationPres += (spins * 360) + targetOffset;
+
+      canvasPres.style.transform = `rotate(${currentRotationPres}deg)`;
+      
+      let duration = 4000;
+      let elapsed = 0;
+      let interval = 20;
+      function tickLoop() {
+        if (elapsed < duration) {
+          playMetallicTick();
+          elapsed += interval;
+          interval *= 1.15; 
+          setTimeout(tickLoop, interval);
+        }
+      }
+      tickLoop();
+
+      setTimeout(() => {
+        btn.disabled = false;
+        const winner = groupsPres[selectedIndex];
+        
+        groupsPres.splice(selectedIndex, 1);
+        triggerCelebration();
+        
+        showNotification(
+           'presentation', 
+           'Waktunya Tampil!', 
+           `Selamat untuk <b class="text-lg text-emerald-600">${winner}</b>!<br>Silakan maju ke depan kelas untuk mempresentasikan hasil diskusinya.`, 
+           () => {
+               drawWheelPresentasi(); 
+               if (groupsPres.length === 0) {
+                   document.getElementById('btnLanjutKeLangkah5').classList.remove('hidden');
+                   document.getElementById('spinBtnPres').classList.add('hidden'); 
+                   document.getElementById('spin-needle-presentasi').classList.add('hidden'); 
+               }
+           }, 
+           "Siap Laksanakan! <i class='fa-solid fa-thumbs-up ml-1'></i>"
+        );
+      }, 4000);
+    }
+
+    // ================= RODA PUTAR KELOMPOK AWAL (LANGKAH 1) =================
+    const canvasKelompok = document.getElementById('wheelCanvasKelompok');
+    const ctxKelompok = canvasKelompok.getContext('2d');
+    const wheelColors = ["#FF3158", "#FFB300", "#00D67D", "#009BFF", "#A200FF", "#FF0084"];
+    const groupsKelompok = [
+      { name: "Kelompok 1" },
+      { name: "Kelompok 2" },
+      { name: "Kelompok 3" },
+      { name: "Kelompok 4" }
+    ];
+    let assignedStudents = groupsKelompok.map(() => []);
+    let assignmentCount = 0;
+    let currentRotationKelompok = 0;
+
+    function drawWheelKelompok() {
+      const wheelItems = internalStudentsList.length ? internalStudentsList : ["Kosong", "Kosong", "Kosong", "Kosong", "Kosong", "Kosong"];
+      const numSegments = wheelItems.length;
+      const arc = (2 * Math.PI) / numSegments;
+      const radius = canvasKelompok.width / 2;
+
+      ctxKelompok.clearRect(0, 0, canvasKelompok.width, canvasKelompok.height);
+      wheelItems.forEach((student, i) => {
+        const angle = i * arc;
+        ctxKelompok.beginPath();
+        ctxKelompok.fillStyle = wheelColors[i % wheelColors.length];
+        ctxKelompok.moveTo(radius, radius);
+        ctxKelompok.arc(radius, radius, radius - 8, angle, angle + arc);
+        ctxKelompok.fill();
+        ctxKelompok.strokeStyle = "#ffffff";
+        ctxKelompok.lineWidth = 4;
+        ctxKelompok.stroke();
+        ctxKelompok.save();
+        ctxKelompok.translate(radius, radius);
+        ctxKelompok.rotate(angle + arc / 2);
+        ctxKelompok.textAlign = "right";
+        ctxKelompok.textBaseline = "middle";
+        ctxKelompok.fillStyle = "#ffffff"; 
+        ctxKelompok.shadowColor = "rgba(0,0,0,0.3)";
+        ctxKelompok.shadowBlur = 4;
+        ctxKelompok.font = `bold ${wheelItems.length > 10 ? 12 : 16}px Fredoka`;
+        const label = student.length > 12 ? `${student.slice(0, 11)}...` : student;
+        ctxKelompok.fillText(label, radius - 30, 0);
+        ctxKelompok.restore();
+      });
+    }
+
+    if (canvasKelompok) drawWheelKelompok();
+
+    function handleEnter(e) { if(e.key === 'Enter') addSingleName(); }
+
+    function addSingleName() {
+      const input = document.getElementById('singleNameInput');
+      const name = input.value.trim();
+      if(name && !internalStudentsList.includes(name)) {
+        internalStudentsList.push(name);
+        input.value = '';
+        renderStudentList();
+        drawWheelKelompok(); 
+      } else if (internalStudentsList.includes(name)) {
+        playSound('alert');
+      }
+    }
+
+    function removeName(index) {
+      internalStudentsList.splice(index, 1);
+      renderStudentList();
+      drawWheelKelompok(); 
+    }
+
+    function clearAllNames() {
+      internalStudentsList = [];
+      assignedStudents = groupsKelompok.map(() => []);
+      assignmentCount = 0;
+      currentRotationKelompok = 0;
+      canvasKelompok.style.transform = 'rotate(0deg)';
+      renderStudentList();
+      updateGroupList();
+      drawWheelKelompok();
+      playSound('alert');
+    }
+
+    function renderStudentList() {
+      const listDiv = document.getElementById('studentNameList');
+      const badge = document.getElementById('studentCountBadge');
+      badge.innerText = `${internalStudentsList.length} siswa`;
+      listDiv.innerHTML = '';
+      if (internalStudentsList.length === 0) {
+        listDiv.innerHTML = '<div class="text-xs text-slate-400 text-center py-4 italic">Belum ada nama yang dimasukkan.</div>';
+        return;
+      }
+      internalStudentsList.forEach((name, idx) => {
+        const item = document.createElement('div');
+        item.className = "flex justify-between items-center bg-slate-50 border border-slate-100 rounded-xl px-3 py-2 text-sm";
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="text-slate-400 font-bold text-xs w-4">${idx + 1}</span>
+            <span class="font-medium text-slate-700">${name}</span>
+          </div>
+          <button onclick="removeName(${idx})" class="text-slate-400 hover:text-rose-500 transition-colors px-2"><i class="fa-solid fa-xmark"></i></button>
+        `;
+        listDiv.appendChild(item); 
+      });
+    }
+
+    function updateGroupList() {
+      assignedStudents.forEach((members, index) => {
+        const countBadge = document.getElementById(`count-group-${index}`);
+        const memberContainer = document.getElementById(`members-group-${index}`);
+        countBadge.innerText = `${members.length} siswa`;
+        if (members.length > 0) {
+          memberContainer.innerHTML = `<ul class="list-disc list-inside space-y-1 w-full text-slate-600 font-medium">${members.map(m => `<li>${m}</li>`).join('')}</ul>`;
+        } else {
+          memberContainer.innerHTML = `<i class="fa-solid fa-user-xmark mr-2 opacity-50"></i> Belum ada anggota`;
+        }
+      });
+    }
+
+    function spinWheelKelompok() {
+      if (internalStudentsList.length === 0) {
+        playSound('wrong');
+        return;
+      }
+      const btn = document.getElementById('spinBtnKelompok');
+      btn.disabled = true;
+      const spins = 5; 
+      const selectedIndex = Math.floor(Math.random() * internalStudentsList.length);
+      const segmentCenter = ((selectedIndex + 0.5) / internalStudentsList.length) * 360;
+      const targetAngle = 270 - segmentCenter;
+      const targetOffset = (targetAngle - (currentRotationKelompok % 360) + 360) % 360;
+      currentRotationKelompok += (spins * 360) + targetOffset;
+      canvasKelompok.style.transform = `rotate(${currentRotationKelompok}deg)`;
+      
+      let duration = 4000;
+      let elapsed = 0;
+      let interval = 20;
+      function tickLoop() {
+        if (elapsed < duration) {
+          playMetallicTick();
+          elapsed += interval;
+          interval *= 1.15; 
+          setTimeout(tickLoop, interval);
+        }
+      }
+      tickLoop();
+
+      setTimeout(() => {
+        btn.disabled = false;
+        const winner = internalStudentsList.splice(selectedIndex, 1)[0];
+        const groupIndex = assignmentCount % groupsKelompok.length;
+        assignedStudents[groupIndex].push(winner);
+        assignmentCount++;
+        renderStudentList(); 
+        drawWheelKelompok();         
+        updateGroupList();   
+        
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+        playSound('win'); 
+        activeGroupName = groupsKelompok[groupIndex].name;
+        
+        showNotification('success', 'Hore! Masuk Kelompok', `Selamat! <b>${winner}</b> berhasil tergabung ke dalam <b>${activeGroupName}</b>.`);
+
+      }, 4000);
+    }
   </script>
 </body>
 </html>
