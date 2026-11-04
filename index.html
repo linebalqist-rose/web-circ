@@ -1926,5 +1926,689 @@
       }, 4000);
     }
   </script>
+
+  
+<!-- =====================================================
+     LINGUAPLAY - FINAL REVISION PATCH
+     Kompatibel dengan struktur folder PNG + JPG
+     Tidak perlu mengubah JavaScript utama
+===================================================== -->
+
+<script>
+(function () {
+  "use strict";
+
+  // =====================================================
+  // 1. KONFIGURASI GAMBAR KOMIK
+  // =====================================================
+
+  // Sesuai struktur folder yang diberikan.
+  const COMIC_IMAGES = {
+    1: "komik-1.png",
+    2: "komik-2.jpg",
+    3: "komik-3.jpg",
+    4: "komik-4.png",
+    5: "komik-5.png",
+    6: "komik-6.png",
+    7: "komik-7.png",
+    8: "komik-8.jpg",
+    9: "komik-9.jpg",
+    10: "komik-10.jpg",
+    11: "komik-11.jpg",
+    12: "komik-12.jpg",
+    13: "komik-13.png",
+    14: "komik-14.png",
+    15: "komik-15.png",
+    16: null, // Halaman 15 dihapus.
+    17: "komik-17.png",
+    18: "komik-18.png"
+  };
+
+  // =====================================================
+  // 2. PERTANYAAN EVALUASI 4
+  // =====================================================
+
+  const EVALUASI_4 =
+    "Jika Kamu menjadi teman Raka, apakah kamu akan menyarankan Raka untuk mengubah kebiasaan buruknya seperti dalam cerita? Jelaskan alasanmu.";
+
+  // =====================================================
+  // 3. LANDING PAGE
+  // =====================================================
+
+  function updateLandingPage() {
+    const hero = document.querySelector(
+      '#page-landing img[src*="hero-cartoon"]'
+    );
+
+    if (hero) {
+      hero.src = "hero-cartoon.png";
+      hero.alt = "Raka dan teman-temannya belajar bersama";
+
+      hero.onerror = function () {
+        this.onerror = null;
+        console.error(
+          "Gambar hero-cartoon.png tidak ditemukan."
+        );
+      };
+    }
+  }
+
+  // =====================================================
+  // 4. REVISI TEKS DASHBOARD
+  // =====================================================
+
+  function updateDashboardText() {
+    const replacements = [
+      {
+        old: "Buka dan baca cerita bergambar dan jawab soal evaluasi di sela-sela ceritanya.",
+        updated: "Buka dan baca cerita bergambar dan jawab soal evaluasi di sela-sela ceritanya!"
+      },
+      {
+        old: "Bahas 6 pertanyaan pendalaman materi bersama temanmu secara interaktif.",
+        updated: "Bahas 6 pertanyaan pendalaman materi bersama temanmu secara interaktif!"
+      },
+      {
+        old: "Uji wawasanmu! Jawab 10 soal seru dan kumpulkan poinmu.",
+        updated: "Uji wawasanmu! Jawab 10 soal seru dan kumpulkan poinmu!"
+      }
+    ];
+
+    const paragraphs = document.querySelectorAll(
+      "#page-dashboard p"
+    );
+
+    paragraphs.forEach((paragraph) => {
+      const currentText = paragraph.textContent.trim();
+
+      replacements.forEach((item) => {
+        if (currentText === item.old) {
+          paragraph.textContent = item.updated;
+        }
+      });
+    });
+  }
+
+  // =====================================================
+  // 5. SISTEM GAMBAR KOMIK BARU
+  // =====================================================
+
+  function createComicImage(number, filename) {
+    const image = document.createElement("img");
+
+    image.src = filename;
+    image.alt = "Halaman Komik " + number;
+    image.loading = "lazy";
+
+    image.className =
+      "w-full h-auto object-contain border-b-2 border-slate-200";
+
+    image.onerror = function () {
+      this.onerror = null;
+
+      const fallback = filename.endsWith(".png")
+        ? filename.replace(/\.png$/, ".jpg")
+        : filename.replace(/\.jpg$/, ".png");
+
+      // Coba ekstensi alternatif hanya sekali.
+      const fallbackImage = new Image();
+
+      fallbackImage.onload = () => {
+        image.src = fallback;
+      };
+
+      fallbackImage.onerror = () => {
+        console.error(
+          "Gambar komik tidak ditemukan:",
+          filename
+        );
+
+        image.src =
+          "https://placehold.co/600x800/e2e8f0/475569?text=Gambar+Tidak+Ditemukan";
+      };
+
+      fallbackImage.src = fallback;
+    };
+
+    return image;
+  }
+
+  // =====================================================
+  // 6. MEMBUAT KOTAK EVALUASI
+  // =====================================================
+
+  function createEvaluation(number, questionData) {
+    const box = document.createElement("div");
+
+    box.className = [
+      "bg-gradient-to-br",
+      "from-sky-50",
+      "to-blue-100",
+      "p-5",
+      "md:p-7",
+      "m-4",
+      "md:mx-8",
+      "rounded-2xl",
+      "border-2",
+      "border-blue-200",
+      "border-l-8",
+      "border-l-blue-500",
+      "shadow-lg",
+      "flex",
+      "flex-col",
+      "relative",
+      "z-10"
+    ].join(" ");
+
+    const header = document.createElement("div");
+    header.className = "flex items-center gap-2 mb-4";
+
+    const badge = document.createElement("span");
+
+    badge.className =
+      "bg-blue-600 text-white text-[10px] sm:text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-widest shadow-sm";
+
+    badge.innerHTML =
+      '<i class="fa-solid fa-brain mr-1"></i> Ayo Berpikir';
+
+    const typeLabel = document.createElement("span");
+
+    typeLabel.className =
+      "text-xs sm:text-sm font-bold text-blue-800 tracking-wider";
+
+    typeLabel.textContent = questionData.type;
+
+    header.appendChild(badge);
+    header.appendChild(typeLabel);
+
+    const question = document.createElement("p");
+
+    question.className =
+      "font-formal font-bold text-slate-800 text-sm sm:text-base mb-4 leading-relaxed";
+
+    question.textContent =
+      number === 17
+        ? EVALUASI_4
+        : questionData.q;
+
+    const textarea = document.createElement("textarea");
+
+    textarea.id = "eval-input-" + number;
+    textarea.rows = 3;
+
+    textarea.placeholder =
+      "Tuliskan jawabanmu di sini...";
+
+    textarea.className =
+      "w-full p-4 text-sm rounded-xl border-2 border-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100 mb-4 resize-none shadow-inner bg-white/90 transition-all";
+
+    const button = document.createElement("button");
+
+    button.id = "btn-eval-" + number;
+    button.type = "button";
+
+    button.className =
+      "bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-6 py-3 rounded-xl shadow-[0_4px_0_#1d4ed8] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center sm:justify-start w-full sm:w-max";
+
+    button.innerHTML =
+      '<i class="fa-solid fa-paper-plane mr-2"></i> Simpan Jawaban';
+
+    button.addEventListener("click", function () {
+      // Menggunakan fungsi penyimpanan dari kode asli.
+      if (typeof submitInlineAnswer === "function") {
+        submitInlineAnswer(number);
+      } else {
+        console.error(
+          "Fungsi submitInlineAnswer tidak ditemukan."
+        );
+      }
+    });
+
+    box.appendChild(header);
+    box.appendChild(question);
+    box.appendChild(textarea);
+    box.appendChild(button);
+
+    return box;
+  }
+
+  // =====================================================
+  // 7. OPEN COMIC VIEWER - REVISI FINAL
+  // =====================================================
+
+  window.openComicViewer = function () {
+    const modal = document.getElementById("pdfModal");
+
+    const content = document.getElementById(
+      "pdfModalContent"
+    );
+
+    const loading = document.getElementById(
+      "pdfLoadingIndicator"
+    );
+
+    const wrapper = document.getElementById(
+      "comicCanvasWrapper"
+    );
+
+    if (!modal || !content || !loading || !wrapper) {
+      console.error(
+        "Elemen comic viewer tidak ditemukan."
+      );
+      return;
+    }
+
+    // Menampilkan modal.
+    modal.classList.remove("hidden");
+
+    setTimeout(() => {
+      modal.classList.remove("opacity-0");
+      content.classList.remove("scale-95");
+    }, 10);
+
+    // Jangan membuat ulang isi jika sudah tersedia.
+    if (wrapper.dataset.comicReady === "true") {
+      return;
+    }
+
+    loading.classList.remove("hidden");
+
+    wrapper.replaceChildren();
+
+    // Render halaman komik sesuai urutan asli.
+    for (let i = 1; i <= 18; i++) {
+      const filename = COMIC_IMAGES[i];
+
+      // Halaman komik 15 (komik-16.jpg) dihapus.
+      if (!filename) continue;
+
+      // Tambahkan gambar.
+      const image = createComicImage(i, filename);
+      wrapper.appendChild(image);
+
+      // Pertahankan evaluasi di sela-sela komik.
+      if (
+        typeof inlineQuestions !== "undefined" &&
+        inlineQuestions[i]
+      ) {
+        const evaluation = createEvaluation(
+          i,
+          inlineQuestions[i]
+        );
+
+        wrapper.appendChild(evaluation);
+      }
+    }
+
+    wrapper.dataset.comicReady = "true";
+
+    // Sinkronkan status dengan kode asli.
+    if (typeof isComicLoaded !== "undefined") {
+      isComicLoaded = true;
+    }
+
+    loading.classList.add("hidden");
+  };
+
+  // =====================================================
+  // 8. INISIALISASI
+  // =====================================================
+
+  function initializeLinguaPlayRevision() {
+    updateLandingPage();
+    updateDashboardText();
+
+    console.log(
+      "LinguaPlay Revision Patch berhasil dimuat."
+    );
+
+    console.log(
+      "Format gambar PNG dan JPG sudah didukung."
+    );
+
+    console.log(
+      "Halaman komik 15 berhasil dilewati."
+    );
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      initializeLinguaPlayRevision
+    );
+  } else {
+    initializeLinguaPlayRevision();
+  }
+
+})();
+</script>
+ 
+
+<!-- ================================================
+     LINGUAPLAY - 7 IKON DASHBOARD BARU
+     Semua ikon diperbarui secara otomatis.
+     ================================================ -->
+
+<style>
+  /* Ukuran ilustrasi dashboard */
+  #page-dashboard .linguaplay-custom-icon {
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
+    margin-bottom: 24px;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.10);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #page-dashboard .linguaplay-custom-icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+  }
+
+  /* Animasi saat kartu diarahkan kursor */
+  #page-dashboard .group:hover .linguaplay-custom-icon {
+    transform: scale(1.1) rotate(3deg);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Ukuran pada HP */
+  @media (max-width: 640px) {
+    #page-dashboard .linguaplay-custom-icon {
+      width: 80px;
+      height: 80px;
+      min-width: 80px;
+    }
+  }
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  // DAFTAR GAMBAR IKON BARU
+  // Pastikan nama file sama persis.
+
+  const dashboardIcons = [
+    {
+      page: "spin",
+      image: "icon-kelompok.png",
+      alt: "Ikon Bagi Kelompok"
+    },
+    {
+      page: "komik",
+      image: "icon-komik.png",
+      alt: "Ikon Baca Cerita Komik"
+    },
+    {
+      page: "evaluasi_akhir",
+      image: "icon-pahami.png",
+      alt: "Ikon Ayo Pahami dan Ceritakan"
+    },
+    {
+      page: "spin-presentasi",
+      image: "icon-presentasi.png",
+      alt: "Ikon Ayo Presentasi"
+    },
+    {
+      page: "perkuat",
+      image: "icon-perkuat.png",
+      alt: "Ikon Mari Kita Perkuat"
+    },
+    {
+      page: "quiz",
+      image: "icon-kuis.png",
+      alt: "Ikon Tebak Kuis Akhir"
+    },
+    {
+      page: "nilai",
+      image: "icon-pemenang.png",
+      alt: "Ikon Papan Pemenang"
+    }
+  ];
+
+  function installDashboardIcons() {
+
+    const dashboard = document.getElementById(
+      "page-dashboard"
+    );
+
+    if (!dashboard) {
+      console.error("Dashboard LinguaPlay tidak ditemukan.");
+      return;
+    }
+
+    dashboardIcons.forEach((item) => {
+
+      // Cari kartu berdasarkan halaman tujuan.
+      const card = Array.from(
+        dashboard.querySelectorAll("[onclick]")
+      ).find((element) => {
+        return element.getAttribute("onclick") ===
+          `goToPage('${item.page}')`;
+      });
+
+      if (!card) {
+        console.warn("Kartu tidak ditemukan:", item.page);
+        return;
+      }
+
+      // Cari ikon Font Awesome lama.
+      const oldIcon = card.querySelector(
+        "div.w-16.h-16"
+      );
+
+      if (!oldIcon) {
+        console.warn("Ikon lama tidak ditemukan:", item.page);
+        return;
+      }
+
+      // Buat pembungkus ilustrasi baru.
+      const newIcon = document.createElement("div");
+
+      newIcon.className = "linguaplay-custom-icon";
+
+      // Buat elemen gambar.
+      const img = document.createElement("img");
+
+      img.src = item.image;
+      img.alt = item.alt;
+      img.loading = "lazy";
+
+      // Jika file gambar tidak ditemukan.
+      img.onerror = function () {
+        console.error(
+          "Gagal memuat ikon:",
+          item.image
+        );
+
+        // Pertahankan ikon lama sebagai cadangan.
+        oldIcon.style.display = "";
+        newIcon.remove();
+      };
+
+      newIcon.appendChild(img);
+
+      // Sembunyikan ikon lama.
+      oldIcon.style.display = "none";
+
+      // Sisipkan gambar baru di posisi ikon lama.
+      oldIcon.parentNode.insertBefore(
+        newIcon,
+        oldIcon
+      );
+
+      console.log("Ikon berhasil dipasang:", item.image);
+    });
+
+    console.log(
+      "Proses pemasangan 7 ikon LinguaPlay selesai."
+    );
+  }
+
+  // Jalankan setelah seluruh HTML selesai dimuat.
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      installDashboardIcons
+    );
+  } else {
+    installDashboardIcons();
+  }
+
+})();
+</script>
+
+
+<!-- ============================================
+     LINGUAPLAY - IKON HALAMAN FITUR
+     Mengganti ikon pada setiap halaman
+     tanpa mengubah ikon dashboard.
+============================================ -->
+
+<style>
+  .linguaplay-feature-icon {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .linguaplay-feature-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  const featureIcons = [
+    {
+      pageId: "page-spin",
+      image: "icon-kelompok.png",
+      oldIcon: "fa-dharmachakra"
+    },
+    {
+      pageId: "page-komik",
+      image: "icon-komik.png",
+      oldIcon: "fa-paper-plane"
+    },
+    {
+      pageId: "page-evaluasi_akhir",
+      image: "icon-pahami.png",
+      oldIcon: "fa-pen-nib"
+    },
+    {
+      pageId: "page-spin-presentasi",
+      image: "icon-presentasi.png",
+      oldIcon: "fa-person-chalkboard"
+    },
+    {
+      pageId: "page-perkuat",
+      image: "icon-perkuat.png",
+      oldIcon: "fa-lightbulb"
+    },
+    {
+      pageId: "page-quiz",
+      image: "icon-kuis.png",
+      oldIcon: "fa-gamepad"
+    },
+    {
+      pageId: "page-nilai",
+      image: "icon-pemenang.png",
+      oldIcon: "fa-award"
+    }
+  ];
+
+  function replaceFeatureIcons() {
+    featureIcons.forEach((item) => {
+      const page = document.getElementById(item.pageId);
+
+      if (!page) return;
+
+      const oldIcon = page.querySelector(
+        "i." + item.oldIcon
+      );
+
+      if (!oldIcon) {
+        console.warn(
+          "Ikon tidak ditemukan pada:",
+          item.pageId
+        );
+        return;
+      }
+
+      const iconWrapper = oldIcon.parentElement;
+
+      if (!iconWrapper) return;
+
+      // Hindari penggantian berulang.
+      if (
+        iconWrapper.classList.contains(
+          "linguaplay-feature-icon"
+        )
+      ) {
+        return;
+      }
+
+      // Buat gambar baru.
+      const img = document.createElement("img");
+
+      img.src = item.image;
+      img.alt = "Ikon " + item.pageId;
+      img.loading = "lazy";
+
+      // Cadangan jika gambar gagal dimuat.
+      img.onerror = function () {
+        this.remove();
+        oldIcon.style.display = "";
+        iconWrapper.classList.remove(
+          "linguaplay-feature-icon"
+        );
+      };
+
+      oldIcon.style.display = "none";
+
+      iconWrapper.classList.add(
+        "linguaplay-feature-icon"
+      );
+
+      iconWrapper.appendChild(img);
+
+      console.log(
+        "Ikon halaman diperbarui:",
+        item.pageId
+      );
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      replaceFeatureIcons
+    );
+  } else {
+    replaceFeatureIcons();
+  }
+})();
+</script>
+
 </body>
 </html>
